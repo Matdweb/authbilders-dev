@@ -15,24 +15,19 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Theme initialization function
-const initializeTheme = () => {
-  // Check localStorage or system preference
-  const savedTheme = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  
-  // Apply theme class to document
-  if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-};
-
 const App = () => {
   // Initialize theme on app load
   useEffect(() => {
-    initializeTheme();
+    // Check localStorage or system preference
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    // Apply theme class to document
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   }, []);
 
   return (
