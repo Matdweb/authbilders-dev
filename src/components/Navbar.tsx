@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,8 +19,34 @@ const Navbar = () => {
           </Link>
         </div>
         
+        {/* Desktop navigation */}
+        <div className="hidden md:flex items-center gap-6">
+          <Link to="/docs" className="text-muted-foreground hover:text-foreground transition-colors">
+            Documentation
+          </Link>
+          <Link to="/templates" className="text-muted-foreground hover:text-foreground transition-colors">
+            Templates
+          </Link>
+          <Link to="/guides" className="text-muted-foreground hover:text-foreground transition-colors">
+            Guides
+          </Link>
+          <a 
+            href="https://github.com/authbuilders" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            GitHub
+          </a>
+          <ThemeToggle />
+          <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark">
+            Get Started
+          </Button>
+        </div>
+
         {/* Mobile menu button */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
           <Button
             variant="ghost"
             size="sm"
@@ -58,30 +85,6 @@ const Navbar = () => {
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
             <span className="sr-only">Toggle menu</span>
-          </Button>
-        </div>
-        
-        {/* Desktop navigation */}
-        <div className="hidden md:flex items-center gap-6">
-          <Link to="/docs" className="text-muted-foreground hover:text-foreground transition-colors">
-            Documentation
-          </Link>
-          <Link to="/templates" className="text-muted-foreground hover:text-foreground transition-colors">
-            Templates
-          </Link>
-          <Link to="/guides" className="text-muted-foreground hover:text-foreground transition-colors">
-            Guides
-          </Link>
-          <a 
-            href="https://github.com/authbuilders" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            GitHub
-          </a>
-          <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark">
-            Get Started
           </Button>
         </div>
       </div>
