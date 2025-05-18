@@ -147,7 +147,8 @@ const FeaturesSection = () => {
       </div>
 
       {/* Add animation keyframes */}
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes shine {
           0% {
             background-position: 200% 0;
@@ -156,7 +157,7 @@ const FeaturesSection = () => {
             background-position: -200% 0;
           }
         }
-      `}</style>
+      `}} />
     </section>
   );
 };
