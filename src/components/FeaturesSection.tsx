@@ -80,7 +80,7 @@ const FeaturesSection = () => {
   // Track mouse position relative to the heading element
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!headingRef.current) return;
-    
+
     const rect = headingRef.current.getBoundingClientRect();
     setPosition({
       x: e.clientX - rect.left,
@@ -89,35 +89,16 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section className="py-16 bg-secondary/30" id="features">
+    <section className="py-16 bg-secondary/60" id="features">
       <div className="container px-4 md:px-6">
-        <div 
+        <div
           className="flex flex-col items-center justify-center space-y-4 text-center"
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           ref={headingRef}
         >
-          <div 
-            className="space-y-2 relative p-4 rounded-xl overflow-hidden"
-            style={{
-              background: isHovering 
-                ? `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(80, 70, 229, 0.15), transparent 60%)`
-                : 'transparent'
-            }}
-          >
-            {/* Interactive gradient border effect */}
-            <div
-              className={`absolute inset-0 rounded-xl transition-opacity duration-300 pointer-events-none ${
-                isHovering ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{
-                background: `linear-gradient(90deg, transparent, rgba(80, 70, 229, 0.3) 50%, transparent)`,
-                backgroundSize: '200% 100%',
-                animation: isHovering ? 'shine 2s infinite' : 'none',
-              }}
-            />
-
+          <div className="space-y-2 relative p-4 rounded-xl overflow-hidden">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Everything You Need for Authentication
             </h2>
