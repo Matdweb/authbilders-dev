@@ -1,7 +1,7 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -39,4 +39,21 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Background styles */
+body {
+  overflow-x: hidden;
+}
+
+/* Glass effect for containers to work well with the animated background */
+.glass-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-container {
+  background: rgba(15, 15, 15, 0.5);
 }
