@@ -89,7 +89,7 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section className="py-16 bg-secondary/60" id="features">
+    <section className="py-16 bg-primary/10 dark:bg-secondary/60" id="features">
       <div className="container px-4 md:px-6">
         <div
           className="flex flex-col items-center justify-center space-y-4 text-center"
