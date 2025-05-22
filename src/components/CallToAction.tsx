@@ -22,7 +22,7 @@ const CallToAction = () => {
               </Button>
             </Link>
             <a href="https://github.com/authbuilders" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white/10">
+              <Button size="lg" className="w-full sm:w-auto text-white bg-black/60 hover:bg-black/80">
                 View on GitHub
               </Button>
             </a>
