@@ -10,7 +10,7 @@ interface DocContentProps {
 
 const DocContent = ({ title, description, children }: DocContentProps) => {
   return (
-    <div className="min-h-[calc(100vh-69px)] pb-16 m-auto break-all">
+    <div className="min-h-[calc(100vh-69px)] pb-16 m-auto">
       <div className="container py-8 px-6">
         <div className="mx-auto max-w-3xl space-y-8">
           <div className="space-y-4">
