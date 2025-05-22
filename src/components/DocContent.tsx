@@ -10,8 +10,8 @@ interface DocContentProps {
 
 const DocContent = ({ title, description, children }: DocContentProps) => {
   return (
-    <div className="min-h-[calc(100vh-69px)] pb-16">
-      <div className="container py-8 px-4 md:px-6">
+    <div className="min-h-[calc(100vh-69px)] pb-16 m-auto break-all">
+      <div className="container py-8 px-6">
         <div className="mx-auto max-w-3xl space-y-8">
           <div className="space-y-4">
             <h1 className="font-heading text-4xl font-bold">{title}</h1>
