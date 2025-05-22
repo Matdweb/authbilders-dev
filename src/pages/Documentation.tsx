@@ -8,7 +8,7 @@ const Documentation = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex flex-1 lg:container">
+      <div className="flex flex-1 lg:container pt-14">
         <DocSidebar />
         <main className="flex-1">
           <DocContent
