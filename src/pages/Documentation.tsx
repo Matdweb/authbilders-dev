@@ -6,9 +6,9 @@ import DocContent from "@/components/DocContent";
 
 const Documentation = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen min-w-96 flex flex-col">
       <Navbar />
-      <div className="flex flex-1 lg:container pt-14">
+      <div className="lg:flex lg:flex-1 lg:container pt-14">
         <DocSidebar />
         <main className="flex-1">
           <DocContent
@@ -38,7 +38,7 @@ const Documentation = () => {
             <p className="leading-7">
               The quickest way to get started with AuthBuilders is to clone one of our template repositories:
             </p>
-            <div className="code-block mt-4 mb-6">
+            <div className="code-block mt-4 mb-6 overflow-x-scroll">
               <pre><code>
                 {`git clone https://github.com/authbuilders/templates.git
 cd templates/basic-auth
