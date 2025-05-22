@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
-import { 
+import {
   Sheet,
   SheetContent,
-  SheetTrigger 
+  SheetTrigger
 } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -85,7 +85,7 @@ const Navbar = () => {
             <span className="font-bold text-xl">AuthBuilders.dev</span>
           </Link>
         </div>
-        
+
         {/* Desktop navigation */}
         <div className="hidden md:flex items-center gap-6">
           <Link to="/docs" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -97,10 +97,10 @@ const Navbar = () => {
           <Link to="/guides" className="text-muted-foreground hover:text-foreground transition-colors">
             Guides
           </Link>
-          <a 
-            href="https://github.com/authbuilders" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://github.com/authbuilders"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             GitHub
@@ -114,13 +114,13 @@ const Navbar = () => {
         {/* Mobile menu and docs sidebar buttons */}
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
-          
+
           {/* Documentation Sidebar Sheet (only show on docs pages) */}
           {isDocsPage && (
             <Sheet>
               <SheetTrigger asChild>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
                   className="mr-2"
                 >
@@ -178,7 +178,7 @@ const Navbar = () => {
             variant="ghost"
             size="sm"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+            className={`${isDocsPage && 'hidden md:block'} px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -215,41 +215,41 @@ const Navbar = () => {
           </Button>
         </div>
       </div>
-      
+
       {/* Mobile navigation */}
       <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} border-b border-border`}>
         <div className="container py-4 space-y-3">
-          <Link 
-            to="/docs" 
+          <Link
+            to="/docs"
             className="block text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Documentation
           </Link>
-          <Link 
-            to="/templates" 
+          <Link
+            to="/templates"
             className="block text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Templates
           </Link>
-          <Link 
-            to="/guides" 
+          <Link
+            to="/guides"
             className="block text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Guides
           </Link>
-          <a 
-            href="https://github.com/authbuilders" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://github.com/authbuilders"
+            target="_blank"
+            rel="noopener noreferrer"
             className="block text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             GitHub
           </a>
-          <Button 
+          <Button
             className="w-full bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
             onClick={() => setIsMenuOpen(false)}
           >
