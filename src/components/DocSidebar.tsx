@@ -67,31 +67,6 @@ const DocSidebar = () => {
 
   return (
     <>
-      {/* Mobile Trigger */}
-      <div className="lg:hidden sticky top-[69px] z-30 flex items-center justify-between bg-background border-b border-border px-4 py-2">
-        <span className="font-medium">Documentation</span>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          aria-label="Toggle documentation sidebar"
-        >
-          {isMobileOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          )}
-        </Button>
-      </div>
-
-      {/* Sidebar */}
       <div className={cn(
         "fixed inset-y-0 z-20 flex-col border-r border-border bg-background transition-all",
         "lg:sticky lg:top-[69px] lg:flex lg:h-[calc(100vh-69px)]",
