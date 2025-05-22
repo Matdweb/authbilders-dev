@@ -12,6 +12,7 @@ import Documentation from "./pages/Documentation";
 import Templates from "./pages/Templates";
 import Guides from "./pages/Guides";
 import NotFound from "./pages/NotFound";
+import TechStackSelector from "./pages/TechStackSelector";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/docs/*" element={<Documentation />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/guides" element={<Guides />} />
+            <Route path="/tech-stack-selector" element={<TechStackSelector />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
