@@ -3,23 +3,23 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
-import { 
-  SiNextdotjs, 
-  SiVite, 
-  SiVuedotjs, 
+import {
+  SiNextdotjs,
+  SiVite,
+  SiVuedotjs,
   SiAngular,
   SiFirebase,
   SiSupabase,
   SiPostgresql,
   SiMongodb
 } from "react-icons/si";
-import { 
-  MdEmail, 
-  MdSecurity, 
-  MdKey, 
-  MdSync, 
-  MdLock, 
-  MdAutoAwesome 
+import {
+  MdEmail,
+  MdSecurity,
+  MdKey,
+  MdSync,
+  MdLock,
+  MdAutoAwesome
 } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 
@@ -44,36 +44,36 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   const [selectedFrontend, setSelectedFrontend] = useState<string | null>(null);
   const [selectedBackend, setSelectedBackend] = useState<string | null>(null);
   const [selectedAuth, setSelectedAuth] = useState<string | null>(null);
-  
+
   // Extract unique options from templates
   const frontendOptions = [...new Set(templates.map(t => t.frontend))];
   const backendOptions = [...new Set(templates
     .filter(t => !selectedFrontend || t.frontend === selectedFrontend)
     .map(t => t.backend))];
   const authOptions = [...new Set(templates
-    .filter(t => 
-      (!selectedFrontend || t.frontend === selectedFrontend) && 
+    .filter(t =>
+      (!selectedFrontend || t.frontend === selectedFrontend) &&
       (!selectedBackend || t.backend === selectedBackend)
     )
     .map(t => t.authMethod))];
-    
+
   // Reset subsequent selections when earlier selection changes
   useEffect(() => {
     if (selectedFrontend) {
       const backendStillValid = templates.some(
         t => t.frontend === selectedFrontend && t.backend === selectedBackend
       );
-      
+
       if (!backendStillValid) {
         setSelectedBackend(null);
         setSelectedAuth(null);
       } else if (selectedBackend) {
         const authStillValid = templates.some(
-          t => t.frontend === selectedFrontend && 
-              t.backend === selectedBackend && 
-              t.authMethod === selectedAuth
+          t => t.frontend === selectedFrontend &&
+            t.backend === selectedBackend &&
+            t.authMethod === selectedAuth
         );
-        
+
         if (!authStillValid) {
           setSelectedAuth(null);
         }
@@ -85,11 +85,11 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   useEffect(() => {
     if (selectedFrontend && selectedBackend && selectedAuth) {
       const match = templates.find(
-        t => t.frontend === selectedFrontend && 
-            t.backend === selectedBackend && 
-            t.authMethod === selectedAuth
+        t => t.frontend === selectedFrontend &&
+          t.backend === selectedBackend &&
+          t.authMethod === selectedAuth
       );
-      
+
       onSelect(match || null);
     } else {
       onSelect(null);
@@ -146,19 +146,21 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                       <FrameworkIcon framework={frontend} />
                     </div>
                     <span className="text-center font-medium">{frontend}</span>
-                    {selectedFrontend === frontend && (
-                      <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
-                    )}
+                    <div className="min-h-7">
+                      {selectedFrontend === frontend && (
+                        <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
+                      )}
+                    </div>
                   </label>
                 ))}
               </RadioGroup>
-              
+
               <div className="mt-6 flex justify-between">
                 <Button variant="ghost" onClick={resetSelections}>
                   Reset
                 </Button>
-                <Button 
-                  onClick={goToNextStep} 
+                <Button
+                  onClick={goToNextStep}
                   className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
                   disabled={!selectedFrontend}
                 >
@@ -168,7 +170,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             </CardContent>
           </>
         );
-      
+
       case 2:
         return (
           <>
@@ -198,19 +200,21 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                       <DatabaseIcon database={backend} />
                     </div>
                     <span className="text-center font-medium">{backend}</span>
-                    {selectedBackend === backend && (
-                      <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
-                    )}
+                    <div className="min-h-7">
+                      {selectedBackend === backend && (
+                        <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
+                      )}
+                    </div>
                   </label>
                 ))}
               </RadioGroup>
-              
+
               <div className="mt-6 flex justify-between">
                 <Button variant="outline" onClick={goToPrevStep}>
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
-                <Button 
-                  onClick={goToNextStep} 
+                <Button
+                  onClick={goToNextStep}
                   className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
                   disabled={!selectedBackend}
                 >
@@ -220,7 +224,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             </CardContent>
           </>
         );
-      
+
       case 3:
         return (
           <>
@@ -250,19 +254,21 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                       <AuthIcon authMethod={auth} />
                     </div>
                     <span className="text-center font-medium">{auth}</span>
-                    {selectedAuth === auth && (
-                      <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
-                    )}
+                    <div className="min-h-7">
+                      {selectedAuth === auth && (
+                        <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
+                      )}
+                    </div>
                   </label>
                 ))}
               </RadioGroup>
-              
+
               <div className="mt-6 flex justify-between">
                 <Button variant="outline" onClick={goToPrevStep}>
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   onClick={resetSelections}
                 >
                   Reset All
@@ -271,7 +277,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             </CardContent>
           </>
         );
-      
+
       default:
         return null;
     }
