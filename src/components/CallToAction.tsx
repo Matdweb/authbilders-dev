@@ -16,14 +16,14 @@ const CallToAction = () => {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
-            <Link to="/docs/getting-started">
+            <Link to="/tech-stack-selector">
               <Button size="lg" className="w-full sm:w-auto bg-white text-authbuilders-purple hover:bg-white/90">
-                Read the Docs
+                Select my stack
               </Button>
             </Link>
             <a href="https://github.com/authbuilders" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white/10">
-                View on GitHub
+              <Button size="lg" variant="outline" className="bg-black w-full sm:w-auto border-white text-white hover:bg-white/10">
+                Read the docs
               </Button>
             </a>
           </div>
