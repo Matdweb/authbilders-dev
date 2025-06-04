@@ -18,7 +18,7 @@ const steps: Step[] = [
   },
   {
     id: 2,
-    title: "Download Template", 
+    title: "Download Template",
     description: "Clone a GitHub project tailored to your stack.",
     icon: <Download className="h-8 w-8 text-authbuilders-purple" />
   },
@@ -53,7 +53,7 @@ const HowItWorksSection = () => {
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {steps.map((step, index) => (
-            <Card 
+            <Card
               key={step.id}
               className="group relative overflow-hidden border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-authbuilders-purple/50 hover:shadow-lg hover:shadow-authbuilders-purple/10"
             >
@@ -86,7 +86,10 @@ const HowItWorksSection = () => {
                 )}
 
                 {/* Hover Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-authbuilders-purple/5 to-authbuilders-purple-light/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                <div
+                  style={{ marginTop: "0" }}
+                  className="absolute inset-0 bg-gradient-to-r from-authbuilders-purple/5 to-authbuilders-purple-light/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
+                />
               </CardContent>
             </Card>
           ))}
