@@ -54,12 +54,12 @@ export default function ButtonAPIRequest({ session, isAuthenticated }: Props) {
             <div className="relative group">
                 <button
                     onClick={handleAPIRequest}
-                    className={`relative bg-blue-700 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-md transition duration-300 min-w-32`}
+                    className={`relative bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white font-semibold px-5 py-2 rounded-md transition duration-300 min-w-32`}
                 >
                     {isPending ? (
                         <span className="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
                     ) : (
-                        'API Route'
+                        'Call API Route'
                     )}
                 </button>
                 <div className="absolute min-w-32 left-1/2 -translate-x-1/2 top-full mt-2 hidden group-hover:block bg-gray-800 text-sm text-white rounded-md px-3 py-2 shadow-md z-50">
