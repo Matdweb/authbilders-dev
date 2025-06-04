@@ -72,7 +72,7 @@ const TechStackSelector = () => {
       <Navbar />
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
+          <div className="mb-10 pt-12 text-center">
             <h1 className="text-4xl font-bold mb-4">Find Your Perfect Auth Stack</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Select your preferred tech stack and authentication method to get started with AuthBuilders.
