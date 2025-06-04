@@ -58,7 +58,7 @@ const InteractiveFeatures = () => {
     const interval = setInterval(() => {
       const now = Math.floor(Date.now() / 1000);
       const remaining = session.expires - now;
-      
+
       if (remaining <= 0) {
         setTimeLeft("00:00:00");
       } else {
@@ -100,7 +100,7 @@ const InteractiveFeatures = () => {
 
   const renderTimerTab = () => {
     if (!isValidJson) return renderErrorState();
-    
+
     return (
       <div className="flex flex-col items-center justify-center h-64 space-y-4">
         <div className="text-center">
@@ -115,7 +115,7 @@ const InteractiveFeatures = () => {
 
   const renderSessionTab = () => {
     if (!isValidJson) return renderErrorState();
-    
+
     return (
       <div className="flex flex-col items-center justify-center h-64 space-y-6">
         <TooltipProvider>
@@ -139,7 +139,7 @@ const InteractiveFeatures = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        
+
         <div className="text-center space-y-2">
           <h3 className="text-lg font-semibold">{session.user.name}</h3>
           <p className="text-sm text-muted-foreground">{session.user.email}</p>
@@ -169,11 +169,11 @@ const InteractiveFeatures = () => {
 
   const renderApiTab = () => {
     if (!isValidJson) return renderErrorState();
-    
+
     return (
       <div className="flex flex-col items-center justify-center h-64 space-y-6 relative">
-        <Button 
-          onClick={handleApiRequest} 
+        <Button
+          onClick={handleApiRequest}
           disabled={isLoading}
           className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
         >
@@ -201,7 +201,7 @@ const InteractiveFeatures = () => {
             </CardHeader>
             <CardContent>
               <pre className="text-xs bg-slate-900 text-green-400 p-3 rounded overflow-auto">
-{`{
+                {`{
   "status": "success",
   "user": "${session.user.name}",
   "timestamp": ${Date.now()}
@@ -215,7 +215,7 @@ const InteractiveFeatures = () => {
   };
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 bg-primary/10 dark:bg-secondary/60">
       <div className="container px-4 md:px-6">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -263,15 +263,15 @@ const InteractiveFeatures = () => {
                     <span>API Test</span>
                   </TabsTrigger>
                 </TabsList>
-                
+
                 <TabsContent value="timer" className="mt-6">
                   {renderTimerTab()}
                 </TabsContent>
-                
+
                 <TabsContent value="session" className="mt-6">
                   {renderSessionTab()}
                 </TabsContent>
-                
+
                 <TabsContent value="api" className="mt-6">
                   {renderApiTab()}
                 </TabsContent>
