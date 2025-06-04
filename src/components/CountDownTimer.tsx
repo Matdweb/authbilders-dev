@@ -53,7 +53,7 @@ export function CountDownTimer({ session, isAuthenticated }: CountDownTimerProps
     };
 
     return (
-        <div className="inconsolata-font relative p-4 border-2 border-solid border-gray-800 rounded-lg scale-125">
+        <div className="inconsolata-font relative p-4 border-2 border-solid border-gray-800 rounded-lg scale-125 bg-[#0e0e0e]">
             <div className="absolute inset-0 border border-solid border-gray-600 blur-md bg-gradient-to-r from-[#1d1f20] to-[#0e0e0e] rounded-lg" />
             <div className="relative flex flex-col justify-center items-center">
                 <span className="text-gray-100 text-xs font-medium">Session expires in:</span>
