@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Copy, ExternalLink } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import TerminalSimulator from "@/components/TerminalSimulator";
 import { 
   SiNextdotjs, 
   SiVite, 
@@ -130,9 +132,10 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
           </div>
         </div>
         
-        <div className="bg-muted rounded-lg p-3 font-mono text-xs overflow-auto">
-          {gitCommand}
-        </div>
+        <TerminalSimulator 
+          gitBranch={selectedTemplate.gitBranch}
+          githubUrl={selectedTemplate.githubUrl}
+        />
       </CardContent>
       <CardFooter className="flex flex-col gap-3 px-6 pt-0 pb-6">
         <Link to={selectedTemplate.docUrl} className="w-full">
