@@ -19,7 +19,7 @@ const HeroSection = () => {
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Link to="/docs/getting-started">
-                <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark" size="lg">
+                <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white" size="lg">
                   Get Started
                 </Button>
               </Link>
@@ -46,22 +46,24 @@ const HeroSection = () => {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:gap-8 lg:grid-cols-1">
               <div className="rounded-xl border bg-background p-6 shadow-sm">
                 <div className="space-y-2">
-                  <h3 className="font-bold">User Authentication</h3>
+                  <h3 className="font-bold">Login Form</h3>
                   <div className="code-block">
                     <pre><code>
-{`import { AuthProvider } from 'auth-builders';
+{`import { AuthProvider } from './components/AuthForm';
 
-const App = () => (
-  <AuthProvider 
-    config={{ 
-      methods: ['email', 'google', 'github'],
-      onAuthSuccess: (user) => console.log(user),
-      redirectUrl: '/dashboard'
-    }}
-  >
-    <YourApplication />
-  </AuthProvider>
-);`}
+function LoginPage() {
+    return (
+        <AuthForm
+            title="Login"
+            action={login}
+            fields={fields}
+            redirectTo="/dashboard"
+            thirdPartyProviders={
+                ['google', 'github']
+            }
+        />
+    )}
+  );`}
                     </code></pre>
                   </div>
                 </div>

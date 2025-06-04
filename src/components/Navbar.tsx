@@ -106,7 +106,7 @@ const Navbar = () => {
             GitHub
           </a>
           <ThemeToggle />
-          <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark">
+          <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white">
             Get Started
           </Button>
         </div>
