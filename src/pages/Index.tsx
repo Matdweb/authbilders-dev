@@ -2,7 +2,7 @@
 import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import InteractiveFeatures from "@/components/InteractiveFeatures";
-import FeatureShowcase from "@/components/FeatureShowcase";
+// import FeatureShowcase from "@/components/FeatureShowcase";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import CallToAction from "@/components/CallToAction";
 import Navbar from "@/components/Navbar";
@@ -19,7 +19,7 @@ const Index = () => {
         <FeaturesSection />
         <HowItWorksSection />
         <InteractiveFeatures />
-        <FeatureShowcase />
+        {/* <FeatureShowcase /> */}
         <CallToAction />
       </main>
       <Footer />
