@@ -1,9 +1,27 @@
-
 import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { 
+  SiNextdotjs, 
+  SiVite, 
+  SiVuedotjs, 
+  SiAngular,
+  SiFirebase,
+  SiSupabase,
+  SiPostgresql,
+  SiMongodb
+} from "react-icons/si";
+import { 
+  MdEmail, 
+  MdSecurity, 
+  MdKey, 
+  MdSync, 
+  MdLock, 
+  MdAutoAwesome 
+} from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
 
 interface Template {
   slug: string;
@@ -266,18 +284,17 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   );
 };
 
-// Helper components for icons
+// Helper components for icons using react-icons
 const FrameworkIcon = ({ framework }: { framework: string }) => {
-  // These would ideally be actual SVG logos
   switch (framework.toLowerCase()) {
     case 'next.js':
-      return <span className="text-2xl font-bold">N.js</span>;
+      return <SiNextdotjs className="w-8 h-8" />;
     case 'vite':
-      return <span className="text-2xl font-bold">V</span>;
+      return <SiVite className="w-8 h-8" />;
     case 'vue':
-      return <span className="text-2xl font-bold">Vue</span>;
+      return <SiVuedotjs className="w-8 h-8" />;
     case 'angular':
-      return <span className="text-2xl font-bold">Ng</span>;
+      return <SiAngular className="w-8 h-8" />;
     default:
       return <span className="text-2xl font-bold">?</span>;
   }
@@ -286,13 +303,13 @@ const FrameworkIcon = ({ framework }: { framework: string }) => {
 const DatabaseIcon = ({ database }: { database: string }) => {
   switch (database.toLowerCase()) {
     case 'firebase':
-      return <span className="text-2xl font-bold">FB</span>;
+      return <SiFirebase className="w-8 h-8" />;
     case 'supabase':
-      return <span className="text-2xl font-bold">SB</span>;
+      return <SiSupabase className="w-8 h-8" />;
     case 'postgresql':
-      return <span className="text-2xl font-bold">PG</span>;
+      return <SiPostgresql className="w-8 h-8" />;
     case 'mongodb':
-      return <span className="text-2xl font-bold">MDB</span>;
+      return <SiMongodb className="w-8 h-8" />;
     default:
       return <span className="text-2xl font-bold">?</span>;
   }
@@ -301,19 +318,19 @@ const DatabaseIcon = ({ database }: { database: string }) => {
 const AuthIcon = ({ authMethod }: { authMethod: string }) => {
   switch (authMethod.toLowerCase()) {
     case 'email/password':
-      return <span className="text-2xl font-bold">📧</span>;
+      return <MdEmail className="w-8 h-8" />;
     case 'social login':
-      return <span className="text-2xl font-bold">👤</span>;
+      return <FaUsers className="w-8 h-8" />;
     case 'jwt':
-      return <span className="text-2xl font-bold">🔑</span>;
+      return <MdKey className="w-8 h-8" />;
     case 'oauth':
-      return <span className="text-2xl font-bold">🔄</span>;
+      return <MdSync className="w-8 h-8" />;
     case 'mfa':
-      return <span className="text-2xl font-bold">🔒</span>;
+      return <MdLock className="w-8 h-8" />;
     case 'magic link':
-      return <span className="text-2xl font-bold">✨</span>;
+      return <MdAutoAwesome className="w-8 h-8" />;
     default:
-      return <span className="text-2xl font-bold">?</span>;
+      return <MdSecurity className="w-8 h-8" />;
   }
 };
 
