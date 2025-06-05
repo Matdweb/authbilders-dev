@@ -5,73 +5,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StackSelector from "@/components/StackSelector";
 import TechStackSummary from "@/components/TechStackSummary";
-
-// Sample data - this would be replaced with actual data from your backend or props
-const templates = [
-  {
-    slug: 'nextjs-firebase-email',
-    frontend: 'Next.js',
-    backend: 'Firebase',
-    authMethod: ['Email/Password','Google','Github'],
-    gitBranch: 'nextjs-firebase-email',
-    docUrl: '/docs/templates/nextjs-firebase-email',
-    githubUrl: 'https://github.com/authbuilders/templates',
-    isInProgress: false,
-  },
-  {
-    slug: 'nextjs-supabase-oauth',
-    frontend: 'Next.js',
-    backend: 'Supabase',
-    authMethod: ['OAuth',],
-    gitBranch: 'nextjs-supabase-oauth',
-    docUrl: '/docs/templates/nextjs-supabase-oauth',
-    githubUrl: 'https://github.com/authbuilders/templates',
-    isInProgress: false,
-  },
-  {
-    slug: 'vite-mongodb-jwt',
-    frontend: 'Vite',
-    backend: 'MongoDB',
-    authMethod: ['JWT',],
-    gitBranch: 'vite-mongodb-jwt',
-    docUrl: '/docs/templates/vite-mongodb-jwt',
-    githubUrl: 'https://github.com/authbuilders/templates',
-    isInProgress: true,
-  },
-  {
-    slug: 'vue-postgres-mfa',
-    frontend: 'Vue',
-    backend: 'PostgreSQL',
-    authMethod: ['MFA',],
-    gitBranch: 'vue-postgres-mfa',
-    docUrl: '/docs/templates/vue-postgres-mfa',
-    githubUrl: 'https://github.com/authbuilders/templates',
-    isInProgress: false,
-  },
-  {
-    slug: 'angular-firebase-magic-link',
-    frontend: 'Angular',
-    backend: 'Firebase',
-    authMethod: ['Magic Link',],
-    gitBranch: 'angular-firebase-magic',
-    docUrl: '/docs/templates/angular-firebase-magic',
-    githubUrl: 'https://github.com/authbuilders/templates',
-    isInProgress: true,
-  },
-  {
-    slug: 'vite-supabase-social',
-    frontend: 'Vite',
-    backend: 'Supabase',
-    authMethod: ['Social Login',],
-    gitBranch: 'vite-supabase-social',
-    docUrl: '/docs/templates/vite-supabase-social',
-    githubUrl: 'https://github.com/authbuilders/templates',
-    isInProgress: false,
-  },
-];
+import { templates } from "@/lib/templates";
 
 const TechStackSelector = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
+  const [selectedAuthMethods, setSelectedAuthMethods] = useState<string[]>([]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -89,13 +28,15 @@ const TechStackSelector = () => {
               <StackSelector
                 templates={templates}
                 onSelect={setSelectedTemplate}
-                selectedTemplate={selectedTemplate}
+                selectedAuthMethods={selectedAuthMethods}
+                setSelectedAuthMethods={setSelectedAuthMethods}
               />
             </div>
 
             <div className="lg:col-span-1">
               <TechStackSummary
                 selectedTemplate={selectedTemplate}
+                selectedAuthMethods={selectedAuthMethods}
               />
             </div>
 
