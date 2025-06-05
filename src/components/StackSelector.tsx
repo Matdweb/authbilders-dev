@@ -1,9 +1,9 @@
-// ✅ src/components/StackSelector.tsx (updated for string[] authMethod)
 
 import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   SiNextdotjs,
@@ -33,6 +33,7 @@ interface Template {
   gitBranch: string;
   docUrl: string;
   githubUrl: string;
+  isInProgress?: boolean;
 }
 
 interface StackSelectorProps {
@@ -45,7 +46,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   const [step, setStep] = useState<number>(1);
   const [selectedFrontend, setSelectedFrontend] = useState<string | null>(null);
   const [selectedBackend, setSelectedBackend] = useState<string | null>(null);
-  const [selectedAuth, setSelectedAuth] = useState<string | null>(null);
+  const [selectedAuthMethods, setSelectedAuthMethods] = useState<string[]>([]);
 
   const frontendOptions = [...new Set(templates.map(t => t.frontend))];
   const backendOptions = [...new Set(templates
@@ -66,39 +67,46 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
 
       if (!backendStillValid) {
         setSelectedBackend(null);
-        setSelectedAuth(null);
+        setSelectedAuthMethods([]);
       } else if (selectedBackend) {
-        const authStillValid = templates.some(
-          t => t.frontend === selectedFrontend &&
-            t.backend === selectedBackend &&
-            t.authMethod.includes(selectedAuth || "")
+        const validAuthMethods = selectedAuthMethods.filter(auth =>
+          templates.some(
+            t => t.frontend === selectedFrontend &&
+              t.backend === selectedBackend &&
+              t.authMethod.includes(auth)
+          )
         );
-
-        if (!authStillValid) {
-          setSelectedAuth(null);
-        }
+        setSelectedAuthMethods(validAuthMethods);
       }
     }
   }, [selectedFrontend, selectedBackend, templates]);
 
   useEffect(() => {
-    if (selectedFrontend && selectedBackend && selectedAuth) {
-      const match = templates.find(
+    if (selectedFrontend && selectedBackend && selectedAuthMethods.length > 0) {
+      // Find best matching template - prioritize non-progress templates
+      const matches = templates.filter(
         t => t.frontend === selectedFrontend &&
           t.backend === selectedBackend &&
-          t.authMethod.includes(selectedAuth)
+          selectedAuthMethods.every(auth => t.authMethod.includes(auth))
       );
 
-      onSelect(match || null);
+      // Sort by non-progress first, then by number of matching auth methods
+      const bestMatch = matches.sort((a, b) => {
+        if (a.isInProgress && !b.isInProgress) return 1;
+        if (!a.isInProgress && b.isInProgress) return -1;
+        return b.authMethod.length - a.authMethod.length;
+      })[0];
+
+      onSelect(bestMatch || null);
     } else {
       onSelect(null);
     }
-  }, [selectedFrontend, selectedBackend, selectedAuth, templates, onSelect]);
+  }, [selectedFrontend, selectedBackend, selectedAuthMethods, templates, onSelect]);
 
   const resetSelections = () => {
     setSelectedFrontend(null);
     setSelectedBackend(null);
-    setSelectedAuth(null);
+    setSelectedAuthMethods([]);
     setStep(1);
     onSelect(null);
   };
@@ -109,6 +117,14 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
 
   const goToPrevStep = () => {
     if (step > 1) setStep(step - 1);
+  };
+
+  const handleAuthMethodToggle = (authMethod: string) => {
+    setSelectedAuthMethods(prev => 
+      prev.includes(authMethod) 
+        ? prev.filter(method => method !== authMethod)
+        : [...prev, authMethod]
+    );
   };
 
   const renderStepContent = () => {
@@ -214,39 +230,54 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             <CardHeader>
               <CardTitle className="text-2xl flex items-center">
                 <span className="bg-authbuilders-purple text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">3</span>
-                Choose Authentication Method
+                Choose Authentication Methods
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup
-                className="grid grid-cols-2 gap-4 h-72"
-                value={selectedAuth || ""}
-                onValueChange={(value) => setSelectedAuth(value)}
-              >
+              <div className="grid grid-cols-2 gap-4 h-72 overflow-y-auto">
                 {authOptions.map((auth) => {
-                  console.log(auth)
-                  return(
+                  const isSelected = selectedAuthMethods.includes(auth);
+                  const hasInProgressTemplate = templates.some(
+                    t => t.frontend === selectedFrontend &&
+                      t.backend === selectedBackend &&
+                      t.authMethod.includes(auth) &&
+                      t.isInProgress
+                  );
                   
-                  <label
-                    key={auth}
-                    className={`
-                      flex flex-col items-center justify-center p-4 rounded-lg border-2 cursor-pointer
-                      ${selectedAuth === auth ? 'border-authbuilders-purple bg-muted' : 'border-border'}
-                      hover:border-authbuilders-purple hover:bg-muted/50 transition-colors`}
-                  >
-                    <RadioGroupItem className="sr-only" value={auth} id={`auth-${auth}`} />
-                    <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-2">
-                      <AuthIcon authMethod={auth} />
-                    </div>
-                    <span className="text-center font-medium">{auth}</span>
-                    <div className="min-h-7">
-                      {selectedAuth === auth && (
-                        <Check className="text-authbuilders-purple mt-2 w-5 h-5" />
+                  return (
+                    <div
+                      key={auth}
+                      className={`
+                        relative flex flex-col items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all
+                        ${isSelected ? 'border-authbuilders-purple bg-muted ring-2 ring-authbuilders-purple/20' : 'border-border'}
+                        ${hasInProgressTemplate && !isSelected ? 'opacity-50 pointer-events-none' : ''}
+                        hover:border-authbuilders-purple hover:bg-muted/50
+                      `}
+                      onClick={() => !hasInProgressTemplate && handleAuthMethodToggle(auth)}
+                    >
+                      {hasInProgressTemplate && (
+                        <div className="absolute top-1 right-1 text-xs bg-orange-400 text-white px-2 py-0.5 rounded">
+                          Coming Soon 🚧
+                        </div>
                       )}
+                      
+                      <div className="flex items-center mb-2">
+                        <Checkbox
+                          checked={isSelected}
+                          disabled={hasInProgressTemplate}
+                          className="mr-2"
+                          onCheckedChange={() => !hasInProgressTemplate && handleAuthMethodToggle(auth)}
+                        />
+                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                          <AuthIcon authMethod={auth} />
+                        </div>
+                      </div>
+                      
+                      <span className="text-center font-medium text-sm">{auth}</span>
                     </div>
-                  </label>
-                )})}
-              </RadioGroup>
+                  );
+                })}
+              </div>
               <div className="mt-6 flex justify-between">
                 <Button variant="outline" onClick={goToPrevStep}>
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous

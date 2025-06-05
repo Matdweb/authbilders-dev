@@ -16,6 +16,7 @@ const templates = [
     gitBranch: 'nextjs-firebase-email',
     docUrl: '/docs/templates/nextjs-firebase-email',
     githubUrl: 'https://github.com/authbuilders/templates',
+    isInProgress: false,
   },
   {
     slug: 'nextjs-supabase-oauth',
@@ -25,6 +26,7 @@ const templates = [
     gitBranch: 'nextjs-supabase-oauth',
     docUrl: '/docs/templates/nextjs-supabase-oauth',
     githubUrl: 'https://github.com/authbuilders/templates',
+    isInProgress: false,
   },
   {
     slug: 'vite-mongodb-jwt',
@@ -34,6 +36,7 @@ const templates = [
     gitBranch: 'vite-mongodb-jwt',
     docUrl: '/docs/templates/vite-mongodb-jwt',
     githubUrl: 'https://github.com/authbuilders/templates',
+    isInProgress: true,
   },
   {
     slug: 'vue-postgres-mfa',
@@ -43,6 +46,7 @@ const templates = [
     gitBranch: 'vue-postgres-mfa',
     docUrl: '/docs/templates/vue-postgres-mfa',
     githubUrl: 'https://github.com/authbuilders/templates',
+    isInProgress: false,
   },
   {
     slug: 'angular-firebase-magic-link',
@@ -52,6 +56,7 @@ const templates = [
     gitBranch: 'angular-firebase-magic',
     docUrl: '/docs/templates/angular-firebase-magic',
     githubUrl: 'https://github.com/authbuilders/templates',
+    isInProgress: true,
   },
   {
     slug: 'vite-supabase-social',
@@ -61,6 +66,7 @@ const templates = [
     gitBranch: 'vite-supabase-social',
     docUrl: '/docs/templates/vite-supabase-social',
     githubUrl: 'https://github.com/authbuilders/templates',
+    isInProgress: false,
   },
 ];
 
