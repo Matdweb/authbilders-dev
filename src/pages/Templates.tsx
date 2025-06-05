@@ -67,7 +67,7 @@ const Templates = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 py-12">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 pt-12">
           <div className="mb-12 text-center">
             <h1 className="text-4xl font-bold mb-4">Authentication Templates</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
