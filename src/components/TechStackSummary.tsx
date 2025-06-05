@@ -30,7 +30,7 @@ interface Template {
   slug: string;
   frontend: string;
   backend: string;
-  authMethod: string;
+  authMethod: string[];
   gitBranch: string;
   docUrl: string;
   githubUrl: string;
@@ -86,8 +86,6 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
     );
   }
 
-  const gitCommand = `git clone --branch ${selectedTemplate.gitBranch} ${selectedTemplate.githubUrl}.git`;
-  
   return (
     <Card className="h-full shadow-md border-2 border-authbuilders-purple/50 animate-fade-in">
       <CardHeader className="bg-muted border-b">
@@ -122,7 +120,7 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
           <div className="flex items-center gap-4">
             <div className="bg-authbuilders-purple/10 p-3 rounded-full">
               <div className="w-8 h-8 flex items-center justify-center">
-                <AuthIcon authMethod={selectedTemplate.authMethod} />
+                <AuthIcon authMethod={selectedTemplate.authMethod[0]} />
               </div>
             </div>
             <div>
@@ -131,11 +129,6 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
             </div>
           </div>
         </div>
-        
-        <TerminalSimulator 
-          gitBranch={selectedTemplate.gitBranch}
-          githubUrl={selectedTemplate.githubUrl}
-        />
       </CardContent>
       <CardFooter className="flex flex-col gap-3 px-6 pt-0 pb-6">
         <Link to={selectedTemplate.docUrl} className="w-full">
