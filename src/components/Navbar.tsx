@@ -106,9 +106,11 @@ const Navbar = () => {
             GitHub
           </a>
           <ThemeToggle />
-          <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white">
-            Get Started
-          </Button>
+          <Link to="/tech-stack-selector">
+            <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white">
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile menu and docs sidebar buttons */}

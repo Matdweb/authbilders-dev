@@ -18,7 +18,7 @@ const CallToAction = () => {
           <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
             <Link to="/tech-stack-selector">
               <Button size="lg" className="w-full sm:w-auto bg-white text-authbuilders-purple hover:bg-white/90">
-                Select my stack
+                Get Started
               </Button>
             </Link>
             <a href="https://github.com/authbuilders" target="_blank" rel="noopener noreferrer">

@@ -13,12 +13,12 @@ const HeroSection = () => {
                 Build Secure Authentication <span className="gradient-text">Without the Hassle</span>
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                AuthBuilders provides ready-to-use templates and comprehensive guides for implementing 
+                AuthBuilders provides ready-to-use templates and comprehensive guides for implementing
                 robust authentication systems in your applications.
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Link to="/docs/getting-started">
+              <Link to="/tech-stack-selector">
                 <Button className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white" size="lg">
                   Get Started
                 </Button>
@@ -49,7 +49,7 @@ const HeroSection = () => {
                   <h3 className="font-bold">Login Form</h3>
                   <div className="code-block">
                     <pre><code>
-{`import { AuthProvider } from './components/AuthForm';
+                      {`import { AuthProvider } from './components/AuthForm';
 
 function LoginPage() {
     return (
