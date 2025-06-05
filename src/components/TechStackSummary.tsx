@@ -1,31 +1,12 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Copy, ExternalLink, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import TerminalSimulator from "@/components/TerminalSimulator";
-import { 
-  SiNextdotjs, 
-  SiVite, 
-  SiVuedotjs, 
-  SiAngular,
-  SiFirebase,
-  SiSupabase,
-  SiPostgresql,
-  SiMongodb
-} from "react-icons/si";
-import { 
-  MdEmail, 
-  MdSecurity, 
-  MdKey, 
-  MdSync, 
-  MdLock, 
-  MdAutoAwesome 
-} from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
+import { Icon } from "../lib/icons";
 
 interface Template {
   slug: string;
@@ -40,17 +21,18 @@ interface Template {
 
 interface TechStackSummaryProps {
   selectedTemplate: Template | null;
+  selectedAuthMethods: string[]
 }
 
-const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
+const TechStackSummary = ({ selectedTemplate, selectedAuthMethods }: TechStackSummaryProps) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
     if (!selectedTemplate) return;
-    
+
     const command = `git clone --branch ${selectedTemplate.gitBranch} ${selectedTemplate.githubUrl}.git`;
-    
+
     navigator.clipboard.writeText(command)
       .then(() => {
         setCopied(true);
@@ -58,7 +40,7 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
           title: "Copied to clipboard!",
           description: "You can now paste the command in your terminal.",
         });
-        
+
         setTimeout(() => setCopied(false), 3000);
       })
       .catch(() => {
@@ -89,11 +71,10 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
   }
 
   return (
-    <Card className={`h-full shadow-md border-2 animate-fade-in ${
-      selectedTemplate.isInProgress 
-        ? 'border-orange-400/50 bg-muted/30' 
-        : 'border-authbuilders-purple/50'
-    }`}>
+    <Card className={`h-full shadow-md border-2 animate-fade-in ${selectedTemplate.isInProgress
+      ? 'border-orange-400/50 bg-muted/30'
+      : 'border-authbuilders-purple/50'
+      }`}>
       <CardHeader className="bg-muted border-b">
         <CardTitle className="text-xl flex items-center justify-between">
           Your Perfect Stack
@@ -113,12 +94,12 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
             </div>
           </div>
         )}
-        
+
         <div className="space-y-4 mb-6">
           <div className="flex items-center gap-4">
             <div className="bg-authbuilders-purple/10 p-3 rounded-full">
               <div className="w-8 h-8 flex items-center justify-center">
-                <FrameworkIcon framework={selectedTemplate.frontend} />
+                <Icon value={selectedTemplate.frontend} />
               </div>
             </div>
             <div>
@@ -126,11 +107,11 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
               <div className="font-medium">{selectedTemplate.frontend}</div>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <div className="bg-authbuilders-purple/10 p-3 rounded-full">
               <div className="w-8 h-8 flex items-center justify-center">
-                <DatabaseIcon database={selectedTemplate.backend} />
+                <Icon value={selectedTemplate.backend} />
               </div>
             </div>
             <div>
@@ -138,17 +119,17 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
               <div className="font-medium">{selectedTemplate.backend}</div>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-4">
             <div className="bg-authbuilders-purple/10 p-3 rounded-full">
               <div className="w-8 h-8 flex items-center justify-center">
-                <AuthIcon authMethod={selectedTemplate.authMethod[0]} />
+                <Icon value={selectedAuthMethods[0]} />
               </div>
             </div>
             <div className="flex-1">
               <div className="text-sm text-muted-foreground">Auth Methods</div>
               <div className="flex flex-wrap gap-2 mt-1">
-                {selectedTemplate.authMethod.map((method, index) => (
+                {selectedAuthMethods.map((method, index) => (
                   <Badge key={index} variant="outline" className="text-xs">
                     {method}
                   </Badge>
@@ -157,13 +138,6 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
             </div>
           </div>
         </div>
-
-        {!selectedTemplate.isInProgress && (
-          <TerminalSimulator
-            gitBranch={selectedTemplate.gitBranch}
-            githubUrl={selectedTemplate.githubUrl}
-          />
-        )}
       </CardContent>
       <CardFooter className="flex flex-col gap-3 px-6 pt-0 pb-6">
         <Link to={selectedTemplate.docUrl} className="w-full">
@@ -172,8 +146,8 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
             View Documentation
           </Button>
         </Link>
-        <Button 
-          className="w-full bg-authbuilders-purple hover:bg-authbuilders-purple-dark" 
+        <Button
+          className="w-full bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
           onClick={copyToClipboard}
           disabled={selectedTemplate.isInProgress}
         >
@@ -192,56 +166,6 @@ const TechStackSummary = ({ selectedTemplate }: TechStackSummaryProps) => {
       </CardFooter>
     </Card>
   );
-};
-
-// Helper components for icons using react-icons (same as StackSelector)
-const FrameworkIcon = ({ framework }: { framework: string }) => {
-  switch (framework.toLowerCase()) {
-    case 'next.js':
-      return <SiNextdotjs className="w-8 h-8" />;
-    case 'vite':
-      return <SiVite className="w-8 h-8" />;
-    case 'vue':
-      return <SiVuedotjs className="w-8 h-8" />;
-    case 'angular':
-      return <SiAngular className="w-8 h-8" />;
-    default:
-      return <span className="text-2xl font-bold">?</span>;
-  }
-};
-
-const DatabaseIcon = ({ database }: { database: string }) => {
-  switch (database.toLowerCase()) {
-    case 'firebase':
-      return <SiFirebase className="w-8 h-8" />;
-    case 'supabase':
-      return <SiSupabase className="w-8 h-8" />;
-    case 'postgresql':
-      return <SiPostgresql className="w-8 h-8" />;
-    case 'mongodb':
-      return <SiMongodb className="w-8 h-8" />;
-    default:
-      return <span className="text-2xl font-bold">?</span>;
-  }
-};
-
-const AuthIcon = ({ authMethod }: { authMethod: string }) => {
-  switch (authMethod.toLowerCase()) {
-    case 'email/password':
-      return <MdEmail className="w-8 h-8" />;
-    case 'social login':
-      return <FaUsers className="w-8 h-8" />;
-    case 'jwt':
-      return <MdKey className="w-8 h-8" />;
-    case 'oauth':
-      return <MdSync className="w-8 h-8" />;
-    case 'mfa':
-      return <MdLock className="w-8 h-8" />;
-    case 'magic link':
-      return <MdAutoAwesome className="w-8 h-8" />;
-    default:
-      return <MdSecurity className="w-8 h-8" />;
-  }
 };
 
 export default TechStackSummary;
