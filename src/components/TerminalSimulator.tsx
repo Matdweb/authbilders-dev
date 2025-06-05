@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Check, Download, Play, Server } from "lucide-react";
+import { Download, Play, Server } from "lucide-react";
 
 interface TerminalSimulatorProps {
   gitBranch: string;
@@ -82,7 +82,7 @@ const TerminalSimulator = ({ gitBranch, githubUrl }: TerminalSimulatorProps) => 
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
-        <span className="text-gray-400 text-xs">Terminal</span>
+        <span className="text-gray-400 text-xs">C:/AuthBilders/rocks/...</span>
       </div>
       
       <div className="space-y-2">
