@@ -1,3 +1,5 @@
+// ✅ src/components/StackSelector.tsx (updated for string[] authMethod)
+
 import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
@@ -21,13 +23,13 @@ import {
   MdLock,
   MdAutoAwesome
 } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
+import { FaGithub, FaGoogle, FaUsers } from "react-icons/fa";
 
 interface Template {
   slug: string;
   frontend: string;
   backend: string;
-  authMethod: string;
+  authMethod: string[];
   gitBranch: string;
   docUrl: string;
   githubUrl: string;
@@ -45,7 +47,6 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   const [selectedBackend, setSelectedBackend] = useState<string | null>(null);
   const [selectedAuth, setSelectedAuth] = useState<string | null>(null);
 
-  // Extract unique options from templates
   const frontendOptions = [...new Set(templates.map(t => t.frontend))];
   const backendOptions = [...new Set(templates
     .filter(t => !selectedFrontend || t.frontend === selectedFrontend)
@@ -55,9 +56,8 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
       (!selectedFrontend || t.frontend === selectedFrontend) &&
       (!selectedBackend || t.backend === selectedBackend)
     )
-    .map(t => t.authMethod))];
+    .flatMap(t => t.authMethod))];
 
-  // Reset subsequent selections when earlier selection changes
   useEffect(() => {
     if (selectedFrontend) {
       const backendStillValid = templates.some(
@@ -71,7 +71,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
         const authStillValid = templates.some(
           t => t.frontend === selectedFrontend &&
             t.backend === selectedBackend &&
-            t.authMethod === selectedAuth
+            t.authMethod.includes(selectedAuth || "")
         );
 
         if (!authStillValid) {
@@ -81,13 +81,12 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
     }
   }, [selectedFrontend, selectedBackend, templates]);
 
-  // Find matching template when all selections are made
   useEffect(() => {
     if (selectedFrontend && selectedBackend && selectedAuth) {
       const match = templates.find(
         t => t.frontend === selectedFrontend &&
           t.backend === selectedBackend &&
-          t.authMethod === selectedAuth
+          t.authMethod.includes(selectedAuth)
       );
 
       onSelect(match || null);
@@ -96,7 +95,6 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
     }
   }, [selectedFrontend, selectedBackend, selectedAuth, templates, onSelect]);
 
-  // Reset all selections
   const resetSelections = () => {
     setSelectedFrontend(null);
     setSelectedBackend(null);
@@ -105,7 +103,6 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
     onSelect(null);
   };
 
-  // Navigation between steps
   const goToNextStep = () => {
     if (step < 3) setStep(step + 1);
   };
@@ -114,7 +111,6 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
     if (step > 1) setStep(step - 1);
   };
 
-  // Render different step content
   const renderStepContent = () => {
     switch (step) {
       case 1:
@@ -128,7 +124,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             </CardHeader>
             <CardContent>
               <RadioGroup
-                className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+                className="grid grid-cols-2 sm:grid-cols-3 gap-4 h-72"
                 value={selectedFrontend || ""}
                 onValueChange={(value) => setSelectedFrontend(value)}
               >
@@ -156,21 +152,14 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
               </RadioGroup>
 
               <div className="mt-6 flex justify-between">
-                <Button variant="ghost" onClick={resetSelections}>
-                  Reset
-                </Button>
-                <Button
-                  onClick={goToNextStep}
-                  className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
-                  disabled={!selectedFrontend}
-                >
+                <Button variant="ghost" onClick={resetSelections}>Reset</Button>
+                <Button onClick={goToNextStep} className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark" disabled={!selectedFrontend}>
                   Next Step <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </CardContent>
           </>
         );
-
       case 2:
         return (
           <>
@@ -182,7 +171,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             </CardHeader>
             <CardContent>
               <RadioGroup
-                className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+                className="grid grid-cols-2 sm:grid-cols-3 gap-4 h-72"
                 value={selectedBackend || ""}
                 onValueChange={(value) => setSelectedBackend(value)}
               >
@@ -208,23 +197,17 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                   </label>
                 ))}
               </RadioGroup>
-
               <div className="mt-6 flex justify-between">
                 <Button variant="outline" onClick={goToPrevStep}>
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
-                <Button
-                  onClick={goToNextStep}
-                  className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark"
-                  disabled={!selectedBackend}
-                >
+                <Button onClick={goToNextStep} className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark" disabled={!selectedBackend}>
                   Next Step <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </CardContent>
           </>
         );
-
       case 3:
         return (
           <>
@@ -236,18 +219,20 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
             </CardHeader>
             <CardContent>
               <RadioGroup
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-2 gap-4 h-72"
                 value={selectedAuth || ""}
                 onValueChange={(value) => setSelectedAuth(value)}
               >
-                {authOptions.map((auth) => (
+                {authOptions.map((auth) => {
+                  console.log(auth)
+                  return(
+                  
                   <label
                     key={auth}
                     className={`
                       flex flex-col items-center justify-center p-4 rounded-lg border-2 cursor-pointer
                       ${selectedAuth === auth ? 'border-authbuilders-purple bg-muted' : 'border-border'}
-                      hover:border-authbuilders-purple hover:bg-muted/50 transition-colors
-                    `}
+                      hover:border-authbuilders-purple hover:bg-muted/50 transition-colors`}
                   >
                     <RadioGroupItem className="sr-only" value={auth} id={`auth-${auth}`} />
                     <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-2">
@@ -260,83 +245,56 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                       )}
                     </div>
                   </label>
-                ))}
+                )})}
               </RadioGroup>
-
               <div className="mt-6 flex justify-between">
                 <Button variant="outline" onClick={goToPrevStep}>
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
-                <Button
-                  variant="ghost"
-                  onClick={resetSelections}
-                >
-                  Reset All
-                </Button>
+                <Button variant="ghost" onClick={resetSelections}>Reset All</Button>
               </div>
             </CardContent>
           </>
         );
-
       default:
         return null;
     }
   };
 
-  return (
-    <Card className="border-2">
-      {renderStepContent()}
-    </Card>
-  );
+  return <Card className="border-2 min-h-full">{renderStepContent()}</Card>;
 };
 
-// Helper components for icons using react-icons
 const FrameworkIcon = ({ framework }: { framework: string }) => {
   switch (framework.toLowerCase()) {
-    case 'next.js':
-      return <SiNextdotjs className="w-8 h-8" />;
-    case 'vite':
-      return <SiVite className="w-8 h-8" />;
-    case 'vue':
-      return <SiVuedotjs className="w-8 h-8" />;
-    case 'angular':
-      return <SiAngular className="w-8 h-8" />;
-    default:
-      return <span className="text-2xl font-bold">?</span>;
+    case 'next.js': return <SiNextdotjs className="w-8 h-8" />;
+    case 'vite': return <SiVite className="w-8 h-8" />;
+    case 'vue': return <SiVuedotjs className="w-8 h-8" />;
+    case 'angular': return <SiAngular className="w-8 h-8" />;
+    default: return <span className="text-2xl font-bold">?</span>;
   }
 };
 
 const DatabaseIcon = ({ database }: { database: string }) => {
   switch (database.toLowerCase()) {
-    case 'firebase':
-      return <SiFirebase className="w-8 h-8" />;
-    case 'supabase':
-      return <SiSupabase className="w-8 h-8" />;
-    case 'postgresql':
-      return <SiPostgresql className="w-8 h-8" />;
-    case 'mongodb':
-      return <SiMongodb className="w-8 h-8" />;
-    default:
-      return <span className="text-2xl font-bold">?</span>;
+    case 'firebase': return <SiFirebase className="w-8 h-8" />;
+    case 'supabase': return <SiSupabase className="w-8 h-8" />;
+    case 'postgresql': return <SiPostgresql className="w-8 h-8" />;
+    case 'mongodb': return <SiMongodb className="w-8 h-8" />;
+    default: return <span className="text-2xl font-bold">?</span>;
   }
 };
 
 const AuthIcon = ({ authMethod }: { authMethod: string }) => {
   switch (authMethod.toLowerCase()) {
-    case 'email/password':
-      return <MdEmail className="w-8 h-8" />;
-    case 'social login':
-      return <FaUsers className="w-8 h-8" />;
-    case 'jwt':
-      return <MdKey className="w-8 h-8" />;
-    case 'oauth':
-      return <MdSync className="w-8 h-8" />;
-    case 'mfa':
-      return <MdLock className="w-8 h-8" />;
-    case 'magic link':
-      return <MdAutoAwesome className="w-8 h-8" />;
-    default:
-      return <MdSecurity className="w-8 h-8" />;
+    case 'email/password': return <MdEmail className="w-8 h-8" />;
+    case 'google': return <FaGoogle className="w-8 h-8" />;
+    case 'github': return <FaGithub className="w-8 h-8" />;
+    case 'social login': return <FaUsers className="w-8 h-8" />;
+    case 'jwt': return <MdKey className="w-8 h-8" />;
+    case 'oauth': return <MdSync className="w-8 h-8" />;
+    case 'mfa': return <MdLock className="w-8 h-8" />;
+    case 'magic link': return <MdAutoAwesome className="w-8 h-8" />;
+    default: return <MdSecurity className="w-8 h-8" />;
   }
 };
 
