@@ -55,7 +55,7 @@ const TerminalSimulator = ({ gitBranch, githubUrl }: TerminalSimulatorProps) => 
 
     const typeInterval = setInterval(() => {
       if (charIndex < currentLineText.length) {
-        setDisplayedText(prev => prev + currentLineText[charIndex]);
+        setDisplayedText(prev => prev + currentLineText[charIndex-1]);
         charIndex++;
       } else {
         clearInterval(typeInterval);
@@ -66,7 +66,7 @@ const TerminalSimulator = ({ gitBranch, githubUrl }: TerminalSimulatorProps) => 
           setCurrentLine(prev => prev + 1);
         }, lines[currentLine].delay);
       }
-    }, 50); // Typing speed
+    }, 30); // Typing speed
 
     return () => clearInterval(typeInterval);
   }, [currentLine, isTyping]);
@@ -75,7 +75,7 @@ const TerminalSimulator = ({ gitBranch, githubUrl }: TerminalSimulatorProps) => 
   const currentTypingLine = displayedText.split('\n').slice(-1)[0];
 
   return (
-    <div className="bg-[#0e0e0e] border border-green-500/30 rounded-lg p-4 font-mono text-xs max-h-52 overflow-auto">
+    <div className="bg-[#0e0e0e] w-full h-full border border-green-500/30 rounded-lg p-4 font-mono text-xs max-h-52 overflow-auto">
       <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-700">
         <div className="flex gap-1">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
