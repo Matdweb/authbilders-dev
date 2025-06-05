@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import TerminalSimulator from "@/components/TerminalSimulator";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StackSelector from "@/components/StackSelector";
@@ -12,7 +12,7 @@ const templates = [
     slug: 'nextjs-firebase-email',
     frontend: 'Next.js',
     backend: 'Firebase',
-    authMethod: 'Email/Password',
+    authMethod: ['Email/Password','Google','Github'],
     gitBranch: 'nextjs-firebase-email',
     docUrl: '/docs/templates/nextjs-firebase-email',
     githubUrl: 'https://github.com/authbuilders/templates',
@@ -21,7 +21,7 @@ const templates = [
     slug: 'nextjs-supabase-oauth',
     frontend: 'Next.js',
     backend: 'Supabase',
-    authMethod: 'OAuth',
+    authMethod: ['OAuth',],
     gitBranch: 'nextjs-supabase-oauth',
     docUrl: '/docs/templates/nextjs-supabase-oauth',
     githubUrl: 'https://github.com/authbuilders/templates',
@@ -30,7 +30,7 @@ const templates = [
     slug: 'vite-mongodb-jwt',
     frontend: 'Vite',
     backend: 'MongoDB',
-    authMethod: 'JWT',
+    authMethod: ['JWT',],
     gitBranch: 'vite-mongodb-jwt',
     docUrl: '/docs/templates/vite-mongodb-jwt',
     githubUrl: 'https://github.com/authbuilders/templates',
@@ -39,7 +39,7 @@ const templates = [
     slug: 'vue-postgres-mfa',
     frontend: 'Vue',
     backend: 'PostgreSQL',
-    authMethod: 'MFA',
+    authMethod: ['MFA',],
     gitBranch: 'vue-postgres-mfa',
     docUrl: '/docs/templates/vue-postgres-mfa',
     githubUrl: 'https://github.com/authbuilders/templates',
@@ -48,7 +48,7 @@ const templates = [
     slug: 'angular-firebase-magic-link',
     frontend: 'Angular',
     backend: 'Firebase',
-    authMethod: 'Magic Link',
+    authMethod: ['Magic Link',],
     gitBranch: 'angular-firebase-magic',
     docUrl: '/docs/templates/angular-firebase-magic',
     githubUrl: 'https://github.com/authbuilders/templates',
@@ -57,7 +57,7 @@ const templates = [
     slug: 'vite-supabase-social',
     frontend: 'Vite',
     backend: 'Supabase',
-    authMethod: 'Social Login',
+    authMethod: ['Social Login',],
     gitBranch: 'vite-supabase-social',
     docUrl: '/docs/templates/vite-supabase-social',
     githubUrl: 'https://github.com/authbuilders/templates',
@@ -66,7 +66,6 @@ const templates = [
 
 const TechStackSelector = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -78,21 +77,32 @@ const TechStackSelector = () => {
               Select your preferred tech stack and authentication method to get started with AuthBuilders.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <StackSelector 
-                templates={templates} 
-                onSelect={setSelectedTemplate} 
+              <StackSelector
+                templates={templates}
+                onSelect={setSelectedTemplate}
                 selectedTemplate={selectedTemplate}
               />
             </div>
-            
+
             <div className="lg:col-span-1">
-              <TechStackSummary 
+              <TechStackSummary
                 selectedTemplate={selectedTemplate}
               />
             </div>
+
+            <div className="lg:col-span-2">
+              {selectedTemplate &&
+                (
+                  <TerminalSimulator
+                    gitBranch={selectedTemplate.gitBranch}
+                    githubUrl={selectedTemplate.githubUrl}
+                  />
+                )}
+            </div>
+
           </div>
         </div>
       </main>
