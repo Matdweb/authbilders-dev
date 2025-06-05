@@ -5,25 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
-import {
-  SiNextdotjs,
-  SiVite,
-  SiVuedotjs,
-  SiAngular,
-  SiFirebase,
-  SiSupabase,
-  SiPostgresql,
-  SiMongodb
-} from "react-icons/si";
-import {
-  MdEmail,
-  MdSecurity,
-  MdKey,
-  MdSync,
-  MdLock,
-  MdAutoAwesome
-} from "react-icons/md";
-import { FaGithub, FaGoogle, FaUsers } from "react-icons/fa";
+import { Icon } from "../lib/icons";
 
 interface Template {
   slug: string;
@@ -39,14 +21,15 @@ interface Template {
 interface StackSelectorProps {
   templates: Template[];
   onSelect: (template: Template | null) => void;
-  selectedTemplate: Template | null;
+  selectedAuthMethods: string[];
+  setSelectedAuthMethods: React.Dispatch<React.SetStateAction<string[]>>
+
 }
 
-const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorProps) => {
+const StackSelector = ({ templates, onSelect, selectedAuthMethods, setSelectedAuthMethods }: StackSelectorProps) => {
   const [step, setStep] = useState<number>(1);
   const [selectedFrontend, setSelectedFrontend] = useState<string | null>(null);
   const [selectedBackend, setSelectedBackend] = useState<string | null>(null);
-  const [selectedAuthMethods, setSelectedAuthMethods] = useState<string[]>([]);
 
   const frontendOptions = [...new Set(templates.map(t => t.frontend))];
   const backendOptions = [...new Set(templates
@@ -120,9 +103,10 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   };
 
   const handleAuthMethodToggle = (authMethod: string) => {
-    setSelectedAuthMethods(prev => 
-      prev.includes(authMethod) 
-        ? prev.filter(method => method !== authMethod)
+    setSelectedAuthMethods(prev =>
+      prev.includes(authMethod) ?
+        prev.length == 1 ? [...prev] :
+          prev.filter(method => method !== authMethod)
         : [...prev, authMethod]
     );
   };
@@ -155,7 +139,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                   >
                     <RadioGroupItem className="sr-only" value={frontend} id={`frontend-${frontend}`} />
                     <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-2">
-                      <FrameworkIcon framework={frontend} />
+                      <Icon value={frontend} />
                     </div>
                     <span className="text-center font-medium">{frontend}</span>
                     <div className="min-h-7">
@@ -202,7 +186,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                   >
                     <RadioGroupItem className="sr-only" value={backend} id={`backend-${backend}`} />
                     <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-2">
-                      <DatabaseIcon database={backend} />
+                      <Icon value={backend} />
                     </div>
                     <span className="text-center font-medium">{backend}</span>
                     <div className="min-h-7">
@@ -243,7 +227,7 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                       t.authMethod.includes(auth) &&
                       t.isInProgress
                   );
-                  
+
                   return (
                     <div
                       key={auth}
@@ -260,19 +244,19 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
                           Coming Soon 🚧
                         </div>
                       )}
-                      
+
                       <div className="flex items-center mb-2">
                         <Checkbox
                           checked={isSelected}
                           disabled={hasInProgressTemplate}
-                          className="mr-2"
+                          className="mr-2 hidden"
                           onCheckedChange={() => !hasInProgressTemplate && handleAuthMethodToggle(auth)}
                         />
                         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                          <AuthIcon authMethod={auth} />
+                          <Icon value={auth} />
                         </div>
                       </div>
-                      
+
                       <span className="text-center font-medium text-sm">{auth}</span>
                     </div>
                   );
@@ -293,40 +277,6 @@ const StackSelector = ({ templates, onSelect, selectedTemplate }: StackSelectorP
   };
 
   return <Card className="border-2 min-h-full">{renderStepContent()}</Card>;
-};
-
-const FrameworkIcon = ({ framework }: { framework: string }) => {
-  switch (framework.toLowerCase()) {
-    case 'next.js': return <SiNextdotjs className="w-8 h-8" />;
-    case 'vite': return <SiVite className="w-8 h-8" />;
-    case 'vue': return <SiVuedotjs className="w-8 h-8" />;
-    case 'angular': return <SiAngular className="w-8 h-8" />;
-    default: return <span className="text-2xl font-bold">?</span>;
-  }
-};
-
-const DatabaseIcon = ({ database }: { database: string }) => {
-  switch (database.toLowerCase()) {
-    case 'firebase': return <SiFirebase className="w-8 h-8" />;
-    case 'supabase': return <SiSupabase className="w-8 h-8" />;
-    case 'postgresql': return <SiPostgresql className="w-8 h-8" />;
-    case 'mongodb': return <SiMongodb className="w-8 h-8" />;
-    default: return <span className="text-2xl font-bold">?</span>;
-  }
-};
-
-const AuthIcon = ({ authMethod }: { authMethod: string }) => {
-  switch (authMethod.toLowerCase()) {
-    case 'email/password': return <MdEmail className="w-8 h-8" />;
-    case 'google': return <FaGoogle className="w-8 h-8" />;
-    case 'github': return <FaGithub className="w-8 h-8" />;
-    case 'social login': return <FaUsers className="w-8 h-8" />;
-    case 'jwt': return <MdKey className="w-8 h-8" />;
-    case 'oauth': return <MdSync className="w-8 h-8" />;
-    case 'mfa': return <MdLock className="w-8 h-8" />;
-    case 'magic link': return <MdAutoAwesome className="w-8 h-8" />;
-    default: return <MdSecurity className="w-8 h-8" />;
-  }
 };
 
 export default StackSelector;
