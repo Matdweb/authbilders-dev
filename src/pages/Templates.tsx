@@ -22,7 +22,6 @@ const Templates = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {templates?.map((template, index) => (
               <Card key={index} className={`flex flex-col h-full ${template.isInProgress && 'opacity-50 pointer-events-none'}`}>
-
                 {
                   template.isInProgress &&
                   (

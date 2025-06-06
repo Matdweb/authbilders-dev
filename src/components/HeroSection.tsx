@@ -35,10 +35,10 @@ const HeroSection = () => {
                 <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
                 <div className="h-3 w-3 rounded-full bg-green-500"></div>
               </div>
-              <p className="text-muted-foreground">$ git clone https://github.com/authbuilders/templates.git</p>
-              <p className="text-muted-foreground">$ cd templates/basic-auth</p>
-              <p className="text-muted-foreground">$ npm install</p>
-              <p className="text-muted-foreground">$ npm start</p>
+              <p className="text-muted-foreground">&gt; git clone https://github.com/authbuilders/templates.git</p>
+              <p className="text-muted-foreground">&gt; cd templates/basic-auth</p>
+              <p className="text-muted-foreground">&gt; npm install</p>
+              <p className="text-muted-foreground">&gt; npm start</p>
               <p className="text-green-400">✓ Authentication system ready at http://localhost:3000</p>
             </div>
           </div>

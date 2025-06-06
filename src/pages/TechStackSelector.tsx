@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TerminalSimulator from "@/components/TerminalSimulator";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
