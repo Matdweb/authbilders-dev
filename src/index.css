@@ -102,23 +102,116 @@
     font-family: 'Inter', sans-serif;
   }
 
+  /* Enhanced syntax highlighting for code blocks */
   pre {
-    @apply p-4 rounded-lg my-4 overflow-x-auto;
-    background-color: #1e293b;
-    color: #e2e8f0;
+    @apply rounded-lg my-6 overflow-x-auto border border-slate-700;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
   }
+
+  pre code {
+    @apply block p-6 font-mono text-sm leading-relaxed;
+    color: #e2e8f0;
+    font-family: 'Inconsolata', 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
+  }
+
+  /* JavaScript/TypeScript syntax highlighting */
+  .keyword { color: #c792ea; font-weight: 500; } /* purple for keywords */
+  .string { color: #c3e88d; } /* green for strings */
+  .comment { color: #546e7a; font-style: italic; } /* gray for comments */
+  .function { color: #82aaff; } /* blue for functions */
+  .property { color: #f78c6c; } /* orange for properties */
+  .number { color: #f78c6c; } /* orange for numbers */
+  .operator { color: #89ddff; } /* cyan for operators */
+  .punctuation { color: #89ddff; } /* cyan for punctuation */
 
   code {
     @apply font-mono text-sm;
+    color: #e2e8f0;
   }
   
   .code-block {
-    @apply p-4 rounded-lg bg-slate-900 text-slate-50 font-mono text-sm my-4 overflow-x-auto;
+    @apply rounded-lg border border-slate-700 font-mono text-sm my-6 overflow-x-auto;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .code-block code {
+    @apply block p-6 leading-relaxed;
+    color: #e2e8f0;
+  }
+
+  /* Copy button for code blocks */
+  pre::before {
+    content: "JavaScript";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(30, 41, 59, 0.8);
+    color: #94a3b8;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  /* Dark mode adjustments */
+  .dark pre {
+    background: linear-gradient(135deg, #0c0a09 0%, #1c1917 100%);
+    border-color: #374151;
+  }
+
+  .dark pre::before {
+    background: rgba(28, 25, 23, 0.8);
+    color: #9ca3af;
   }
 }
 
 @layer utilities {
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light;
+  }
+
+  /* Enhanced documentation styles */
+  .doc-heading {
+    @apply text-2xl font-bold mt-12 mb-6 text-foreground;
+    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: 8px;
+  }
+
+  .doc-subheading {
+    @apply text-xl font-semibold mt-8 mb-4 text-foreground;
+  }
+
+  .doc-paragraph {
+    @apply leading-7 mb-6 text-muted-foreground;
+  }
+
+  .doc-list {
+    @apply list-disc pl-6 space-y-2 mb-6 text-muted-foreground;
+  }
+
+  .doc-callout {
+    @apply border-l-4 pl-6 py-4 mb-6 rounded-r-lg;
+  }
+
+  .doc-callout-info {
+    @apply doc-callout border-blue-500 bg-blue-50 dark:bg-blue-900/20;
+  }
+
+  .doc-callout-warning {
+    @apply doc-callout border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20;
+  }
+
+  .doc-callout-success {
+    @apply doc-callout border-green-500 bg-green-50 dark:bg-green-900/20;
+  }
+
+  .doc-callout-error {
+    @apply doc-callout border-red-500 bg-red-50 dark:bg-red-900/20;
   }
 }

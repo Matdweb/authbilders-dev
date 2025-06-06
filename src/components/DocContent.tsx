@@ -1,6 +1,7 @@
 
 import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface DocContentProps {
   title: string;
@@ -10,30 +11,44 @@ interface DocContentProps {
 
 const DocContent = ({ title, description, children }: DocContentProps) => {
   return (
-    <div className="min-h-[calc(100vh-69px)] pb-16 m-auto">
-      <div className="container py-8 px-6">
-        <div className="mx-auto max-w-3xl space-y-8">
-          <div className="space-y-4">
-            <h1 className="font-heading text-4xl font-bold">{title}</h1>
-            {description && <p className="text-xl text-muted-foreground">{description}</p>}
-          </div>
-          <div className="space-y-6">
+    <div className="min-h-[calc(100vh-69px)] pb-16">
+      <div className="container py-8 px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          {/* Breadcrumb */}
+          <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
+            <span>Documentation</span>
+            <span>/</span>
+            <span className="text-foreground">{title}</span>
+          </nav>
+
+          {/* Header */}
+          <header className="mb-12">
+            <h1 className="font-heading text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+              {title}
+            </h1>
+            {description && (
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl">
+                {description}
+              </p>
+            )}
+          </header>
+
+          {/* Content */}
+          <article className="prose prose-slate dark:prose-invert prose-lg max-w-none">
             {children}
-          </div>
-          <div className="flex justify-between pt-4 border-t border-border mt-12">
-            <Button variant="outline" size="sm">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
+          </article>
+
+          {/* Navigation */}
+          <nav className="flex justify-between items-center pt-12 mt-12 border-t border-border">
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
               Next
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <ChevronRight className="h-4 w-4" />
             </Button>
-          </div>
+          </nav>
         </div>
       </div>
     </div>

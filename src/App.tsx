@@ -19,6 +19,7 @@ import QuickStart from "./pages/docs/QuickStart";
 import ConceptsAuthentication from "./pages/docs/ConceptsAuthentication";
 import ConceptsDal from "./pages/docs/ConceptsDal";
 import ConceptsAuthorization from "./pages/docs/ConceptsAuthorization";
+import ConceptsJwt from "./pages/docs/ConceptsJwt";
 import ConceptsSessions from "./pages/docs/ConceptsSessions";
 import ConceptsMagicLinks from "./pages/docs/ConceptsMagicLinks";
 import ConceptsMfa from "./pages/docs/ConceptsMfa";
