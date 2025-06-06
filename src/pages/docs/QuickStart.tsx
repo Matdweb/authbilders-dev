@@ -1,91 +1,190 @@
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import DocSidebar from "@/components/DocSidebar";
-import DocContent from "@/components/DocContent";
+import DocContent from '@/components/DocContent';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import DocSidebar from '@/components/DocSidebar';
+import CodeBlock from '@/components/CodeBlock';
 
 const QuickStart = () => {
   return (
-    <div className="min-h-screen min-w-96 flex flex-col">
+    <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="lg:flex lg:flex-1 lg:container pt-14">
-        <DocSidebar />
+      <div className="flex">
+        <aside className="w-80 shrink-0">
+          <DocSidebar />
+        </aside>
         <main className="flex-1">
           <DocContent
-            title="Quick Start"
-            description="Get up and running with AuthBuilders in under 5 minutes."
+            title="Quick Start Guide"
+            description="Get up and running with AuthBuilders in under 5 minutes. Choose your tech stack and deploy a complete authentication system."
           >
-            <h2 className="text-2xl font-bold mt-8 mb-4">Prerequisites</h2>
-            <p className="leading-7 mb-4">
-              Before getting started, make sure you have the following installed:
-            </p>
-            <ul className="list-disc pl-6 space-y-2 mb-6">
-              <li>Node.js 16.x or later</li>
-              <li>Git</li>
-              <li>Your preferred code editor</li>
-            </ul>
+            <div className="space-y-8">
+              <section>
+                <h2 className="doc-heading">1. Choose Your Template</h2>
+                <p className="doc-paragraph">
+                  Start by selecting a template that matches your tech stack. We support various combinations of frontend frameworks, backend services, and authentication methods.
+                </p>
+                
+                <div className="doc-callout-info">
+                  <p className="font-medium mb-2">💡 Pro Tip</p>
+                  <p>Visit our <a href="/tech-stack-selector" className="text-primary hover:underline">Tech Stack Selector</a> to find the perfect template for your needs.</p>
+                </div>
+              </section>
 
-            <h2 className="text-2xl font-bold mt-8 mb-4">Step 1: Choose Your Template</h2>
-            <p className="leading-7 mb-4">
-              Select a template that matches your tech stack. We offer several pre-configured options:
-            </p>
-            <div className="grid gap-4 md:grid-cols-2 mb-6">
-              <div className="border border-border rounded-lg p-4">
-                <h3 className="font-semibold mb-2">Next.js + Firebase</h3>
-                <p className="text-sm text-muted-foreground">Full-stack authentication with Firebase backend</p>
-              </div>
-              <div className="border border-border rounded-lg p-4">
-                <h3 className="font-semibold mb-2">Next.js + JWT</h3>
-                <p className="text-sm text-muted-foreground">JWT-based auth with mocked database</p>
-              </div>
-            </div>
-
-            <h2 className="text-2xl font-bold mt-8 mb-4">Step 2: Clone the Repository</h2>
-            <p className="leading-7 mb-4">
-              Use our interactive tech stack selector or clone directly:
-            </p>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`# For Next.js + Firebase template
+              <section>
+                <h2 className="doc-heading">2. Clone the Repository</h2>
+                <p className="doc-paragraph">
+                  Once you've chosen your template, clone the repository and navigate to your project directory:
+                </p>
+                
+                <CodeBlock language="bash" filename="terminal">
+{`# For Next.js + Firebase template
 git clone --branch nextjs-firebase https://github.com/authbuilders/templates.git my-auth-app
-cd my-auth-app`}</code></pre>
-            </div>
+cd my-auth-app`}
+                </CodeBlock>
+              </section>
 
-            <h2 className="text-2xl font-bold mt-8 mb-4">Step 3: Install Dependencies</h2>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`npm install
-# or
+              <section>
+                <h2 className="doc-heading">3. Install Dependencies</h2>
+                <p className="doc-paragraph">
+                  Install the required packages using your preferred package manager:
+                </p>
+                
+                <CodeBlock language="bash" filename="package-installation">
+{`# Using npm
+npm install
+
+# Using yarn
 yarn install
-# or
-pnpm install`}</code></pre>
-            </div>
 
-            <h2 className="text-2xl font-bold mt-8 mb-4">Step 4: Configure Environment</h2>
-            <p className="leading-7 mb-4">
-              Copy the environment template and add your configuration:
-            </p>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`cp .env.example .env.local
-# Edit .env.local with your API keys`}</code></pre>
-            </div>
+# Using pnpm
+pnpm install
 
-            <h2 className="text-2xl font-bold mt-8 mb-4">Step 5: Start Development</h2>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`npm run dev`}</code></pre>
-            </div>
+# Using bun
+bun install`}
+                </CodeBlock>
+              </section>
 
-            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mt-8">
-              <h3 className="text-lg font-semibold mb-2 text-green-800 dark:text-green-200">🎉 Success!</h3>
-              <p className="text-green-700 dark:text-green-300">
-                Your authentication system is now running at <code className="bg-green-100 dark:bg-green-800 px-1 rounded">http://localhost:3000</code>
-              </p>
-            </div>
+              <section>
+                <h2 className="doc-heading">4. Environment Configuration</h2>
+                <p className="doc-paragraph">
+                  Create a <code>.env.local</code> file in your project root and add your environment variables:
+                </p>
+                
+                <CodeBlock language="bash" filename=".env.local">
+{`# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
 
-            <div className="bg-muted p-4 rounded-lg mt-8">
-              <h3 className="text-lg font-semibold mb-2">Next Steps</h3>
-              <p>
-                Continue to the <a href="/docs/concepts/authentication" className="text-authbuilders-purple hover:underline">Authentication Concepts</a> guide to understand how the system works,
-                or explore our <a href="/docs/templates/nextjs-firebase" className="text-authbuilders-purple hover:underline">Template Documentation</a> for customization options.
-              </p>
+# NextAuth Configuration (if using NextAuth)
+NEXTAUTH_SECRET=your_secret_key_here
+NEXTAUTH_URL=http://localhost:3000
+
+# Database Configuration
+DATABASE_URL=your_database_connection_string`}
+                </CodeBlock>
+
+                <div className="doc-callout-warning">
+                  <p className="font-medium mb-2">⚠️ Security Note</p>
+                  <p>Never commit your <code>.env.local</code> file to version control. Add it to your <code>.gitignore</code> file.</p>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="doc-heading">5. Start Development Server</h2>
+                <p className="doc-paragraph">
+                  Launch your development server and start building:
+                </p>
+                
+                <CodeBlock language="bash" filename="development">
+{`# Start the development server
+npm run dev
+
+# Your app will be available at:
+# http://localhost:3000`}
+                </CodeBlock>
+              </section>
+
+              <section>
+                <h2 className="doc-heading">6. Customize Your Authentication</h2>
+                <p className="doc-paragraph">
+                  Your template comes with pre-configured authentication components. Here's a simple example of how to use them:
+                </p>
+                
+                <CodeBlock language="typescript" filename="components/LoginForm.tsx">
+{`import { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+
+export const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // User is now logged in
+    } catch (error) {
+      console.error('Login failed:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleLogin} className="space-y-4">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        className="w-full px-4 py-2 border rounded-lg"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        className="w-full px-4 py-2 border rounded-lg"
+        required
+      />
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+      >
+        {loading ? 'Signing in...' : 'Sign In'}
+      </button>
+    </form>
+  );
+};`}
+                </CodeBlock>
+              </section>
+
+              <section>
+                <h2 className="doc-heading">Next Steps</h2>
+                <p className="doc-paragraph">
+                  Congratulations! You now have a working authentication system. Here are some next steps to consider:
+                </p>
+                
+                <ul className="doc-list">
+                  <li><a href="/docs/concepts/authentication" className="text-primary hover:underline">Learn about authentication concepts</a></li>
+                  <li><a href="/docs/concepts/authorization" className="text-primary hover:underline">Implement role-based access control</a></li>
+                  <li><a href="/docs/concepts/sessions" className="text-primary hover:underline">Configure session management</a></li>
+                  <li><a href="/docs/concepts/mfa" className="text-primary hover:underline">Add multi-factor authentication</a></li>
+                </ul>
+
+                <div className="doc-callout-success">
+                  <p className="font-medium mb-2">🚀 Ready to Deploy?</p>
+                  <p>Check out our deployment guides for Vercel, Netlify, and other platforms in the Templates section.</p>
+                </div>
+              </section>
             </div>
           </DocContent>
         </main>
