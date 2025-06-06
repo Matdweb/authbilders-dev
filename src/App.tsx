@@ -14,6 +14,15 @@ import Guides from "./pages/Guides";
 import NotFound from "./pages/NotFound";
 import TechStackSelector from "./pages/TechStackSelector";
 
+// Documentation pages
+import QuickStart from "./pages/docs/QuickStart";
+import ConceptsAuthentication from "./pages/docs/ConceptsAuthentication";
+import ConceptsDal from "./pages/docs/ConceptsDal";
+import ConceptsAuthorization from "./pages/docs/ConceptsAuthorization";
+import ConceptsSessions from "./pages/docs/ConceptsSessions";
+import ConceptsMagicLinks from "./pages/docs/ConceptsMagicLinks";
+import ConceptsMfa from "./pages/docs/ConceptsMfa";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -40,7 +49,13 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/docs" element={<Documentation />} />
-            <Route path="/docs/*" element={<Documentation />} />
+            <Route path="/docs/quick-start" element={<QuickStart />} />
+            <Route path="/docs/concepts/authentication" element={<ConceptsAuthentication />} />
+            <Route path="/docs/concepts/dal" element={<ConceptsDal />} />
+            <Route path="/docs/concepts/authorization" element={<ConceptsAuthorization />} />
+            <Route path="/docs/concepts/sessions" element={<ConceptsSessions />} />
+            <Route path="/docs/concepts/magic-links" element={<ConceptsMagicLinks />} />
+            <Route path="/docs/concepts/mfa" element={<ConceptsMfa />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/guides" element={<Guides />} />
             <Route path="/tech-stack-selector" element={<TechStackSelector />} />
