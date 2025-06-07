@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import CodeBlock from './CodeBlock';
 
 const HeroSection = () => {
   return (
@@ -47,9 +48,8 @@ const HeroSection = () => {
               <div className="rounded-xl border bg-background p-6 shadow-sm">
                 <div className="space-y-2">
                   <h3 className="font-bold">Login Form</h3>
-                  <div className="code-block">
-                    <pre><code>
-                      {`import { AuthProvider } from './components/AuthForm';
+                  <CodeBlock language="javascript" header={false}>
+                    {`import { AuthProvider } from './components/AuthForm';
 
 function LoginPage() {
     return (
@@ -64,15 +64,14 @@ function LoginPage() {
         />
     )}
   );`}
-                    </code></pre>
-                  </div>
+                  </CodeBlock>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 
