@@ -7,12 +7,10 @@ import CodeBlock from '@/components/CodeBlock';
 
 const QuickStart = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-w-96 flex flex-col">
       <Navbar />
-      <div className="flex">
-        <aside className="w-80 shrink-0">
-          <DocSidebar />
-        </aside>
+      <div className="lg:flex lg:flex-1 lg:container pt-14">
+        <DocSidebar />
         <main className="flex-1">
           <DocContent
             title="Quick Start Guide"
@@ -24,7 +22,7 @@ const QuickStart = () => {
                 <p className="doc-paragraph">
                   Start by selecting a template that matches your tech stack. We support various combinations of frontend frameworks, backend services, and authentication methods.
                 </p>
-                
+
                 <div className="doc-callout-info">
                   <p className="font-medium mb-2">💡 Pro Tip</p>
                   <p>Visit our <a href="/tech-stack-selector" className="text-primary hover:underline">Tech Stack Selector</a> to find the perfect template for your needs.</p>
@@ -36,9 +34,9 @@ const QuickStart = () => {
                 <p className="doc-paragraph">
                   Once you've chosen your template, clone the repository and navigate to your project directory:
                 </p>
-                
+
                 <CodeBlock language="bash" filename="terminal">
-{`# For Next.js + Firebase template
+                  {`# For Next.js + Firebase template
 git clone --branch nextjs-firebase https://github.com/authbuilders/templates.git my-auth-app
 cd my-auth-app`}
                 </CodeBlock>
@@ -49,9 +47,9 @@ cd my-auth-app`}
                 <p className="doc-paragraph">
                   Install the required packages using your preferred package manager:
                 </p>
-                
+
                 <CodeBlock language="bash" filename="package-installation">
-{`# Using npm
+                  {`# Using npm
 npm install
 
 # Using yarn
@@ -70,9 +68,9 @@ bun install`}
                 <p className="doc-paragraph">
                   Create a <code>.env.local</code> file in your project root and add your environment variables:
                 </p>
-                
+
                 <CodeBlock language="bash" filename=".env.local">
-{`# Firebase Configuration
+                  {`# Firebase Configuration
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
@@ -96,9 +94,9 @@ DATABASE_URL=your_database_connection_string`}
                 <p className="doc-paragraph">
                   Launch your development server and start building:
                 </p>
-                
+
                 <CodeBlock language="bash" filename="development">
-{`# Start the development server
+                  {`# Start the development server
 npm run dev
 
 # Your app will be available at:
@@ -111,59 +109,58 @@ npm run dev
                 <p className="doc-paragraph">
                   Your template comes with pre-configured authentication components. Here's a simple example of how to use them:
                 </p>
-                
-                <CodeBlock language="typescript" filename="components/LoginForm.tsx">
-{`import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+                <CodeBlock language="typescript" filename="app/fields.ts">
+                  {`import { passwordSchema } from '../lib/(AuthBilders)/zod'
 
-export const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+export const fields = [
+  {
+    name: 'email',
+    label: 'Email',
+    type: 'email',
+    required: true,
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    required: true,
+    schema: passwordSchema,
+    onValueChange: (val) => passwordSchema.safeParse(val).success || undefined
+  }
+]
+`}
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // User is now logged in
-    } catch (error) {
-      console.error('Login failed:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+                </CodeBlock>
 
+                <CodeBlock language="typescript" filename="login/page.tsx">
+                  {`'use client';
+import AuthForm from '@/components/(AuthBilders)/Form/AuthForm'
+import { login } from '@/app/lib/(AuthBilders)/actions'
+import { fields } from "./fields"
+import Link from 'next/link'
+
+export default function LoginPage() {
   return (
-    <form onSubmit={handleLogin} className="space-y-4">
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        className="w-full px-4 py-2 border rounded-lg"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        className="w-full px-4 py-2 border rounded-lg"
-        required
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
-      >
-        {loading ? 'Signing in...' : 'Sign In'}
-      </button>
-    </form>
-  );
-};`}
+    <AuthForm
+      title="Login"
+      action={login}
+      redirectTo='/'
+      fields={fields}
+      thirdPartyProviders={['google', 'github']}
+      extraContent={
+        <section className="mt-4 text-gray-400">
+          <p className="text-center">
+            Don&apos;t have an account? <Link href="/signUp" className="text-blue-500">Sign Up</Link>
+          </p>
+          <p className="text-center">
+            A lot in mind? <Link href="/forgot-password/provide-email" className="text-blue-500 cursor-pointer">Forgot password</Link>
+          </p>
+        </section>
+      }
+    />
+  )
+}`}
+
                 </CodeBlock>
               </section>
 
@@ -172,7 +169,7 @@ export const LoginForm = () => {
                 <p className="doc-paragraph">
                   Congratulations! You now have a working authentication system. Here are some next steps to consider:
                 </p>
-                
+
                 <ul className="doc-list">
                   <li><a href="/docs/concepts/authentication" className="text-primary hover:underline">Learn about authentication concepts</a></li>
                   <li><a href="/docs/concepts/authorization" className="text-primary hover:underline">Implement role-based access control</a></li>
