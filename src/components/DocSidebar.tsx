@@ -20,7 +20,6 @@ const docLinks: DocCategory[] = [
     title: "Getting Started",
     links: [
       { title: "Introduction", href: "/docs" },
-      { title: "Installation", href: "/docs/installation" },
       { title: "Quick Start", href: "/docs/quick-start" },
     ],
   },
@@ -51,6 +50,7 @@ const docLinks: DocCategory[] = [
       { title: "Count Down Timer", href: "/docs/components/timer" },
       { title: "User Info + Session", href: "/docs/components/user-info" },
       { title: "Call API Button", href: "/docs/components/api-button" },
+      { title: "AuthForm", href: "/docs/components/authForm" },
     ],
   },
   {
