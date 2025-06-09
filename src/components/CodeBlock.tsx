@@ -47,7 +47,7 @@ const CodeBlock = ({ children, language = 'javascript', filename, header = true 
         style={vscDarkPlus}
         customStyle={{
           margin: 0,
-          padding: '1.5rem',
+          padding: '1rem',
           background: 'transparent',
           fontSize: '14px',
           lineHeight: '1.5',
