@@ -20,6 +20,7 @@ const docLinks: DocCategory[] = [
     title: "Getting Started",
     links: [
       { title: "Introduction", href: "/docs" },
+      { title: "Installation", href: "/docs/installation" },	
       { title: "Quick Start", href: "/docs/quick-start" },
     ],
   },

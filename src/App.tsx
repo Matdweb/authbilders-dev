@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import TechStackSelector from "./pages/TechStackSelector";
 
 // Documentation pages
+import Installation from "./pages/docs/Installation";
 import QuickStart from "./pages/docs/QuickStart";
 import ConceptsAuthentication from "./pages/docs/ConceptsAuthentication";
 import ConceptsDal from "./pages/docs/ConceptsDal";
@@ -50,6 +51,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/docs" element={<Documentation />} />
+            <Route path="/docs/installation" element={<Installation />} />
             <Route path="/docs/quick-start" element={<QuickStart />} />
             <Route path="/docs/concepts/authentication" element={<ConceptsAuthentication />} />
             <Route path="/docs/concepts/dal" element={<ConceptsDal />} />
