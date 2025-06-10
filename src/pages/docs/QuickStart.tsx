@@ -1,4 +1,3 @@
-
 import DocContent from '@/components/DocContent';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -30,26 +29,36 @@ const QuickStart = () => {
               </section>
 
               <section>
-                <h2 className="doc-heading">2. Clone the Repository</h2>
+                <h2 className="doc-heading">2. Install degit (First Time Only)</h2>
                 <p className="doc-paragraph">
-                  Once you've chosen your template, clone the repository and navigate to your project directory:
+                  Make sure you have <code>git</code> and <code>degit</code> installed globally on your machine:
                 </p>
 
                 <CodeBlock language="bash" filename="terminal">
-                  {`# For Next.js + Firebase template
-git clone --branch nextjs-firebase https://github.com/authbuilders/templates.git my-auth-app
+{`npm install -g degit`}
+                </CodeBlock>
+              </section>
+
+              <section>
+                <h2 className="doc-heading">3. Clone the Template</h2>
+                <p className="doc-paragraph">
+                  Use <code>degit</code> to clone the template into your project folder:
+                </p>
+
+                <CodeBlock language="bash" filename="terminal">
+{`degit github:authbuilders/templates/nextjs-firebase my-auth-app
 cd my-auth-app`}
                 </CodeBlock>
               </section>
 
               <section>
-                <h2 className="doc-heading">3. Install Dependencies</h2>
+                <h2 className="doc-heading">4. Install Dependencies</h2>
                 <p className="doc-paragraph">
                   Install the required packages using your preferred package manager:
                 </p>
 
                 <CodeBlock language="bash" filename="package-installation">
-                  {`# Using npm
+{`# Using npm
 npm install
 
 # Using yarn
@@ -64,13 +73,13 @@ bun install`}
               </section>
 
               <section>
-                <h2 className="doc-heading">4. Environment Configuration</h2>
+                <h2 className="doc-heading">5. Environment Configuration</h2>
                 <p className="doc-paragraph">
                   Create a <code>.env.local</code> file in your project root and add your environment variables:
                 </p>
 
                 <CodeBlock language="bash" filename=".env.local">
-                  {`# Firebase Configuration
+{`# Firebase Configuration
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
@@ -90,13 +99,13 @@ DATABASE_URL=your_database_connection_string`}
               </section>
 
               <section>
-                <h2 className="doc-heading">5. Start Development Server</h2>
+                <h2 className="doc-heading">6. Start Development Server</h2>
                 <p className="doc-paragraph">
                   Launch your development server and start building:
                 </p>
 
                 <CodeBlock language="bash" filename="development">
-                  {`# Start the development server
+{`# Start the development server
 npm run dev
 
 # Your app will be available at:
@@ -105,12 +114,12 @@ npm run dev
               </section>
 
               <section>
-                <h2 className="doc-heading">6. Customize Your Authentication</h2>
+                <h2 className="doc-heading">7. Customize Your Authentication</h2>
                 <p className="doc-paragraph">
                   Your template comes with pre-configured authentication components. Here's a simple example of how to use them:
                 </p>
                 <CodeBlock language="typescript" filename="app/fields.ts">
-                  {`import { passwordSchema } from '../lib/(AuthBilders)/zod'
+{`import { passwordSchema } from '../lib/(AuthBilders)/zod'
 
 export const fields = [
   {
@@ -127,13 +136,11 @@ export const fields = [
     schema: passwordSchema,
     onValueChange: (val) => passwordSchema.safeParse(val).success || undefined
   }
-]
-`}
-
+]`}
                 </CodeBlock>
 
                 <CodeBlock language="typescript" filename="login/page.tsx">
-                  {`'use client';
+{`'use client';
 import AuthForm from '@/components/(AuthBilders)/Form/AuthForm'
 import { login } from '@/app/lib/(AuthBilders)/actions'
 import { fields } from "./fields"
@@ -160,7 +167,6 @@ export default function LoginPage() {
     />
   )
 }`}
-
                 </CodeBlock>
               </section>
 
