@@ -24,6 +24,7 @@ import ConceptsJwt from "./pages/docs/ConceptsJwt";
 import ConceptsSessions from "./pages/docs/ConceptsSessions";
 import ConceptsMagicLinks from "./pages/docs/ConceptsMagicLinks";
 import ConceptsMfa from "./pages/docs/ConceptsMfa";
+import Nextjs_jwt from "./pages/docs/templates/Nextjs_jwt"
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,7 @@ const App = () => {
     // Check localStorage or system preference
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
+
     // Apply theme class to document
     if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
       document.documentElement.classList.add("dark");
@@ -60,6 +61,7 @@ const App = () => {
             <Route path="/docs/concepts/sessions" element={<ConceptsSessions />} />
             <Route path="/docs/concepts/magic-links" element={<ConceptsMagicLinks />} />
             <Route path="/docs/concepts/mfa" element={<ConceptsMfa />} />
+            <Route path="/docs/templates/nextjs-jwt" element={<Nextjs_jwt />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/guides" element={<Guides />} />
             <Route path="/tech-stack-selector" element={<TechStackSelector />} />
