@@ -200,7 +200,7 @@ export const verifySession = cache(async () => {
               <div className="border border-border rounded-lg p-4">
                 <h3 className="font-semibold mb-2">🟣 nextjs-jwt template:</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  AuthBuilders uses a fully mocked file-based JSON database for prototyping custom databases.
+                  Some AuthBuilders templates uses a fully mocked file-based JSON database for prototyping custom databases.
                 </p>
                 <CodeBlock language="typescript" filename="dal/queries.ts">{`
 import fs from 'fs';

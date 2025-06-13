@@ -89,9 +89,9 @@ export interface User {
   id: string;
   email: string;
   roles: Role[];
-}
+}`}</CodeBlock>
 
-// utils/authorization.ts
+            <CodeBlock language="typescript" filename="utils/authorization.ts">{`
 export function hasPermission(user: User, permission: string): boolean {
   return user.roles.some(role =>
     role.permissions.some(p => p.name === permission)

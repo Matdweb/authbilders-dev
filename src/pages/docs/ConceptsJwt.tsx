@@ -71,7 +71,6 @@ const ConceptsJwt = () => {
   "sub": "1234567890",
   "name": "John Doe", 
   "email": "john@example.com",
-  "iat": 1516239022,
   "exp": 1516242622
 }
 `}</CodeBlock>
@@ -138,24 +137,20 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 
             <h3 className="doc-subheading">Creating JWTs</h3>
 
-            <CodeBlock language="typescript" filename="jwt.ts">{`import jwt from 'jsonwebtoken';
+            <CodeBlock language="typescript" filename="jwt.ts">{`
+import jwt from 'jsonwebtoken';
 
-// Create a JWT
 function createToken(user) {
   const payload = {
     sub: user.id,
     email: user.email,
     name: user.name,
     iat: Math.floor(Date.now() / 1000),
-    exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24 hours
+    exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
   };
-
-  return jwt.sign(payload, process.env.JWT_SECRET, {
-    algorithm: 'HS256',
-    expiresIn: '24h'
-  });
+  return jwt.sign(payload, process.env.JWT_SECRET, { algorithm: 'HS256' });
 }
-`}</CodeBlock>
+              `}</CodeBlock>
 
             <CodeBlock language="typescript" filename="Usage">{`
 const token = createToken({
@@ -167,25 +162,18 @@ const token = createToken({
 
             <h3 className="doc-subheading">Verifying JWTs</h3>
 
-            <CodeBlock language="typescript" filename="jwt.ts">{`// Verify and decode JWT
+            <CodeBlock language="typescript" filename="jwt.ts">{`
 function verifyToken(token) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    return { 
-      success: true, 
-      payload: decoded 
-    };
+    return { success: true, payload: decoded };
   } catch (error) {
-    return { 
-      success: false, 
-      error: error.message 
-    };
+    return { success: false, error: error.message };
   }
 }
-`}</CodeBlock>
+              `}</CodeBlock>
 
-<CodeBlock language="typescript" filename="Middleware">{`
-// Middleware for protecting routes
+            <CodeBlock language="typescript" filename="Middleware">{`
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -206,48 +194,22 @@ function authenticateToken(req, res, next) {
 `}</CodeBlock>
 
             <h3 className="doc-subheading">Frontend Usage</h3>
-            <CodeBlock language="typescript" filename="jwt.ts">{`// Store JWT in localStorage (consider httpOnly cookies for better security)
+            <CodeBlock language="typescript" filename="jwt.ts">{`
 function loginUser(credentials) {
   return fetch('/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.token) {
-      localStorage.setItem('authToken', data.token);
-      return data.user;
-    }
-    throw new Error('Login failed');
-  });
+  }).then(response => response.json())
+    .then(data => {
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        return data.user;
+      }
+      throw new Error('Login failed');
+    });
 }
-
-// Include JWT in API requests
-function apiRequest(url, options = {}) {
-  const token = localStorage.getItem('authToken');
-  
-  return fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': token ? \`Bearer \${token}\` : '',
-      ...options.headers
-    }
-  });
-}
-
-// Check if token is expired
-function isTokenExpired(token) {
-  if (!token) return true;
-  
-  try {
-    const { exp } = JSON.parse(atob(token.split('.')[1]));
-    return Date.now() >= exp * 1000;
-  } catch {
-    return true;
-  }
-}`}</CodeBlock>
+              `}</CodeBlock>
 
             <h2 className="doc-heading">Security Best Practices</h2>
             <div className="space-y-6 mb-8">
@@ -278,75 +240,228 @@ function isTokenExpired(token) {
 
             <h3 className="doc-subheading">Refresh Token Pattern</h3>
 
-            <CodeBlock language="typescript" filename="Session.ts">{`// Refresh token implementation
-class TokenManager {
-  constructor() {
-    this.accessToken = null;
-    this.refreshToken = null;
+            <CodeBlock language="typescript" filename="Session.ts">{`
+async function refreshAccessToken() {
+  const response = await fetch('/api/refresh', {
+    method: 'POST',
+    credentials: 'include'
+  });
+  const data = await response.json();
+  return data.accessToken;
+}
+              `}</CodeBlock>
+
+            <h2 className="doc-heading">How does AuthBuilders do it?</h2>
+
+            <div className="border border-border rounded-lg p-4 mt-4">
+              <h3 className="font-semibold mb-2">🟣 JWT Handling & Token Utilities:</h3>
+              <p className="text-sm text-muted-foreground mb-4">nextjs-jwt template</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                AuthBuilders uses a hybrid JWT approach combining <strong>JOSE</strong> for core session encryption and <strong>jsonwebtoken</strong> for specific flows like password reset and email verification. This provides:
+              </p>
+              <ul className="list-disc pl-6 mb-4 text-sm text-muted-foreground">
+                <li>🔐 Server-side encryption for active sessions via JOSE's <code>SignJWT</code> and <code>jwtVerify</code>.</li>
+                <li>🔄 Stateless token issuance with short expirations for password reset and email verification flows.</li>
+                <li>⚙️ Environment-isolated secret management using different keys for session and reset tokens.</li>
+              </ul>
+              <CodeBlock language="typescript" filename="utils/jwt.ts">{`
+"use server";
+import { SignJWT, jwtVerify } from "jose";
+import type { Session } from "../defintions";
+import jwt from "jsonwebtoken";
+
+const secretKey = process.env.JWT_SECRET_KEY || "";
+const key = new TextEncoder().encode(secretKey);
+
+// Session Token: Create JWT for session payload
+export async function encrypt(payload: Session): Promise<string> {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("100 sec from now")
+    .sign(key);
+}
+
+// Session Token: Verify JWT from cookie/session
+export async function decrypt(input: string): Promise<Session | null> {
+  try {
+    const { payload } = await jwtVerify(input, key, { algorithms: ["HS256"] });
+    return payload;
+  } catch (error) {
+    console.log("Decryption error:", error);
+    return null;
+  }
+}
+
+// Reusable token logic for password reset & email verification
+const RESET_SECRET = process.env.RESET_TOKEN_SECRET!;
+const RESET_TOKEN_EXP = '5m';
+
+export async function createResetPasswordToken(email: string) {
+  return jwt.sign({ email }, RESET_SECRET, { expiresIn: RESET_TOKEN_EXP });
+}
+
+export async function verifyResetPasswordToken(token: string) {
+  try {
+    const payload = jwt.verify(token, RESET_SECRET) as { email: string };
+    return payload?.email;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+}
+
+export async function createVerificationEmailToken(email: string) {
+  return jwt.sign({ email }, RESET_SECRET, { expiresIn: RESET_TOKEN_EXP });
+}
+
+export async function verifyVerificationEmailToken(token: string) {
+  try {
+    const payload = jwt.verify(token, RESET_SECRET) as { email: string };
+    return payload?.email;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+}
+  `}</CodeBlock>
+            </div>
+            <div className="border border-border rounded-lg p-4 mt-4">
+              <h3 className="font-semibold mb-2">🟣 Full JWT Flow in AuthBuilders:</h3>
+              <p className="text-sm text-muted-foreground mb-4">nextjs-jwt template</p>
+
+              <p className="text-sm text-muted-foreground mb-4">
+                AuthBuilders applies JWTs as a core mechanism for multiple flows:
+              </p>
+
+              <ul className="list-disc pl-6 mb-4 text-sm text-muted-foreground">
+                <li>🔐 <strong>Session Management:</strong> Short-lived encrypted JWTs are issued after login and stored inside an HTTP-only cookie.</li>
+                <li>📩 <strong>Password Reset & Email Verification:</strong> Stateless JWTs (with different secret) are issued for time-sensitive flows via email links.</li>
+                <li>⚙️ <strong>Server Actions Integrated:</strong> The entire flow leverages Next.js <code>"use server"</code> actions for secure server-side execution.</li>
+              </ul>
+
+              <CodeBlock language="typescript" filename="lib/actions.ts">{`
+"use server";
+import { cookies } from "next/headers";
+import { AuthServerActionState } from "@/app/lib/(AuthBilders)/defintions";
+import { successResponse, errorResponse } from "./utils/response";
+import type { User } from "@/app/lib/(AuthBilders)/defintions";
+import { FormDataSchema } from "./zod";
+import { addUser, findUserByEmail, validateUser, resetUserPassword } from "@/app/lib/(AuthBilders)/dal/queries";
+import { encrypt, createResetPasswordToken } from "./utils/jwt";
+import { extractErrorDetails } from "./utils/errors";
+import { sendEmailVerification } from "./utils/email";
+import { passwordSchema } from "./zod";
+
+const timeSec = 100; // Token expiration (100 seconds)
+
+const extractUser = (user: User) => ({
+  id: user?.id || '',
+  email: user?.email || '',
+  name: user?.name || '',
+});
+
+export async function login(_prev: AuthServerActionState, formData: FormData): Promise<AuthServerActionState> {
+  const cookieStore = await cookies();
+  const fields = FormDataSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
+  if (!fields.success) {
+    return errorResponse(['Login failed. Check input.'], fields.error.flatten().fieldErrors);
   }
 
-  async login(credentials) {
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
-    });
-
-    const data = await response.json();
-    
-    this.accessToken = data.accessToken;
-    this.refreshToken = data.refreshToken;
-    
-    // Store refresh token securely (httpOnly cookie recommended)
-    document.cookie = \`refreshToken=\${data.refreshToken}; HttpOnly; Secure; SameSite=Strict\`;
-    
-    return data.user;
+  const { email, password } = fields.data;
+  const user = await validateUser(email, password);
+  if (!user) {
+    return errorResponse(['Login failed. Invalid email or password.'], {});
   }
 
-  async refreshAccessToken() {
-    const response = await fetch('/api/refresh', {
-      method: 'POST',
-      credentials: 'include' // Include httpOnly cookies
+  const expires = new Date(Date.now() + timeSec * 1000);
+  const session = await encrypt({ user, expires });
+  cookieStore.set("session", session, { expires, httpOnly: true });
+
+  return successResponse(['Logged in successfully'], { user: extractUser(user) });
+}
+
+export async function logout() {
+  const cookieStore = await cookies();
+  cookieStore.set("session", "", { expires: new Date(0) });
+}
+
+export async function signUp(_prev: AuthServerActionState, formData: FormData): Promise<AuthServerActionState> {
+  try {
+    const fields = FormDataSchema.safeParse({
+      email: formData.get('email'),
+      password: formData.get('password'),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      this.accessToken = data.accessToken;
-      return true;
+    if (!fields.success) {
+      return errorResponse(['Sign Up failed. Check input.'], fields.error.flatten().fieldErrors);
     }
-    
-    // Refresh failed, redirect to login
-    this.logout();
-    return false;
-  }
 
-  async apiRequest(url, options = {}) {
-    let response = await fetch(url, {
-      ...options,
-      headers: {
-        'Authorization': \`Bearer \${this.accessToken}\`,
-        ...options.headers
-      }
-    });
-
-    // If token expired, try to refresh
-    if (response.status === 401) {
-      const refreshed = await this.refreshAccessToken();
-      if (refreshed) {
-        // Retry the request with new token
-        response = await fetch(url, {
-          ...options,
-          headers: {
-            'Authorization': \`Bearer \${this.accessToken}\`,
-            ...options.headers
-          }
-        });
-      }
+    const { email, password } = fields.data;
+    const exists = findUserByEmail(email);
+    if (exists) {
+      return errorResponse(['User already exists'], { email: ['Email already registered'] });
     }
 
-    return response;
+    const res = await addUser({ email, password });
+    if (!res?.success) {
+      return errorResponse(['Failed to register user'], res?.errors || {});
+    }
+
+    const emailRes = await sendEmailVerification(email);
+    if (!emailRes.success) {
+      return errorResponse(['User created, but email failed', ...emailRes.message], {});
+    }
+
+    return successResponse(['User created', 'Verification email sent'], { user: res.user, data: emailRes.data });
+  } catch (error) {
+    const { message = 'Unexpected error occurred' } = extractErrorDetails(error);
+    return errorResponse(['Failed to register user'], { email: [message] });
   }
-}`}</CodeBlock>
+}
+
+export async function sendPasswordResetEmail(_prev: AuthServerActionState, formData: FormData): Promise<AuthServerActionState> {
+  const email = formData.get("email") as string;
+  const resetToken = await createResetPasswordToken(email);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  try {
+    const response = await fetch(\`\${baseUrl}/api/reset-password/send\`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, redirectUrl: \`\${baseUrl}/forgot-password/reset-password?token=\${resetToken}\` }),
+    });
+
+    const result = await response.json();
+    return { success: response.ok, message: [result?.message || "Unknown server response"], data: result?.data ?? null };
+  } catch (error) {
+    const { message } = extractErrorDetails(error);
+    return errorResponse(["Email server error", message]);
+  }
+}
+
+export async function handlePasswordReset(_prev: AuthServerActionState, formData: FormData) {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const validated = passwordSchema.safeParse(password);
+
+  if (!validated.success) {
+    return errorResponse(["Invalid password"], { password: validated.error.flatten().fieldErrors[0] });
+  }
+
+  try {
+    await resetUserPassword(email, password);
+    return successResponse(["Password updated successfully.", "You can now login with your new password"]);
+  } catch {
+    return errorResponse(["Failed to update password.", "Please try again"]);
+  }
+}
+  `}</CodeBlock>
+            </div>
 
             <div className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-lg p-6 mt-12">
               <h3 className="text-lg font-semibold mb-3 text-authbuilders-purple">🚀 Next Steps</h3>

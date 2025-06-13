@@ -1,8 +1,8 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DocSidebar from "@/components/DocSidebar";
 import DocContent from "@/components/DocContent";
+import CodeBlock from "@/components/CodeBlock";
 
 const ConceptsMagicLinks = () => {
   return (
@@ -45,10 +45,9 @@ const ConceptsMagicLinks = () => {
             </div>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">Implementation Example</h2>
-            
+
             <h3 className="text-xl font-semibold mt-6 mb-3">1. Generate Magic Link</h3>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// Generate magic link token
+            <CodeBlock language="typescript" filename="auth/generateMagicLink.ts">{`
 import crypto from 'crypto';
 
 interface MagicLinkToken {
@@ -59,109 +58,55 @@ interface MagicLinkToken {
 }
 
 async function generateMagicLink(email: string): Promise<string> {
-  // Generate cryptographically secure token
   const token = crypto.randomBytes(32).toString('hex');
-  
-  // Set expiration (15 minutes is common)
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
-  
-  // Store token in database
-  await tokenStore.save({
-    token,
-    email,
-    expiresAt,
-    used: false
-  });
-  
-  // Create magic link URL
-  const magicLink = \`\${process.env.BASE_URL}/auth/verify?token=\${token}\`;
-  
-  return magicLink;
-}`}</code></pre>
-            </div>
+  await tokenStore.save({ token, email, expiresAt, used: false });
+  return \`\${process.env.BASE_URL}/auth/verify?token=\${token}\`;
+}`}</CodeBlock>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">2. Send Email</h3>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// Send magic link email
+            <CodeBlock language="typescript" filename="auth/sendMagicLink.ts">{`
 async function sendMagicLink(email: string) {
   const magicLink = await generateMagicLink(email);
-  
   const emailTemplate = \`
     <h1>Sign in to Your Account</h1>
     <p>Click the link below to sign in. This link expires in 15 minutes.</p>
-    <a href="\${magicLink}" 
-       style="background: #6366f1; color: white; padding: 12px 24px; 
-              text-decoration: none; border-radius: 6px; display: inline-block;">
-      Sign In Now
-    </a>
+    <a href="\${magicLink}" style="background: #6366f1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Sign In Now</a>
     <p>If you didn't request this, you can safely ignore this email.</p>
   \`;
-  
-  await emailService.send({
-    to: email,
-    subject: 'Your sign-in link',
-    html: emailTemplate
-  });
-}`}</code></pre>
-            </div>
+  await emailService.send({ to: email, subject: 'Your sign-in link', html: emailTemplate });
+}`}</CodeBlock>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">3. Verify Magic Link</h3>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// Verify magic link and authenticate user
+            <CodeBlock language="typescript" filename="auth/verifyMagicLink.ts">{`
 async function verifyMagicLink(token: string): Promise<User | null> {
-  // Get token from database
   const tokenData = await tokenStore.findByToken(token);
-  
-  if (!tokenData) {
-    throw new Error('Invalid or expired link');
-  }
-  
-  // Check if token is expired
+  if (!tokenData) throw new Error('Invalid or expired link');
   if (tokenData.expiresAt < new Date()) {
     await tokenStore.delete(token);
     throw new Error('Link has expired');
   }
-  
-  // Check if token was already used
-  if (tokenData.used) {
-    throw new Error('Link has already been used');
-  }
-  
-  // Mark token as used
+  if (tokenData.used) throw new Error('Link has already been used');
   await tokenStore.markAsUsed(token);
-  
-  // Get or create user
   let user = await userStore.findByEmail(tokenData.email);
   if (!user) {
-    user = await userStore.create({
-      email: tokenData.email,
-      emailVerified: true
-    });
+    user = await userStore.create({ email: tokenData.email, emailVerified: true });
   }
-  
   return user;
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">Frontend Implementation</h2>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// Magic link request form
+            <CodeBlock language="typescript" filename="components/MagicLinkForm.tsx">{`
 function MagicLinkForm() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLinkSent, setIsLinkSent] = useState(false);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
     try {
-      await fetch('/api/auth/magic-link', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      
+      await fetch('/api/auth/magic-link', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
       setIsLinkSent(true);
     } catch (error) {
       console.error('Failed to send magic link:', error);
@@ -169,58 +114,36 @@ function MagicLinkForm() {
       setIsLoading(false);
     }
   };
-  
+
   if (isLinkSent) {
-    return (
-      <div className="text-center">
-        <h2>Check your email</h2>
-        <p>We've sent a sign-in link to {email}</p>
-      </div>
-    );
+    return <div className="text-center"><h2>Check your email</h2><p>We've sent a sign-in link to {email}</p></div>;
   }
-  
+
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-        required
-      />
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Sending...' : 'Send Magic Link'}
-      </button>
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
+      <button type="submit" disabled={isLoading}>{isLoading ? 'Sending...' : 'Send Magic Link'}</button>
     </form>
   );
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">Security Considerations</h2>
             <div className="space-y-4 mb-6">
               <div className="border-l-4 border-red-500 pl-4">
                 <h3 className="font-semibold">Token Security</h3>
-                <p className="text-sm text-muted-foreground">
-                  Use cryptographically secure random tokens (crypto.randomBytes, not Math.random).
-                </p>
+                <p className="text-sm text-muted-foreground">Use cryptographically secure random tokens (crypto.randomBytes, not Math.random).</p>
               </div>
               <div className="border-l-4 border-yellow-500 pl-4">
                 <h3 className="font-semibold">Short Expiration</h3>
-                <p className="text-sm text-muted-foreground">
-                  Keep expiration times short (5-15 minutes) to limit exposure window.
-                </p>
+                <p className="text-sm text-muted-foreground">Keep expiration times short (5-15 minutes) to limit exposure window.</p>
               </div>
               <div className="border-l-4 border-blue-500 pl-4">
                 <h3 className="font-semibold">One-Time Use</h3>
-                <p className="text-sm text-muted-foreground">
-                  Ensure tokens can only be used once and are deleted after use.
-                </p>
+                <p className="text-sm text-muted-foreground">Ensure tokens can only be used once and are deleted after use.</p>
               </div>
               <div className="border-l-4 border-green-500 pl-4">
                 <h3 className="font-semibold">Rate Limiting</h3>
-                <p className="text-sm text-muted-foreground">
-                  Implement rate limiting to prevent email bombing attacks.
-                </p>
+                <p className="text-sm text-muted-foreground">Implement rate limiting to prevent email bombing attacks.</p>
               </div>
             </div>
 

@@ -1,8 +1,8 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DocSidebar from "@/components/DocSidebar";
 import DocContent from "@/components/DocContent";
+import CodeBlock from "@/components/CodeBlock";
 
 const ConceptsMfa = () => {
   return (
@@ -17,7 +17,7 @@ const ConceptsMfa = () => {
           >
             <h2 className="text-2xl font-bold mt-8 mb-4">What is Multi-Factor Authentication?</h2>
             <p className="leading-7 mb-4">
-              Multi-Factor Authentication (MFA) adds an extra layer of security by requiring users to provide two or more verification factors to gain access. 
+              Multi-Factor Authentication (MFA) adds an extra layer of security by requiring users to provide two or more verification factors to gain access.
               Even if one factor is compromised, the additional factors help protect the account.
             </p>
 
@@ -32,7 +32,6 @@ const ConceptsMfa = () => {
                   <li>• Security questions</li>
                 </ul>
               </div>
-              
               <div className="border border-border rounded-lg p-4">
                 <h3 className="font-semibold mb-2 text-green-600 dark:text-green-400">Something You Have</h3>
                 <p className="text-sm text-muted-foreground mb-2">Possession factors</p>
@@ -42,7 +41,6 @@ const ConceptsMfa = () => {
                   <li>• Smart card</li>
                 </ul>
               </div>
-              
               <div className="border border-border rounded-lg p-4">
                 <h3 className="font-semibold mb-2 text-purple-600 dark:text-purple-400">Something You Are</h3>
                 <p className="text-sm text-muted-foreground mb-2">Inherence factors</p>
@@ -60,47 +58,29 @@ const ConceptsMfa = () => {
             </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Implementation Example</h3>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// Install: npm install otplib qrcode
+            <CodeBlock language="bash" filename="setup">{`
+npm install otplib qrcode
+`}</CodeBlock>
+            <CodeBlock language="typescript" filename="mfa/totp.ts">{`
 import { authenticator } from 'otplib';
 import QRCode from 'qrcode';
 
 // Generate secret for new user
 function generateTOTPSecret(userEmail: string, appName: string = 'AuthBuilders') {
   const secret = authenticator.generateSecret();
-  
-  const otpauthURL = authenticator.keyuri(
-    userEmail,
-    appName,
-    secret
-  );
-  
+  const otpauthURL = authenticator.keyuri(userEmail, appName, secret);
   return { secret, otpauthURL };
 }
 
 // Generate QR code for easy setup
 async function generateQRCode(otpauthURL: string): Promise<string> {
-  try {
-    const qrCode = await QRCode.toDataURL(otpauthURL);
-    return qrCode;
-  } catch (error) {
-    throw new Error('Failed to generate QR code');
-  }
+  return await QRCode.toDataURL(otpauthURL);
 }
 
 // Verify TOTP token
 function verifyTOTP(token: string, secret: string): boolean {
-  try {
-    return authenticator.verify({
-      token,
-      secret,
-      window: 1 // Allow 1 step tolerance for clock drift
-    });
-  } catch (error) {
-    return false;
-  }
-}`}</code></pre>
-            </div>
+  return authenticator.verify({ token, secret, window: 1 });
+}`}</CodeBlock>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">MFA Setup Flow</h2>
             <div className="bg-muted rounded-lg p-4 mb-6">
@@ -116,8 +96,8 @@ function verifyTOTP(token: string, secret: string): boolean {
             </div>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Frontend Setup Component</h3>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`function MFASetup() {
+            <CodeBlock language="typescript" filename="components/MFASetup.tsx">{`
+function MFASetup() {
   const [qrCode, setQrCode] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
@@ -129,41 +109,20 @@ function verifyTOTP(token: string, secret: string): boolean {
   }, []);
   
   const initializeMFA = async () => {
-    try {
-      const response = await fetch('/api/auth/mfa/setup', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      
-      const { qrCode } = await response.json();
-      setQrCode(qrCode);
-    } catch (error) {
-      console.error('Failed to initialize MFA:', error);
-    }
+    const response = await fetch('/api/auth/mfa/setup', { method: 'POST', credentials: 'include' });
+    const { qrCode } = await response.json();
+    setQrCode(qrCode);
   };
   
   const verifyAndEnable = async () => {
     setIsVerifying(true);
-    
-    try {
-      const response = await fetch('/api/auth/mfa/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ code: verificationCode })
-      });
-      
-      const { success, backupCodes } = await response.json();
-      
-      if (success) {
-        setBackupCodes(backupCodes);
-        // Show success state and backup codes
-      }
-    } catch (error) {
-      console.error('Failed to verify MFA:', error);
-    } finally {
-      setIsVerifying(false);
-    }
+    const response = await fetch('/api/auth/mfa/verify', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', body: JSON.stringify({ code: verificationCode })
+    });
+    const { success, backupCodes } = await response.json();
+    if (success) setBackupCodes(backupCodes); // Show success state and backup codes
+    setIsVerifying(false);
   };
   
   return (
@@ -213,45 +172,30 @@ function verifyTOTP(token: string, secret: string): boolean {
       )}
     </div>
   );
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">Login with MFA</h2>
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// MFA-enabled login flow
+            <CodeBlock language="typescript" filename="auth/loginWithMFA.ts">{`
 async function loginWithMFA(email: string, password: string, mfaCode?: string) {
-  // First, validate email/password
+  // First, validate email/password  
   const user = await validateCredentials(email, password);
-  
-  if (!user) {
-    throw new Error('Invalid credentials');
-  }
-  
+  if (!user) throw new Error('Invalid credentials');
+
   // Check if user has MFA enabled
   if (user.mfaEnabled) {
     if (!mfaCode) {
-      // Return special response indicating MFA required
-      return {
-        requiresMFA: true,
-        partialToken: generatePartialToken(user.id)
-      };
+      return { requiresMFA: true, partialToken: generatePartialToken(user.id) };
     }
-    
     // Verify MFA code
-    const isValidMFA = verifyTOTP(mfaCode, user.mfaSecret) || 
-                       await verifyBackupCode(user.id, mfaCode);
-    
-    if (!isValidMFA) {
-      throw new Error('Invalid MFA code');
-    }
+    const isValidMFA = verifyTOTP(mfaCode, user.mfaSecret) || await verifyBackupCode(user.id, mfaCode);
+    if (!isValidMFA) throw new Error('Invalid MFA code');
   }
-  
   // Create full session
   const session = await createSession(user.id);
   return { success: true, sessionId: session.id };
-}
+}`}</CodeBlock>
 
-// Frontend login component with MFA
+            <CodeBlock language="typescript" filename="auth/login-mfa.ts">{`
 function LoginForm() {
   const [step, setStep] = useState<'credentials' | 'mfa'>('credentials');
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -293,20 +237,16 @@ function LoginForm() {
   }
   
   // Return credentials form...
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">Backup Codes</h2>
             <p className="leading-7 mb-4">
               Backup codes provide recovery access when the primary MFA device is unavailable.
             </p>
-
-            <div className="bg-muted rounded-lg p-4 font-mono text-sm mb-6 overflow-auto">
-              <pre><code>{`// Generate backup codes
+            <CodeBlock language="typescript" filename="auth/backupCodes.ts">{`
 function generateBackupCodes(): string[] {
   const codes = [];
   for (let i = 0; i < 10; i++) {
-    // Generate 8-character alphanumeric codes
     const code = crypto.randomBytes(4).toString('hex').toUpperCase();
     codes.push(code);
   }
@@ -315,33 +255,22 @@ function generateBackupCodes(): string[] {
 
 // Store hashed backup codes
 async function storeBackupCodes(userId: string, codes: string[]) {
-  const hashedCodes = await Promise.all(
-    codes.map(code => bcrypt.hash(code, 10))
-  );
-  
-  await db.backupCodes.create({
-    userId,
-    codes: hashedCodes,
-    createdAt: new Date()
-  });
+  const hashedCodes = await Promise.all(codes.map(code => bcrypt.hash(code, 10)));
+  await db.backupCodes.create({ userId, codes: hashedCodes, createdAt: new Date() });
 }
 
 // Verify and consume backup code
 async function verifyBackupCode(userId: string, code: string): Promise<boolean> {
   const backupCodes = await db.backupCodes.findByUserId(userId);
-  
   for (const [index, hashedCode] of backupCodes.codes.entries()) {
     if (await bcrypt.compare(code, hashedCode)) {
-      // Remove used code
       backupCodes.codes.splice(index, 1);
       await db.backupCodes.update(userId, backupCodes);
       return true;
     }
   }
-  
   return false;
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold mb-2 text-yellow-800 dark:text-yellow-200">🔒 Security Best Practices</h3>
@@ -357,7 +286,7 @@ async function verifyBackupCode(userId: string, code: string): Promise<boolean> 
             <div className="bg-muted p-4 rounded-lg mt-8">
               <h3 className="text-lg font-semibold mb-2">Next Steps</h3>
               <p>
-                Learn about <a href="/docs/security/backend" className="text-authbuilders-purple hover:underline">Backend Security Layers</a> or 
+                Learn about <a href="/docs/security/backend" className="text-authbuilders-purple hover:underline">Backend Security Layers</a> or
                 explore <a href="/docs/templates/nextjs-firebase" className="text-authbuilders-purple hover:underline">Template Implementation</a> to see MFA in action.
               </p>
             </div>
