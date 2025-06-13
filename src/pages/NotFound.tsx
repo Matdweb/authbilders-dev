@@ -53,7 +53,7 @@ const NotFound = () => {
         </motion.div>
 
         {/* Floating Illustration */}
-        <motion.div
+        {/* <motion.div
           animate={{
             y: [-10, 10, -10]
           }}
@@ -72,7 +72,7 @@ const NotFound = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* 404 Heading */}
         <motion.div variants={itemVariants} className="space-y-4">
@@ -95,7 +95,7 @@ const NotFound = () => {
             Oops! Page not found
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-md mx-auto">
-            The page you're looking for seems to have vanished into the digital void. 
+            The page you're looking for seems to have vanished into the digital void.
             Don't worry though – let's get you back on track!
           </p>
         </motion.div>
@@ -103,7 +103,7 @@ const NotFound = () => {
         {/* Action Buttons */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
           <Link to="/">
-            <Button 
+            <Button
               size="lg"
               className="bg-authbuilders-purple hover:bg-authbuilders-purple-dark text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
             >
@@ -111,9 +111,9 @@ const NotFound = () => {
               Go back home
             </Button>
           </Link>
-          
+
           <Link to="/docs">
-            <Button 
+            <Button
               variant="outline"
               size="lg"
               className="px-8 py-4 rounded-xl border-2 border-authbuilders-purple text-authbuilders-purple hover:bg-authbuilders-purple hover:text-white transition-all duration-300 transform hover:scale-105 group"
