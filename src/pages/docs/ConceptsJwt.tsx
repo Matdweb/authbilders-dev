@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DocSidebar from "@/components/DocSidebar";
 import DocContent from "@/components/DocContent";
+import CodeBlock from "@/components/CodeBlock";
 
 const ConceptsJwt = () => {
   return (
@@ -17,7 +18,7 @@ const ConceptsJwt = () => {
           >
             <h2 className="doc-heading">What are JSON Web Tokens?</h2>
             <p className="doc-paragraph">
-              JSON Web Tokens (JWT) are a compact, URL-safe means of representing claims securely between two parties. 
+              JSON Web Tokens (JWT) are a compact, URL-safe means of representing claims securely between two parties.
               They're digitally signed, making them tamper-proof and perfect for authentication and information exchange.
             </p>
 
@@ -57,14 +58,15 @@ const ConceptsJwt = () => {
             </div>
 
             <h3 className="doc-subheading">Example JWT Structure</h3>
-            <div className="bg-muted rounded-lg p-6 font-mono text-sm mb-8 overflow-auto border border-border">
-              <pre><code>{`// Header (Base64URL encoded)
-{
+
+            <CodeBlock language="typescript" filename="Header (Base64URL encoded)">{`
+{	
   "alg": "HS256",
   "typ": "JWT"
 }
+`}</CodeBlock>
 
-// Payload (Base64URL encoded)
+            <CodeBlock language="typescript" filename="Payload (Base64URL encoded)">{`
 {
   "sub": "1234567890",
   "name": "John Doe", 
@@ -72,17 +74,19 @@ const ConceptsJwt = () => {
   "iat": 1516239022,
   "exp": 1516242622
 }
+`}</CodeBlock>
 
-// Signature
+            <CodeBlock language="typescript" filename="Signature">{`
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
   secret
 )
+`}</CodeBlock>
 
-// Final JWT
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`}</code></pre>
-            </div>
+            <CodeBlock language="typescript" filename="Final JWT">{`
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+`}</CodeBlock>
 
             <h2 className="doc-heading">JWT vs Sessions</h2>
             <div className="grid gap-6 md:grid-cols-2 mb-8">
@@ -131,10 +135,10 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
             </div>
 
             <h2 className="doc-heading">Implementation Guide</h2>
-            
+
             <h3 className="doc-subheading">Creating JWTs</h3>
-            <div className="bg-muted rounded-lg p-6 font-mono text-sm mb-8 overflow-auto border border-border">
-              <pre><code>{`import jwt from 'jsonwebtoken';
+
+            <CodeBlock language="typescript" filename="jwt.ts">{`import jwt from 'jsonwebtoken';
 
 // Create a JWT
 function createToken(user) {
@@ -151,18 +155,19 @@ function createToken(user) {
     expiresIn: '24h'
   });
 }
+`}</CodeBlock>
 
-// Usage
+            <CodeBlock language="typescript" filename="Usage">{`
 const token = createToken({
   id: '123',
   email: 'john@example.com',
   name: 'John Doe'
-});`}</code></pre>
-            </div>
+});
+`}</CodeBlock>
 
             <h3 className="doc-subheading">Verifying JWTs</h3>
-            <div className="bg-muted rounded-lg p-6 font-mono text-sm mb-8 overflow-auto border border-border">
-              <pre><code>{`// Verify and decode JWT
+
+            <CodeBlock language="typescript" filename="jwt.ts">{`// Verify and decode JWT
 function verifyToken(token) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -177,7 +182,9 @@ function verifyToken(token) {
     };
   }
 }
+`}</CodeBlock>
 
+<CodeBlock language="typescript" filename="Middleware">{`
 // Middleware for protecting routes
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -195,12 +202,11 @@ function authenticateToken(req, res, next) {
 
   req.user = result.payload;
   next();
-}`}</code></pre>
-            </div>
+}
+`}</CodeBlock>
 
             <h3 className="doc-subheading">Frontend Usage</h3>
-            <div className="bg-muted rounded-lg p-6 font-mono text-sm mb-8 overflow-auto border border-border">
-              <pre><code>{`// Store JWT in localStorage (consider httpOnly cookies for better security)
+            <CodeBlock language="typescript" filename="jwt.ts">{`// Store JWT in localStorage (consider httpOnly cookies for better security)
 function loginUser(credentials) {
   return fetch('/api/login', {
     method: 'POST',
@@ -241,8 +247,7 @@ function isTokenExpired(token) {
   } catch {
     return true;
   }
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <h2 className="doc-heading">Security Best Practices</h2>
             <div className="space-y-6 mb-8">
@@ -272,8 +277,8 @@ function isTokenExpired(token) {
             </div>
 
             <h3 className="doc-subheading">Refresh Token Pattern</h3>
-            <div className="bg-muted rounded-lg p-6 font-mono text-sm mb-8 overflow-auto border border-border">
-              <pre><code>{`// Refresh token implementation
+
+            <CodeBlock language="typescript" filename="Session.ts">{`// Refresh token implementation
 class TokenManager {
   constructor() {
     this.accessToken = null;
@@ -341,8 +346,7 @@ class TokenManager {
 
     return response;
   }
-}`}</code></pre>
-            </div>
+}`}</CodeBlock>
 
             <div className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-lg p-6 mt-12">
               <h3 className="text-lg font-semibold mb-3 text-authbuilders-purple">🚀 Next Steps</h3>

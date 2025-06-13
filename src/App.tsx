@@ -56,6 +56,7 @@ const App = () => {
             <Route path="/docs/concepts/authentication" element={<ConceptsAuthentication />} />
             <Route path="/docs/concepts/dal" element={<ConceptsDal />} />
             <Route path="/docs/concepts/authorization" element={<ConceptsAuthorization />} />
+            <Route path="/docs/concepts/jwt" element={<ConceptsJwt />} />
             <Route path="/docs/concepts/sessions" element={<ConceptsSessions />} />
             <Route path="/docs/concepts/magic-links" element={<ConceptsMagicLinks />} />
             <Route path="/docs/concepts/mfa" element={<ConceptsMfa />} />
