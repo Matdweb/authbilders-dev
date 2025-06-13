@@ -41,8 +41,8 @@ const Documentation = () => {
               The quickest way to get started with AuthBuilders is to clone one of our template repositories:
             </p>
             <CodeBlock language="bash" filename="Terminal">
-              {`git clone https://github.com/authbuilders/templates.git
-cd templates/basic-auth
+              {`degit github:[owner-username]/[template-repo-name]#[branch-name] [your-project-name]
+cd [project-name]
 npm install
 npm run dev`}
             </CodeBlock>

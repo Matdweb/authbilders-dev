@@ -46,8 +46,8 @@ const QuickStart = () => {
                 </p>
 
                 <CodeBlock language="bash" filename="terminal">
-{`degit github:authbuilders/templates/nextjs-firebase my-auth-app
-cd my-auth-app`}
+{`degit github:[owner-username]/[template-repo-name]#[branch-name] [your-project-name]
+cd [project-name]`}
                 </CodeBlock>
               </section>
 

@@ -50,7 +50,9 @@ $ npm -v`}
                 </p>
                 <CodeBlock language="bash" filename="clone-template">
 {`degit github:authbuilders/templates/nextjs-firebase my-auth-app
-cd my-auth-app`}
+cd my-auth-app
+// add real project name
+`}
                 </CodeBlock>
               </section>
 
