@@ -5,25 +5,22 @@ import Footer from "@/components/Footer";
 import DocSidebar from "@/components/DocSidebar";
 import DocContent from "@/components/DocContent";
 import CodeBlock from "@/components/CodeBlock";
-import { 
-    FaNodeJs, 
-    FaReact, 
-    FaDatabase, 
-    FaTools, 
-    FaLinux, 
-    FaApple, 
-    FaWindows, 
-    FaLock, 
-    FaCode, 
+import {
+    FaNodeJs,
+    FaReact,
+    FaDatabase,
+    FaLinux,
+    FaApple,
+    FaWindows,
     FaShieldAlt,
     FaGithub
 } from "react-icons/fa";
-import { 
-    SiNextdotjs, 
-    SiTypescript, 
-    SiTailwindcss, 
+import {
+    SiNextdotjs,
+    SiTypescript,
+    SiTailwindcss,
     SiJsonwebtokens,
-    SiVercel 
+    SiVercel
 } from "react-icons/si";
 
 // Animation variants
@@ -57,8 +54,8 @@ const listItemVariants = {
 };
 
 const iconHoverVariants = {
-    hover: { 
-        scale: 1.1, 
+    hover: {
+        scale: 1.1,
         rotate: 5,
         transition: { duration: 0.2 }
     }
@@ -92,10 +89,10 @@ const Nextjs_jwt = () => {
                         >
                             {/* Setup Process */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     🚀 Setup Process
                                 </h2>
-                                <motion.div 
+                                <motion.div
                                     className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/50 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-lg"
                                     whileHover={cardVariants.hover}
                                 >
@@ -104,11 +101,11 @@ const Nextjs_jwt = () => {
                                             "Ensure git and node are installed on your machine.",
                                             "Clone the repository:",
                                             "Install degit globally:",
-                                            "Install dependencies:", 
+                                            "Install dependencies:",
                                             "Setup environment variables:",
                                             "Run development server:"
                                         ].map((step, index) => (
-                                            <motion.li 
+                                            <motion.li
                                                 key={index}
                                                 variants={listItemVariants}
                                                 className="text-lg leading-relaxed text-slate-700 dark:text-slate-300"
@@ -150,7 +147,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
 
                             {/* Tech Stack */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     ⚙️ Tech Stack
                                 </h2>
                                 <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -181,10 +178,10 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
 
                             {/* Folder Structure */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     📂 Folder Structure
                                 </h2>
-                                <motion.div 
+                                <motion.div
                                     className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/50 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-lg"
                                     whileHover={cardVariants.hover}
                                 >
@@ -208,7 +205,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
 
                             {/* OS Differences */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     🖥️ OS Differences
                                 </h2>
                                 <motion.div className="grid gap-6">
@@ -236,10 +233,10 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
 
                             {/* Extract Session */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     🔑 Extract Session
                                 </h2>
-                                
+
                                 <div className="space-y-8">
                                     <motion.div variants={itemVariants}>
                                         <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Server Side</h3>
@@ -280,10 +277,10 @@ export function useSession() {
 
                             {/* Auth Flows */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     👤 Auth Flows
                                 </h2>
-                                
+
                                 <div className="space-y-10">
                                     {/* Sign In */}
                                     <motion.div variants={itemVariants}>
@@ -333,10 +330,10 @@ export function useSession() {
 
                             {/* Route Protection */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     🔐 Route Protection
                                 </h2>
-                                
+
                                 <div className="space-y-10">
                                     <motion.div variants={itemVariants}>
                                         <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Server Side</h3>
@@ -368,7 +365,7 @@ if (protectedRoutes.includes(path) && !token) {
 
                             {/* API Protection */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
                                     🔐 API Protection
                                 </h2>
                                 <motion.div whileHover={cardVariants.hover}>
@@ -387,39 +384,26 @@ export async function GET() {
 
                             {/* Important Considerations */}
                             <motion.section variants={itemVariants}>
-                                <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light bg-clip-text text-transparent">
+                                <h2 className="text-4xl font-bold mb-4">
                                     ⚠️ Important Considerations
                                 </h2>
-                                <motion.div 
+                                <motion.div
                                     className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl p-8 border border-yellow-200 dark:border-yellow-700 shadow-lg"
                                     whileHover={cardVariants.hover}
                                 >
-                                    <ul className="space-y-4">
-                                        {[
-                                            "Use secure HTTP-only cookies to store sessions",
-                                            "Keep secrets out of codebase via environment variables",
-                                            "Rotate JWT secrets periodically",
-                                            "Apply CSRF protection if required",
-                                            "Always validate incoming requests"
-                                        ].map((item, index) => (
-                                            <motion.li 
-                                                key={index}
-                                                variants={listItemVariants}
-                                                className="flex items-start gap-3 text-lg text-yellow-800 dark:text-yellow-200"
-                                            >
-                                                <motion.div variants={iconHoverVariants} whileHover="hover">
-                                                    <FaShieldAlt className="w-5 h-5 mt-1 text-yellow-600 dark:text-yellow-400" />
-                                                </motion.div>
-                                                {item}
-                                            </motion.li>
-                                        ))}
+                                    <ul className="list-disc pl-6 space-y-2 text-yellow-700 dark:text-yellow-300">
+                                        <li>Use secure HTTP-only cookies to store sessions</li>
+                                        <li>Keep secrets out of codebase via environment variables</li>
+                                        <li>Rotate JWT secrets periodically</li>
+                                        <li>Apply CSRF protection if required</li>
+                                        <li>Always validate incoming requests</li>
                                     </ul>
                                 </motion.div>
                             </motion.section>
 
                             {/* Next Steps */}
                             <motion.section variants={itemVariants} className="pb-16">
-                                <motion.div 
+                                <motion.div
                                     className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-2xl p-8 shadow-lg"
                                     whileHover={cardVariants.hover}
                                 >
@@ -432,12 +416,12 @@ export async function GET() {
                                     <p className="text-lg mb-6 text-slate-700 dark:text-slate-300">
                                         Clone this template and start building your authenticated Next.js application with JWT tokens today!
                                     </p>
-                                    <motion.div 
+                                    <motion.div
                                         className="flex flex-wrap gap-4"
                                         variants={containerVariants}
                                     >
-                                        <motion.a 
-                                            href="https://github.com/Matdweb/authbilders-nextjs-jwt" 
+                                        <motion.a
+                                            href="https://github.com/Matdweb/authbilders-nextjs-jwt"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             variants={itemVariants}
@@ -448,8 +432,8 @@ export async function GET() {
                                             <FaGithub className="w-5 h-5" />
                                             View on GitHub
                                         </motion.a>
-                                        <motion.a 
-                                            href="/docs/concepts/jwt" 
+                                        <motion.a
+                                            href="/docs/concepts/jwt"
                                             variants={itemVariants}
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
