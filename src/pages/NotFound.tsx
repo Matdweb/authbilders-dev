@@ -32,17 +32,6 @@ const NotFound = () => {
     }
   };
 
-  const floatingVariants = {
-    animate: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background px-4">
       <motion.div
@@ -65,8 +54,14 @@ const NotFound = () => {
 
         {/* Floating Illustration */}
         <motion.div
-          variants={floatingVariants}
-          animate="animate"
+          animate={{
+            y: [-10, 10, -10]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "loop"
+          }}
           className="flex justify-center mb-12"
         >
           <div className="relative">
