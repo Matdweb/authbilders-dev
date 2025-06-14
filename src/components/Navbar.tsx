@@ -11,63 +11,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Menu } from 'lucide-react';
-
-// Import the documentation structure from DocSidebar
-interface DocLink {
-  title: string;
-  href: string;
-}
-
-interface DocCategory {
-  title: string;
-  links: DocLink[];
-}
-
-const docLinks: DocCategory[] = [
-  {
-    title: "Getting Started",
-    links: [
-      { title: "Introduction", href: "/docs" },
-      { title: "Installation", href: "/docs/installation" },
-      { title: "Quick Start", href: "/docs/quick-start" },
-    ],
-  },
-  {
-    title: "Authentication",
-    links: [
-      { title: "Email/Password Auth", href: "/docs/authentication/email-password" },
-      { title: "Social Login", href: "/docs/authentication/social-login" },
-      { title: "Multi-Factor Auth", href: "/docs/authentication/multi-factor" },
-      { title: "Magic Links", href: "/docs/authentication/magic-links" },
-      { title: "JWT Authentication", href: "/docs/authentication/jwt" },
-    ],
-  },
-  {
-    title: "Authorization",
-    links: [
-      { title: "Role-Based Access", href: "/docs/authorization/role-based" },
-      { title: "Permission-Based Access", href: "/docs/authorization/permission-based" },
-      { title: "Protected Routes", href: "/docs/authorization/protected-routes" },
-    ],
-  },
-  {
-    title: "Guides",
-    links: [
-      { title: "Securing APIs", href: "/docs/guides/securing-apis" },
-      { title: "Session Management", href: "/docs/guides/session-management" },
-      { title: "Password Storage", href: "/docs/guides/password-storage" },
-      { title: "Security Best Practices", href: "/docs/guides/security-best-practices" },
-    ],
-  },
-  {
-    title: "Templates",
-    links: [
-      { title: "Basic Auth", href: "/docs/templates/basic-auth" },
-      { title: "Social Login", href: "/docs/templates/social-login" },
-      { title: "Multi-Factor Auth", href: "/docs/templates/multi-factor" },
-    ],
-  },
-];
+import { docLinks } from '@/lib/docLinks';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
