@@ -156,12 +156,10 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
                             </motion.section>
                             <motion.section variants={itemVariants}>
                                 <motion.div whileHover={cardVariants.hover}>
-                                    <div className="bg-muted p-4 rounded-lg mt-8">
-                                        <h3 className="text-lg font-semibold mb-2">💡 Further Guidance</h3>
-                                        <p>
-                                            Take a look to <a href="/docs/services/resend" className="text-authbuilders-purple hover:underline">Resend setup guide</a> to get the right env variable value.
-                                            Also, you can use <a href="/docs/services/resend" className="text-authbuilders-purple hover:underline">randomkeygen.com</a> to generate secret keys.
-                                        </p>
+                                    <div className="doc-callout-info">
+                                        <p className="font-medium mb-2">💡 Pro Tips</p>
+                                        1. Take a look to <a href="/docs/services/resend" className="text-authbuilders-purple hover:underline">Resend setup guide</a> to get the right env variable value. <br />
+                                        2. Visit <a href="https://randomkeygen.com/" className="text-authbuilders-purple hover:underline">randomkeygen.com</a> to generate secret keys.
                                     </div>
                                 </motion.div>
                             </motion.section>
