@@ -7,12 +7,10 @@ import DocContent from "@/components/DocContent";
 import CodeBlock from "@/components/CodeBlock";
 import {
     FaNodeJs,
-    FaReact,
     FaDatabase,
     FaLinux,
     FaApple,
     FaWindows,
-    FaShieldAlt,
     FaGithub
 } from "react-icons/fa";
 import {
@@ -20,7 +18,6 @@ import {
     SiTypescript,
     SiTailwindcss,
     SiJsonwebtokens,
-    SiVercel
 } from "react-icons/si";
 
 // Animation variants
@@ -132,7 +129,8 @@ $ node -v`
                                                 )}
                                                 {index === 3 && (
                                                     <CodeBlock language="bash" filename="Dependencies">{
-                                                        `npm install`
+                                                        `cd my-new-app
+npm install`
                                                     }</CodeBlock>
                                                 )}
                                                 {index === 4 && (
@@ -171,7 +169,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
                                 </h2>
                                 <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {[
-                                        { icon: SiNextdotjs, text: "Next.js 14 (React 18)", color: "text-black dark:text-white" },
+                                        { icon: SiNextdotjs, text: "Next.js 15", color: "text-black dark:text-white" },
                                         { icon: FaNodeJs, text: "Node.js", color: "text-green-500" },
                                         { icon: SiTypescript, text: "TypeScript", color: "text-blue-500" },
                                         { icon: SiJsonwebtokens, text: "JWT (Jose + jsonwebtoken)", color: "text-purple-500" },
