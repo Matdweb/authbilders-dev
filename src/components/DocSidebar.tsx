@@ -13,8 +13,8 @@ const DocSidebar = () => {
   return (
     <>
       <div className={cn(
-        "fixed inset-y-0 z-20 flex-col border-r border-border bg-background transition-all w-80",
-        "lg:sticky lg:top-[69px] lg:flex lg:h-[calc(100vh-69px)]",
+        "fixed inset-y-0 left-0 z-20 flex-col border-r border-border bg-background w-80",
+        "lg:flex lg:top-[69px] lg:h-[calc(100vh-69px)]",
         isMobileOpen ? "flex w-full" : "hidden lg:flex"
       )}>
         <div className="flex h-[69px] items-center border-b border-border px-6 lg:hidden">
@@ -53,7 +53,7 @@ const DocSidebar = () => {
                         to={link.href}
                         onClick={() => setIsMobileOpen(false)}
                         className={cn(
-                          "flex w-full items-center rounded-md border border-transparent px-3 py-1.5 text-sm transition-colors",
+                          "flex w-full items-center rounded-md border border-transparent px-3 py-2 text-sm transition-colors",
                           location.pathname === link.href
                             ? "bg-muted font-medium text-foreground"
                             : "text-muted-foreground hover:bg-muted hover:text-foreground",

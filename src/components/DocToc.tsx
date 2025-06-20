@@ -94,7 +94,7 @@ const DocToc = () => {
 
   return (
     <div className="hidden lg:block lg:w-[240px] lg:shrink-0">
-      <div className="lg:sticky lg:top-28">
+      <div className="fixed top-28 right-4 w-[240px]">
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
