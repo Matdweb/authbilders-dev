@@ -7,9 +7,22 @@ interface DocLink {
 interface DocCategory {
     title: string;
     links: DocLink[];
+    icon?: string;
 }
 
-export const docLinks: DocCategory[] = [
+interface TechnologySection {
+    title: string;
+    icon?: string;
+    categories: DocCategory[];
+    disabled?: boolean;
+}
+
+interface GeneralCategory {
+    title: string;
+    links: DocLink[];
+}
+
+export const generalCategories: GeneralCategory[] = [
     {
         title: "Getting Started",
         links: [
@@ -31,34 +44,6 @@ export const docLinks: DocCategory[] = [
         ],
     },
     {
-        title: "Templates",
-        links: [
-            { title: "Next.js + Firebase", href: "/docs/templates/nextjs-firebase" },
-            { title: "Next.js + JWT (Mocked DB)", href: "/docs/templates/nextjs-jwt" },
-            { title: "Next.js + NextAuth.js", href: "/docs/templates/nextjs-nextauth" },
-            { title: "Vite (Coming Soon)", href: "/docs/templates/vite", disabled: true },
-        ],
-    },
-    {
-        title: "Built-in Components",
-        links: [
-            { title: "Count Down Timer", href: "/docs/components/timer" },
-            { title: "User Info + Session", href: "/docs/components/user-info" },
-            { title: "Call API Button", href: "/docs/components/api-button" },
-            { title: "AuthForm", href: "/docs/components/authForm" },
-        ],
-    },
-    {
-        title: "Service Integrations",
-        links: [
-            { title: "Firebase", href: "/docs/integrations/firebase" },
-            { title: "NextAuth.js", href: "/docs/integrations/nextauth" },
-            { title: "Resend", href: "/docs/integrations/resend" },
-            { title: "GitHub Login", href: "/docs/integrations/github" },
-            { title: "Google Login", href: "/docs/integrations/google" },
-        ],
-    },
-    {
         title: "Security & Best Practices",
         links: [
             { title: "Password Handling", href: "/docs/security/passwords" },
@@ -66,5 +51,85 @@ export const docLinks: DocCategory[] = [
             { title: "Frontend Security Tips", href: "/docs/security/frontend" },
             { title: "Backend Security Layers", href: "/docs/security/backend" },
         ],
+    },
+];
+
+export const technologySections: TechnologySection[] = [
+    {
+        title: "Next.js",
+        icon: "nextjs",
+        categories: [
+            {
+                title: "Templates",
+                icon: "template",
+                links: [
+                    { title: "Next.js + Firebase", href: "/docs/templates/nextjs-firebase" },
+                    { title: "Next.js + JWT (Mocked DB)", href: "/docs/templates/nextjs-jwt" },
+                    { title: "Next.js + NextAuth.js", href: "/docs/templates/nextjs-nextauth" },
+                ],
+            },
+            {
+                title: "Built-in Components",
+                icon: "components",
+                links: [
+                    { title: "Count Down Timer", href: "/docs/components/timer" },
+                    { title: "User Info + Session", href: "/docs/components/user-info" },
+                    { title: "Call API Button", href: "/docs/components/api-button" },
+                    { title: "AuthForm", href: "/docs/components/authForm" },
+                ],
+            },
+            {
+                title: "Service Integrations",
+                icon: "integrations",
+                links: [
+                    { title: "Firebase", href: "/docs/integrations/firebase" },
+                    { title: "NextAuth.js", href: "/docs/integrations/nextauth" },
+                    { title: "Resend", href: "/docs/integrations/resend" },
+                    { title: "GitHub Login", href: "/docs/integrations/github" },
+                    { title: "Google Login", href: "/docs/integrations/google" },
+                ],
+            },
+        ],
+    },
+    {
+        title: "Vite.js",
+        icon: "vite",
+        disabled: true,
+        categories: [
+            {
+                title: "Templates",
+                icon: "template",
+                links: [
+                    { title: "Coming Soon", href: "/docs/templates/vite", disabled: true },
+                ],
+            },
+            {
+                title: "Built-in Components",
+                icon: "components",
+                links: [],
+            },
+            {
+                title: "Service Integrations",
+                icon: "integrations",
+                links: [],
+            },
+        ],
+    },
+];
+
+// Keep backward compatibility
+export const docLinks = [
+    ...generalCategories,
+    {
+        title: "Templates",
+        links: technologySections[0].categories[0].links,
+    },
+    {
+        title: "Built-in Components", 
+        links: technologySections[0].categories[1].links,
+    },
+    {
+        title: "Service Integrations",
+        links: technologySections[0].categories[2].links,
     },
 ];
