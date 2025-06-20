@@ -1,3 +1,4 @@
+
 import DocContent from '@/components/DocContent';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -6,10 +7,10 @@ import CodeBlock from '@/components/CodeBlock';
 
 const Installation = () => {
   return (
-    <div className="min-h-screen min-w-96 flex flex-col overflow-x-hidden">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Navbar />
       <div className="flex-1 pt-14">
-        <div className="max-w-[1440px] mx-auto lg:flex lg:gap-8 lg:px-4">
+        <div className="max-w-[1440px] mx-auto flex">
           <DocSidebar />
           <main className="flex-1 min-w-0">
             <DocContent

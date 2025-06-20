@@ -13,7 +13,7 @@ const DocSidebar = () => {
   return (
     <>
       <div className={cn(
-        "fixed inset-y-0 z-20 flex-col border-r border-border bg-background transition-all",
+        "fixed inset-y-0 z-20 flex-col border-r border-border bg-background transition-all w-80",
         "lg:sticky lg:top-[69px] lg:flex lg:h-[calc(100vh-69px)]",
         isMobileOpen ? "flex w-full" : "hidden lg:flex"
       )}>
@@ -42,18 +42,18 @@ const DocSidebar = () => {
           <div className="px-6 lg:px-8">
             <div className="space-y-6">
               {docLinks.map((category, i) => (
-                <div key={i} className="space-y-2">
-                  <h4 className="font-semibold text-sm tracking-tight">
+                <div key={i} className="space-y-3">
+                  <h4 className="font-semibold text-base tracking-tight text-foreground">
                     {category.title}
                   </h4>
-                  <div className="grid grid-flow-row gap-1">
+                  <div className="grid grid-flow-row gap-2">
                     {category.links.map((link, j) => (
                       <Link
                         key={j}
                         to={link.href}
                         onClick={() => setIsMobileOpen(false)}
                         className={cn(
-                          "flex w-full items-center rounded-md border border-transparent px-2 py-1.5 text-sm transition-colors",
+                          "flex w-full items-center rounded-md border border-transparent px-3 py-2.5 text-sm transition-colors",
                           location.pathname === link.href
                             ? "bg-muted font-medium text-foreground"
                             : "text-muted-foreground hover:bg-muted hover:text-foreground",
