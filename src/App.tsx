@@ -31,6 +31,9 @@ import ConceptsMfa from "./pages/docs/concepts/ConceptsMfa";
 import Nextjs_jwt from "./pages/docs/templates/Nextjs_jwt"
 import Nextjs_NextAuth from "./pages/docs/templates/Nextjs_NextAuth";
 
+// --Services
+import ServiceResendDoc from "./pages/docs/integrations/ServiceResend";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -70,6 +73,9 @@ const App = () => {
             {/* templates */}
             <Route path="/docs/templates/nextjs-jwt" element={<Nextjs_jwt />} />
             <Route path="/docs/templates/nextjs-nextauth" element={<Nextjs_NextAuth />} />
+
+            {/* integrations */}
+            <Route path="/docs/integrations/resend" element={<ServiceResendDoc />} />
 
             <Route path="/templates" element={<Templates />} />
             <Route path="/guides" element={<Guides />} />
