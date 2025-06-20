@@ -99,8 +99,8 @@ const Nextjs_jwt = () => {
                                     <ol className="list-decimal pl-8 space-y-6">
                                         {[
                                             "Ensure git and node are installed on your machine.",
-                                            "Clone the repository:",
                                             "Install degit globally:",
+                                            "Download the template:",
                                             "Install dependencies:",
                                             "Setup environment variables:",
                                             "Run development server:"
@@ -108,18 +108,26 @@ const Nextjs_jwt = () => {
                                             <motion.li
                                                 key={index}
                                                 variants={listItemVariants}
-                                                className="text-lg leading-relaxed text-slate-700 dark:text-slate-300"
+                                                className="text-md leading-relaxed text-slate-700 dark:text-slate-300"
                                             >
                                                 {step}
+                                                {index === 0 && (
+                                                    <CodeBlock language="bash" filename="Console">{
+                                                        `# Git
+$ git --version
+
+# Node.js
+$ node -v`
+                                                    }</CodeBlock>
+                                                )}
                                                 {index === 1 && (
-                                                    <CodeBlock language="bash" filename="Clone Repository">{
-                                                        `git clone https://github.com/Matdweb/authbilders-nextjs-jwt your-project-name
-cd your-project-name`
+                                                    <CodeBlock language="bash" filename="degit">{
+                                                        `npm install -g degit`
                                                     }</CodeBlock>
                                                 )}
                                                 {index === 2 && (
-                                                    <CodeBlock language="bash" filename="degit">{
-                                                        `npm install -g degit`
+                                                    <CodeBlock language="bash" filename="Download template">{
+                                                        `degit github:Matdweb/authbilders-nextjs-jwt my-new-app`
                                                     }</CodeBlock>
                                                 )}
                                                 {index === 3 && (
@@ -130,9 +138,11 @@ cd your-project-name`
                                                 {index === 4 && (
                                                     <CodeBlock language="bash" filename=".env.local">{
                                                         `JWT_SECRET_KEY=your_secret
+RESEND_API_KEY=your_api_key
 RESET_TOKEN_SECRET=your_reset_secret
 NEXT_PUBLIC_BASE_URL=http://localhost:3000`
-                                                    }</CodeBlock>
+                                                    }
+                                                    </CodeBlock>
                                                 )}
                                                 {index === 5 && (
                                                     <CodeBlock language="bash" filename="Run Dev Server">{
@@ -142,6 +152,17 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
                                             </motion.li>
                                         ))}
                                     </ol>
+                                </motion.div>
+                            </motion.section>
+                            <motion.section variants={itemVariants}>
+                                <motion.div whileHover={cardVariants.hover}>
+                                    <div className="bg-muted p-4 rounded-lg mt-8">
+                                        <h3 className="text-lg font-semibold mb-2">💡 Further Guidance</h3>
+                                        <p>
+                                            Take a look to <a href="/docs/services/resend" className="text-authbuilders-purple hover:underline">Resend setup guide</a> to get the right env variable value.
+                                            Also, you can use <a href="/docs/services/resend" className="text-authbuilders-purple hover:underline">randomkeygen.com</a> to generate secret keys.
+                                        </p>
+                                    </div>
                                 </motion.div>
                             </motion.section>
 
@@ -241,16 +262,13 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000`
                                     <motion.div variants={itemVariants}>
                                         <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Server Side</h3>
                                         <motion.div whileHover={cardVariants.hover}>
-                                            <CodeBlock language="typescript" filename="dal/session.ts">{
-                                                `"use server";
-import { cookies } from "next/headers";
-import { decrypt } from "../utils/jwt";
+                                            <CodeBlock language="typescript" filename="app/protected">{
+                                                `import { getSession } from "../lib/(AuthBilders)/dal/session";
 
-export async function getSession() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session")?.value;
-  if (!session) return null;
-  return await decrypt(session);
+export default async function App() {
+    const decoded = await getSession();
+
+    return (...)
 }`}
                                             </CodeBlock>
                                         </motion.div>
@@ -259,15 +277,23 @@ export async function getSession() {
                                     <motion.div variants={itemVariants}>
                                         <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Client Side</h3>
                                         <motion.div whileHover={cardVariants.hover}>
-                                            <CodeBlock language="typescript" filename="hooks/useSession.ts">{
-                                                `import { useEffect, useState } from 'react';
+                                            <CodeBlock language="typescript" filename="app/protected.ts">{
+                                                `'use client';
+import { getSession } from "../lib/(AuthBilders)/dal/session";
+import { useEffect } from "react";
 
-export function useSession() {
-  const [session, setSession] = useState(null);
+export default function App() {
+
   useEffect(() => {
-    fetch('/api/session').then(res => res.json()).then(data => setSession(data));
+    const handleSession = async () => {
+      const session = await getSession();
+    }
+
+    handleSession();
   }, []);
-  return session;
+
+  return (...)
+
 }`}
                                             </CodeBlock>
                                         </motion.div>
@@ -328,6 +354,116 @@ export function useSession() {
                                 </div>
                             </motion.section>
 
+                            {/* Auth Forms */}
+                            <motion.section variants={itemVariants}>
+                                <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
+                                    📋 AuthForm.tsx
+                                </h2>
+
+                                <div className="space-y-10">
+                                    {/* Login */}
+                                    <motion.div variants={itemVariants}>
+                                        <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Log In</h3>
+                                        <motion.div whileHover={cardVariants.hover}>
+                                            <CodeBlock language="typescript" filename="login/page.tsx">{
+                                                `'use client';
+import AuthForm from '@/components/(AuthBilders)/Form/AuthForm'
+import { passwordSchema } from '@/app/lib/(AuthBilders)/zod'
+import { login } from '@/app/lib/(AuthBilders)/actions';
+import Link from 'next/link';
+
+export default function LoginPage() {
+    return (
+        <AuthForm
+            title="Login"
+            action={login}
+            redirectTo='/'
+            fields={[
+                {
+                    name: 'email',
+                    label: 'Email',
+                    type: 'email',
+                    required: true,
+                },
+                {
+                    name: 'password',
+                    label: 'Password',
+                    type: 'password',
+                    required: true,
+                    schema: passwordSchema,
+                    onValueChange: (val) => passwordSchema.safeParse(val).success || undefined
+                }
+            ]}
+            thirdPartyProviders={['google', 'github']}
+            extraContent={
+                <section className="mt-4 text-gray-400">
+                    <p className="text-center">
+                        Don&apos;t have an account? <Link href="/signUp" className="text-blue-500">Sign Up</Link>
+                    </p>
+                    <p className="text-center">
+                        A lot in mind? <Link href="/forgot-password/provide-email" className="text-blue-500 cursor-pointer">Forgot password</Link>
+                    </p>
+                </section>
+            }
+        />
+    )
+}
+`}
+                                            </CodeBlock>
+                                        </motion.div>
+                                    </motion.div>
+
+                                    {/* Sign Up */}
+                                    <motion.div variants={itemVariants}>
+                                        <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Sign Up</h3>
+                                        <motion.div whileHover={cardVariants.hover}>
+                                            <CodeBlock language="typescript" filename="signup/page.tsx">{
+                                                `'use client';
+import AuthForm from '@/components/(AuthBilders)/Form/AuthForm'
+import { passwordSchema } from '../lib/(AuthBilders)/zod'
+import { signUp } from '@/app/lib/(AuthBilders)/actions'
+import Link from 'next/link'
+
+export default function SignUpPage() {
+    return (
+        <AuthForm
+            title="Sign Up"
+            strategy="server"
+            action={signUp}
+            fields={[
+                {
+                    name: 'email',
+                    label: 'Email',
+                    type: 'email',
+                    required: true,
+                },
+                {
+                    name: 'password',
+                    label: 'Password',
+                    type: 'password',
+                    required: true,
+                    schema: passwordSchema,
+                    onValueChange: (val) => passwordSchema.safeParse(val).success || undefined
+                }
+            ]}
+            thirdPartyProviders={['google', 'github']}
+            extraContent={
+                <section className="mt-8 text-gray-400">
+                    <p className="text-center">
+                        You already have an account? <Link href="/login" className="text-blue-500">Login</Link>
+                    </p>
+                </section>
+            }
+        />
+    )
+}
+`}
+                                            </CodeBlock>
+                                        </motion.div>
+                                    </motion.div>
+                                </div>
+                            </motion.section>
+
                             {/* Route Protection */}
                             <motion.section variants={itemVariants}>
                                 <h2 className="text-4xl font-bold mb-8 doc-heading pb-8">
@@ -335,18 +471,6 @@ export function useSession() {
                                 </h2>
 
                                 <div className="space-y-10">
-                                    <motion.div variants={itemVariants}>
-                                        <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Server Side</h3>
-                                        <motion.div whileHover={cardVariants.hover}>
-                                            <CodeBlock language="typescript" filename="protected/page.tsx">{
-                                                `import { getSession } from '@/app/lib/(AuthBilders)/dal/session';
-const decoded = await getSession();
-if (!decoded) return <NotLoggedInPage />;
-return <Dashboard user={decoded} />;`}
-                                            </CodeBlock>
-                                        </motion.div>
-                                    </motion.div>
-
                                     <motion.div variants={itemVariants}>
                                         <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200">Middleware</h3>
                                         <motion.div whileHover={cardVariants.hover}>
@@ -388,9 +512,7 @@ export async function GET() {
                                     ⚠️ Important Considerations
                                 </h2>
                                 <motion.div
-                                    className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl p-8 border border-yellow-200 dark:border-yellow-700 shadow-lg"
-                                    whileHover={cardVariants.hover}
-                                >
+                                    className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl p-8 border border-yellow-200 dark:border-yellow-700 shadow-lg">
                                     <ul className="list-disc pl-6 space-y-2 text-yellow-700 dark:text-yellow-300">
                                         <li>Use secure HTTP-only cookies to store sessions</li>
                                         <li>Keep secrets out of codebase via environment variables</li>
@@ -404,9 +526,7 @@ export async function GET() {
                             {/* Next Steps */}
                             <motion.section variants={itemVariants} className="pb-16">
                                 <motion.div
-                                    className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-2xl p-8 shadow-lg"
-                                    whileHover={cardVariants.hover}
-                                >
+                                    className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-2xl p-8 shadow-lg">
                                     <h3 className="text-2xl font-bold mb-6 text-authbuilders-purple flex items-center gap-3">
                                         <motion.div variants={iconHoverVariants} whileHover="hover">
                                             <FaGithub className="w-8 h-8" />
