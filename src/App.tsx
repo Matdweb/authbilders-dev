@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound";
 import TechStackSelector from "./pages/TechStackSelector";
 
 // Documentation pages
+
+// --Concepts
 import Installation from "./pages/docs/Installation";
 import QuickStart from "./pages/docs/QuickStart";
 import ConceptsAuthentication from "./pages/docs/concepts/ConceptsAuthentication";
@@ -24,7 +26,10 @@ import ConceptsJwt from "./pages/docs/concepts/ConceptsJwt";
 import ConceptsSessions from "./pages/docs/concepts/ConceptsSessions";
 import ConceptsMagicLinks from "./pages/docs/concepts/ConceptsMagicLinks";
 import ConceptsMfa from "./pages/docs/concepts/ConceptsMfa";
+
+// --Templates
 import Nextjs_jwt from "./pages/docs/templates/Nextjs_jwt"
+import Nextjs_NextAuth from "./pages/docs/templates/Nextjs_NextAuth";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +59,7 @@ const App = () => {
             <Route path="/docs" element={<Documentation />} />
             <Route path="/docs/installation" element={<Installation />} />
             <Route path="/docs/quick-start" element={<QuickStart />} />
+            {/* concepts */}
             <Route path="/docs/concepts/authentication" element={<ConceptsAuthentication />} />
             <Route path="/docs/concepts/dal" element={<ConceptsDal />} />
             <Route path="/docs/concepts/authorization" element={<ConceptsAuthorization />} />
@@ -61,7 +67,10 @@ const App = () => {
             <Route path="/docs/concepts/sessions" element={<ConceptsSessions />} />
             <Route path="/docs/concepts/magic-links" element={<ConceptsMagicLinks />} />
             <Route path="/docs/concepts/mfa" element={<ConceptsMfa />} />
+            {/* templates */}
             <Route path="/docs/templates/nextjs-jwt" element={<Nextjs_jwt />} />
+            <Route path="/docs/templates/nextjs-nextauth" element={<Nextjs_NextAuth />} />
+
             <Route path="/templates" element={<Templates />} />
             <Route path="/guides" element={<Guides />} />
             <Route path="/tech-stack-selector" element={<TechStackSelector />} />
