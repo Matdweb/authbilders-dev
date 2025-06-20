@@ -17,13 +17,13 @@ import TechStackSelector from "./pages/TechStackSelector";
 // Documentation pages
 import Installation from "./pages/docs/Installation";
 import QuickStart from "./pages/docs/QuickStart";
-import ConceptsAuthentication from "./pages/docs/ConceptsAuthentication";
-import ConceptsDal from "./pages/docs/ConceptsDal";
-import ConceptsAuthorization from "./pages/docs/ConceptsAuthorization";
-import ConceptsJwt from "./pages/docs/ConceptsJwt";
-import ConceptsSessions from "./pages/docs/ConceptsSessions";
-import ConceptsMagicLinks from "./pages/docs/ConceptsMagicLinks";
-import ConceptsMfa from "./pages/docs/ConceptsMfa";
+import ConceptsAuthentication from "./pages/docs/concepts/ConceptsAuthentication";
+import ConceptsDal from "./pages/docs/concepts/ConceptsDal";
+import ConceptsAuthorization from "./pages/docs/concepts/ConceptsAuthorization";
+import ConceptsJwt from "./pages/docs/concepts/ConceptsJwt";
+import ConceptsSessions from "./pages/docs/concepts/ConceptsSessions";
+import ConceptsMagicLinks from "./pages/docs/concepts/ConceptsMagicLinks";
+import ConceptsMfa from "./pages/docs/concepts/ConceptsMfa";
 import Nextjs_jwt from "./pages/docs/templates/Nextjs_jwt"
 
 const queryClient = new QueryClient();
