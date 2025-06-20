@@ -13,10 +13,10 @@ interface DocContentProps {
 const DocContent = ({ title, description, children }: DocContentProps) => {
   return (
     <div className="min-h-[calc(100vh-69px)] pb-16">
-      <div className="container py-8 px-6 lg:px-8">
+      <div className="py-8 px-6 lg:px-8">
         <div className="flex gap-8">
           {/* Main content */}
-          <div className="flex-1 max-w-4xl">
+          <div className="flex-1 min-w-0 max-w-4xl">
             {/* Breadcrumb */}
             <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
               <span>Documentation</span>
