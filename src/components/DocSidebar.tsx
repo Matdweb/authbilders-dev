@@ -53,7 +53,7 @@ const DocSidebar = () => {
                         to={link.href}
                         onClick={() => setIsMobileOpen(false)}
                         className={cn(
-                          "flex w-full items-center rounded-md border border-transparent px-3 py-2.5 text-sm transition-colors",
+                          "flex w-full items-center rounded-md border border-transparent px-3 py-1.5 text-sm transition-colors",
                           location.pathname === link.href
                             ? "bg-muted font-medium text-foreground"
                             : "text-muted-foreground hover:bg-muted hover:text-foreground",
