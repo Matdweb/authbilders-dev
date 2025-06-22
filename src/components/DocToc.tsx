@@ -13,7 +13,7 @@ const DocToc = () => {
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   const [activeId, setActiveId] = useState<string>('');
 
-  // Generate slug from heading text
+  // Generate slug from heading txt
   const generateSlug = (text: string): string => {
     return text
       .toLowerCase()
