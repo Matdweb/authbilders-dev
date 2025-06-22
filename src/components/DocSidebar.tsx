@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -30,13 +30,30 @@ const TechIcon = ({ icon }: { icon?: string }) => {
 
 const DocSidebar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [openAccordions, setOpenAccordions] = useState<string[]>([]);
   const location = useLocation();
+
+  useEffect(() => {
+    const matchedTech = technologySections.find((tech) =>
+      tech.categories.some((cat) =>
+        cat.links.some((link) => link.href === location.pathname)
+      )
+    );
+    if (matchedTech) {
+      setOpenAccordions((prev) =>
+        prev.includes(matchedTech.title.toLowerCase())
+          ? prev
+          : [...prev, matchedTech.title.toLowerCase()]
+      );
+    }
+  }, [location.pathname]);
+
 
   return (
     <>
       <div className={cn(
         "fixed inset-y-0 left-0 z-20 flex-col border-r border-border bg-background w-80",
-        "lg:flex lg:top-[69px] lg:h-[calc(100vh-69px)]",
+        "lg:flex lg:top-[69px] lg:h-[calc(100vh-69px)] ",
         isMobileOpen ? "flex w-full" : "hidden lg:flex"
       )}>
         <div className="flex h-[69px] items-center border-b border-border px-6 lg:hidden">
@@ -96,7 +113,12 @@ const DocSidebar = () => {
                   Technologies
                 </h4>
 
-                <Accordion type="multiple" className="w-full space-y-2">
+                <Accordion
+                  type="multiple"
+                  value={openAccordions}
+                  onValueChange={setOpenAccordions}
+                  className="w-full space-y-2"
+                >
                   {technologySections.map((tech, techIndex) => (
                     <AccordionItem
                       key={techIndex}
