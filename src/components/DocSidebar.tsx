@@ -6,14 +6,14 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
 import { generalCategories, technologySections } from '@/lib/docLinks';
-import { 
-  SiNextdotjs, 
+import {
+  SiNextdotjs,
   SiVite,
   SiReact
 } from 'react-icons/si';
-import { 
-  LayoutTemplate, 
-  Plug, 
+import {
+  LayoutTemplate,
+  Plug,
   Package
 } from 'lucide-react';
 
@@ -64,7 +64,7 @@ const DocSidebar = () => {
           <div className="px-6 lg:px-8">
             <div className="space-y-6">
               {/* General Categories (Getting Started, Core Concepts, Security) */}
-              {generalCategories.map((category, i) => (
+              {generalCategories.slice(0, 1).map((category, i) => (
                 <div key={i} className="space-y-3">
                   <h4 className="font-semibold text-base tracking-tight text-foreground">
                     {category.title}
@@ -95,11 +95,11 @@ const DocSidebar = () => {
                 <h4 className="font-semibold text-base tracking-tight text-foreground">
                   Technologies
                 </h4>
-                
+
                 <Accordion type="multiple" className="w-full space-y-2">
                   {technologySections.map((tech, techIndex) => (
-                    <AccordionItem 
-                      key={techIndex} 
+                    <AccordionItem
+                      key={techIndex}
                       value={tech.title.toLowerCase()}
                       className={cn(
                         "border border-border rounded-lg",
@@ -120,7 +120,7 @@ const DocSidebar = () => {
                           )}
                         </div>
                       </AccordionTrigger>
-                      
+
                       {!tech.disabled && (
                         <AccordionContent className="px-4 pb-4">
                           <div className="space-y-4">
@@ -132,7 +132,7 @@ const DocSidebar = () => {
                                     {category.title}
                                   </h5>
                                 </div>
-                                
+
                                 <div className="space-y-1">
                                   {category.links.length > 0 ? (
                                     category.links.map((link, linkIndex) => (
@@ -166,6 +166,32 @@ const DocSidebar = () => {
                   ))}
                 </Accordion>
               </div>
+
+              {generalCategories.slice(1).map((category, i) => (
+                <div key={i} className="space-y-3">
+                  <h4 className="font-semibold text-base tracking-tight text-foreground">
+                    {category.title}
+                  </h4>
+                  <div className="grid grid-flow-row gap-2">
+                    {category.links.map((link, j) => (
+                      <Link
+                        key={j}
+                        to={link.href}
+                        onClick={() => setIsMobileOpen(false)}
+                        className={cn(
+                          "flex w-full items-center rounded-md border border-transparent px-3 py-2 text-sm transition-colors",
+                          location.pathname === link.href
+                            ? "bg-muted font-medium text-foreground"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                          link.disabled && "opacity-50 pointer-events-none"
+                        )}
+                      >
+                        {link.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </ScrollArea>
