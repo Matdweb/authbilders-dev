@@ -1,19 +1,11 @@
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-
-interface TocItem {
-  id: string;
-  text: string;
-  level: number;
-}
+import { useEffect, useState } from 'react';
 
 const DocToc = () => {
-  const [tocItems, setTocItems] = useState<TocItem[]>([]);
+  const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
   const [activeId, setActiveId] = useState<string>('');
 
-  // Generate slug from heading text
+  // Generate slug from heading txt
   const generateSlug = (text: string): string => {
     return text
       .toLowerCase()
@@ -50,7 +42,13 @@ const DocToc = () => {
 
   // Set up intersection observer for active section tracking
   useEffect(() => {
-    if (tocItems.length === 0) return;
+    const headingElements = document.querySelectorAll('h2, h3, h4');
+    const headingList = Array.from(headingElements).map((heading) => ({
+      id: heading.id || '',
+      text: heading.textContent || '',
+      level: parseInt(heading.tagName.charAt(1)),
+    }));
+    setHeadings(headingList);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -60,72 +58,36 @@ const DocToc = () => {
           }
         });
       },
-      {
-        rootMargin: '-100px 0px -80% 0px',
-        threshold: 0.1,
-      }
+      { rootMargin: '-20% 0% -35% 0%' }
     );
 
-    tocItems.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
+    headingElements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [tocItems]);
+  }, []);
 
-  // Smooth scroll to section
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100; // Account for sticky header
-      const elementPosition = element.offsetTop - offset;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  if (tocItems.length === 0) return null;
+  if (headings.length === 0) return null;
 
   return (
-    <div className="hidden lg:block lg:w-[240px] lg:shrink-0">
-      <div className="fixed top-28 right-4 w-[240px]">
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-          className="bg-gradient-to-br from-background/80 to-muted/20 backdrop-blur-sm border border-border rounded-lg p-4 shadow-md"
-        >
-          <h4 className="font-semibold text-sm text-foreground mb-3 tracking-tight">
-            On this page
-          </h4>
-          
-          <nav className="space-y-1">
-            {tocItems.slice(2).map((item) => (
-              <motion.button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={cn(
-                  "block w-full text-left text-sm leading-snug py-1.5 px-2 rounded-md transition-all duration-200",
-                  "hover:text-authbuilders-purple hover:bg-muted/50",
-                  item.level === 3 && "ml-3 text-xs",
-                  activeId === item.id
-                    ? "text-authbuilders-purple font-medium bg-authbuilders-purple/10"
-                    : "text-muted-foreground"
-                )}
-                whileHover={{ x: 2 }}
-                transition={{ duration: 0.15 }}
+    <div className="hidden xl:block">
+      <div className="fixed top-[69px] right-0 h-[calc(100vh-69px-80px)] w-64 overflow-y-auto border-l border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="p-6">
+          <h4 className="font-semibold text-sm mb-4 text-foreground">On This Page</h4>
+          <nav className="space-y-2">
+            {headings.map((heading) => (
+              <a
+                key={heading.id}
+                href={`#${heading.id}`}
+                className={`block text-sm py-1 transition-colors hover:text-foreground ${
+                  activeId === heading.id
+                    ? 'text-foreground font-medium border-l-2 border-authbuilders-purple pl-3'
+                    : 'text-muted-foreground pl-3'
+                } ${heading.level === 3 ? 'ml-4' : ''} ${heading.level === 4 ? 'ml-8' : ''}`}
               >
-                {item.text}
-              </motion.button>
+                {heading.text}
+              </a>
             ))}
           </nav>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
