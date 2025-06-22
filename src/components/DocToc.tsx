@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -32,10 +31,10 @@ const DocToc = () => {
         const text = heading.textContent || '';
         const level = parseInt(heading.tagName.charAt(1));
         const id = generateSlug(text);
-        
+
         // Set ID on the heading element for scrolling
         heading.id = id;
-        
+
         items.push({ id, text, level });
       });
 
@@ -82,7 +81,7 @@ const DocToc = () => {
     if (element) {
       const offset = 100; // Account for sticky header
       const elementPosition = element.offsetTop - offset;
-      
+
       window.scrollTo({
         top: elementPosition,
         behavior: 'smooth',
@@ -99,12 +98,13 @@ const DocToc = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="bg-gradient-to-br from-background/80 to-muted/20 backdrop-blur-sm border border-border rounded-lg p-4 shadow-md"
+          className="bg-gradient-to-br from-background/80 to-muted/20 backdrop-blur-sm border border-border rounded-lg p-4 shadow-md max-h-[calc(100vh-140px)] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40"
         >
+
           <h4 className="font-semibold text-sm text-foreground mb-3 tracking-tight">
             On this page
           </h4>
-          
+
           <nav className="space-y-1">
             {tocItems.slice(2).map((item) => (
               <motion.button
