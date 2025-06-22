@@ -55,7 +55,7 @@ const ServiceResendDoc = () => {
                                 </ol>
 
                                 {/* Integration example */}
-                                <h3 className="text-xl font-semibold mt-8 mb-2 ">🔌 Integration Example</h3>
+                                <h3 className="text-xl font-semibold mt-8 mb-2 text-authbuilders-purple">🔌 Integration Example</h3>
                                 <CodeBlock language="typescript" filename="app/api/send/route.ts">{`
 import { Resend } from 'resend';
 import { MyEmailTemplate } from '@/components/email/MyEmailTemplate';
