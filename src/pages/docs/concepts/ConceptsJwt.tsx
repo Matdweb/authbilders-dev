@@ -7,67 +7,66 @@ import CodeBlock from "@/components/CodeBlock";
 
 const ConceptsJwt = () => {
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
+    <div className="min-h-screen min-w-96 flex flex-col">
       <Navbar />
-      <div className="flex-1 pt-14">
-        <div className="max-w-[1440px] mx-auto flex">
-          <DocSidebar />
-          <main className="flex-1 min-w-0">
-            <DocContent
-              title="JWT Deep Dive"
-              description="Master JSON Web Tokens for secure, stateless authentication in modern web applications."
-            >
-              <h2 className="doc-heading">What are JSON Web Tokens?</h2>
-              <p className="doc-paragraph">
-                JSON Web Tokens (JWT) are a compact, URL-safe means of representing claims securely between two parties.
-                They're digitally signed, making them tamper-proof and perfect for authentication and information exchange.
-              </p>
+      <div className="lg:flex lg:flex-1 lg:container pt-14">
+        <DocSidebar />
+        <main className="flex-1">
+          <DocContent
+            title="JWT Deep Dive"
+            description="Master JSON Web Tokens for secure, stateless authentication in modern web applications."
+          >
+            <h2 className="doc-heading">What are JSON Web Tokens?</h2>
+            <p className="doc-paragraph">
+              JSON Web Tokens (JWT) are a compact, URL-safe means of representing claims securely between two parties.
+              They're digitally signed, making them tamper-proof and perfect for authentication and information exchange.
+            </p>
 
-              <div className="doc-callout-info">
-                <h3 className="text-lg font-semibold mb-2 text-blue-800 dark:text-blue-200">
-                  🔐 Security First
-                </h3>
-                <p className="text-blue-700 dark:text-blue-300">
-                  JWTs are cryptographically signed, ensuring data integrity and authenticity. They can be signed using a secret (HMAC) or a public/private key pair (RSA/ECDSA).
+            <div className="doc-callout-info">
+              <h3 className="text-lg font-semibold mb-2 text-blue-800 dark:text-blue-200">
+                🔐 Security First
+              </h3>
+              <p className="text-blue-700 dark:text-blue-300">
+                JWTs are cryptographically signed, ensuring data integrity and authenticity. They can be signed using a secret (HMAC) or a public/private key pair (RSA/ECDSA).
+              </p>
+            </div>
+
+            <h2 className="doc-heading">JWT Structure</h2>
+            <p className="doc-paragraph">
+              A JWT consists of three parts separated by dots (.), which are:
+            </p>
+
+            <div className="grid gap-6 md:grid-cols-3 mb-8">
+              <div className="border border-border rounded-lg p-6 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20">
+                <h3 className="font-semibold mb-3 text-red-800 dark:text-red-200">Header</h3>
+                <p className="text-sm text-red-700 dark:text-red-300">
+                  Contains metadata about the token, including the signing algorithm and token type.
                 </p>
               </div>
-
-              <h2 className="doc-heading">JWT Structure</h2>
-              <p className="doc-paragraph">
-                A JWT consists of three parts separated by dots (.), which are:
-              </p>
-
-              <div className="grid gap-6 md:grid-cols-3 mb-8">
-                <div className="border border-border rounded-lg p-6 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20">
-                  <h3 className="font-semibold mb-3 text-red-800 dark:text-red-200">Header</h3>
-                  <p className="text-sm text-red-700 dark:text-red-300">
-                    Contains metadata about the token, including the signing algorithm and token type.
-                  </p>
-                </div>
-                <div className="border border-border rounded-lg p-6 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
-                  <h3 className="font-semibold mb-3 text-green-800 dark:text-green-200">Payload</h3>
-                  <p className="text-sm text-green-700 dark:text-green-300">
-                    Contains the claims - statements about an entity (user) and additional data.
-                  </p>
-                </div>
-                <div className="border border-border rounded-lg p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
-                  <h3 className="font-semibold mb-3 text-blue-800 dark:text-blue-200">Signature</h3>
-                  <p className="text-sm text-blue-700 dark:text-blue-300">
-                    Used to verify the sender and ensure the message wasn't changed along the way.
-                  </p>
-                </div>
+              <div className="border border-border rounded-lg p-6 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
+                <h3 className="font-semibold mb-3 text-green-800 dark:text-green-200">Payload</h3>
+                <p className="text-sm text-green-700 dark:text-green-300">
+                  Contains the claims - statements about an entity (user) and additional data.
+                </p>
               </div>
+              <div className="border border-border rounded-lg p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
+                <h3 className="font-semibold mb-3 text-blue-800 dark:text-blue-200">Signature</h3>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  Used to verify the sender and ensure the message wasn't changed along the way.
+                </p>
+              </div>
+            </div>
 
-              <h3 className="doc-subheading">Example JWT Structure</h3>
+            <h3 className="doc-subheading">Example JWT Structure</h3>
 
-              <CodeBlock language="typescript" filename="Header (Base64URL encoded)">{`
+            <CodeBlock language="typescript" filename="Header (Base64URL encoded)">{`
 {	
   "alg": "HS256",
   "typ": "JWT"
 }
 `}</CodeBlock>
 
-              <CodeBlock language="typescript" filename="Payload (Base64URL encoded)">{`
+            <CodeBlock language="typescript" filename="Payload (Base64URL encoded)">{`
 {
   "sub": "1234567890",
   "name": "John Doe", 
@@ -76,7 +75,7 @@ const ConceptsJwt = () => {
 }
 `}</CodeBlock>
 
-              <CodeBlock language="typescript" filename="Signature">{`
+            <CodeBlock language="typescript" filename="Signature">{`
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
@@ -84,61 +83,61 @@ HMACSHA256(
 )
 `}</CodeBlock>
 
-              <CodeBlock language="typescript" filename="Final JWT">{`
+            <CodeBlock language="typescript" filename="Final JWT">{`
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 `}</CodeBlock>
 
-              <h2 className="doc-heading">JWT vs Sessions</h2>
-              <div className="grid gap-6 md:grid-cols-2 mb-8">
-                <div className="border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-4 text-green-600 dark:text-green-400">✅ JWT Advantages</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-500">•</span>
-                      <span>Stateless - no server storage needed</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-500">•</span>
-                      <span>Scalable across multiple servers</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-500">•</span>
-                      <span>Contains user information</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-500">•</span>
-                      <span>Cross-domain friendly</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-4 text-yellow-600 dark:text-yellow-400">⚠️ JWT Considerations</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-yellow-500">•</span>
-                      <span>Larger payload than session IDs</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-yellow-500">•</span>
-                      <span>Cannot be easily revoked</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-yellow-500">•</span>
-                      <span>Sensitive data exposure risk</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-yellow-500">•</span>
-                      <span>Token replay attacks possible</span>
-                    </li>
-                  </ul>
-                </div>
+            <h2 className="doc-heading">JWT vs Sessions</h2>
+            <div className="grid gap-6 md:grid-cols-2 mb-8">
+              <div className="border border-border rounded-lg p-6">
+                <h3 className="font-semibold mb-4 text-green-600 dark:text-green-400">✅ JWT Advantages</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">•</span>
+                    <span>Stateless - no server storage needed</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">•</span>
+                    <span>Scalable across multiple servers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">•</span>
+                    <span>Contains user information</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500">•</span>
+                    <span>Cross-domain friendly</span>
+                  </li>
+                </ul>
               </div>
+              <div className="border border-border rounded-lg p-6">
+                <h3 className="font-semibold mb-4 text-yellow-600 dark:text-yellow-400">⚠️ JWT Considerations</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-500">•</span>
+                    <span>Larger payload than session IDs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-500">•</span>
+                    <span>Cannot be easily revoked</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-500">•</span>
+                    <span>Sensitive data exposure risk</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-500">•</span>
+                    <span>Token replay attacks possible</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
-              <h2 className="doc-heading">Implementation Guide</h2>
+            <h2 className="doc-heading">Implementation Guide</h2>
 
-              <h3 className="doc-subheading">Creating JWTs</h3>
+            <h3 className="doc-subheading">Creating JWTs</h3>
 
-              <CodeBlock language="typescript" filename="jwt.ts">{`
+            <CodeBlock language="typescript" filename="jwt.ts">{`
 import jwt from 'jsonwebtoken';
 
 function createToken(user) {
@@ -153,7 +152,7 @@ function createToken(user) {
 }
               `}</CodeBlock>
 
-              <CodeBlock language="typescript" filename="Usage">{`
+            <CodeBlock language="typescript" filename="Usage">{`
 const token = createToken({
   id: '123',
   email: 'john@example.com',
@@ -161,9 +160,9 @@ const token = createToken({
 });
 `}</CodeBlock>
 
-              <h3 className="doc-subheading">Verifying JWTs</h3>
+            <h3 className="doc-subheading">Verifying JWTs</h3>
 
-              <CodeBlock language="typescript" filename="jwt.ts">{`
+            <CodeBlock language="typescript" filename="jwt.ts">{`
 function verifyToken(token) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -174,7 +173,7 @@ function verifyToken(token) {
 }
               `}</CodeBlock>
 
-              <CodeBlock language="typescript" filename="Middleware">{`
+            <CodeBlock language="typescript" filename="Middleware">{`
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -194,8 +193,8 @@ function authenticateToken(req, res, next) {
 }
 `}</CodeBlock>
 
-              <h3 className="doc-subheading">Frontend Usage</h3>
-              <CodeBlock language="typescript" filename="jwt.ts">{`
+            <h3 className="doc-subheading">Frontend Usage</h3>
+            <CodeBlock language="typescript" filename="jwt.ts">{`
 function loginUser(credentials) {
   return fetch('/api/login', {
     method: 'POST',
@@ -212,36 +211,36 @@ function loginUser(credentials) {
 }
               `}</CodeBlock>
 
-              <h2 className="doc-heading">Security Best Practices</h2>
-              <div className="space-y-6 mb-8">
-                <div className="doc-callout-error">
-                  <h3 className="font-semibold mb-2 text-red-800 dark:text-red-200">🔒 Secret Management</h3>
-                  <p className="text-red-700 dark:text-red-300 mb-2">
-                    Use strong, random secrets for signing JWTs. Store them securely and rotate them regularly.
-                  </p>
-                  <div className="bg-red-100 dark:bg-red-900/30 rounded p-3 font-mono text-sm">
-                    <code>JWT_SECRET=your-256-bit-secret-key-here</code>
-                  </div>
-                </div>
-
-                <div className="doc-callout-warning">
-                  <h3 className="font-semibold mb-2 text-yellow-800 dark:text-yellow-200">⏰ Token Expiration</h3>
-                  <p className="text-yellow-700 dark:text-yellow-300">
-                    Always set reasonable expiration times. Short-lived tokens (15-30 minutes) with refresh token patterns are recommended for sensitive applications.
-                  </p>
-                </div>
-
-                <div className="doc-callout-info">
-                  <h3 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">🍪 Storage Security</h3>
-                  <p className="text-blue-700 dark:text-blue-300">
-                    Consider using httpOnly cookies instead of localStorage for token storage to prevent XSS attacks.
-                  </p>
+            <h2 className="doc-heading">Security Best Practices</h2>
+            <div className="space-y-6 mb-8">
+              <div className="doc-callout-error">
+                <h3 className="font-semibold mb-2 text-red-800 dark:text-red-200">🔒 Secret Management</h3>
+                <p className="text-red-700 dark:text-red-300 mb-2">
+                  Use strong, random secrets for signing JWTs. Store them securely and rotate them regularly.
+                </p>
+                <div className="bg-red-100 dark:bg-red-900/30 rounded p-3 font-mono text-sm">
+                  <code>JWT_SECRET=your-256-bit-secret-key-here</code>
                 </div>
               </div>
 
-              <h3 className="doc-subheading">Refresh Token Pattern</h3>
+              <div className="doc-callout-warning">
+                <h3 className="font-semibold mb-2 text-yellow-800 dark:text-yellow-200">⏰ Token Expiration</h3>
+                <p className="text-yellow-700 dark:text-yellow-300">
+                  Always set reasonable expiration times. Short-lived tokens (15-30 minutes) with refresh token patterns are recommended for sensitive applications.
+                </p>
+              </div>
 
-              <CodeBlock language="typescript" filename="Session.ts">{`
+              <div className="doc-callout-info">
+                <h3 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">🍪 Storage Security</h3>
+                <p className="text-blue-700 dark:text-blue-300">
+                  Consider using httpOnly cookies instead of localStorage for token storage to prevent XSS attacks.
+                </p>
+              </div>
+            </div>
+
+            <h3 className="doc-subheading">Refresh Token Pattern</h3>
+
+            <CodeBlock language="typescript" filename="Session.ts">{`
 async function refreshAccessToken() {
   const response = await fetch('/api/refresh', {
     method: 'POST',
@@ -252,20 +251,20 @@ async function refreshAccessToken() {
 }
               `}</CodeBlock>
 
-              <h2 className="doc-heading">How does AuthBuilders do it?</h2>
+            <h2 className="doc-heading">How does AuthBuilders do it?</h2>
 
-              <div className="border border-border rounded-lg p-4 mt-4">
-                <h3 className="font-semibold mb-2">🟣 JWT Handling & Token Utilities:</h3>
-                <p className="text-sm text-muted-foreground mb-4">nextjs-jwt template</p>
-                <p className="text-sm text-muted-foreground mb-4">
-                  AuthBuilders uses a hybrid JWT approach combining <strong>JOSE</strong> for core session encryption and <strong>jsonwebtoken</strong> for specific flows like password reset and email verification. This provides:
-                </p>
-                <ul className="list-disc pl-6 mb-4 text-sm text-muted-foreground">
-                  <li>🔐 Server-side encryption for active sessions via JOSE's <code>SignJWT</code> and <code>jwtVerify</code>.</li>
-                  <li>🔄 Stateless token issuance with short expirations for password reset and email verification flows.</li>
-                  <li>⚙️ Environment-isolated secret management using different keys for session and reset tokens.</li>
-                </ul>
-                <CodeBlock language="typescript" filename="utils/jwt.ts">{`
+            <div className="border border-border rounded-lg p-4 mt-4">
+              <h3 className="font-semibold mb-2">🟣 JWT Handling & Token Utilities:</h3>
+              <p className="text-sm text-muted-foreground mb-4">nextjs-jwt template</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                AuthBuilders uses a hybrid JWT approach combining <strong>JOSE</strong> for core session encryption and <strong>jsonwebtoken</strong> for specific flows like password reset and email verification. This provides:
+              </p>
+              <ul className="list-disc pl-6 mb-4 text-sm text-muted-foreground">
+                <li>🔐 Server-side encryption for active sessions via JOSE's <code>SignJWT</code> and <code>jwtVerify</code>.</li>
+                <li>🔄 Stateless token issuance with short expirations for password reset and email verification flows.</li>
+                <li>⚙️ Environment-isolated secret management using different keys for session and reset tokens.</li>
+              </ul>
+              <CodeBlock language="typescript" filename="utils/jwt.ts">{`
 "use server";
 import { SignJWT, jwtVerify } from "jose";
 import type { Session } from "../defintions";
@@ -326,22 +325,22 @@ export async function verifyVerificationEmailToken(token: string) {
   }
 }
   `}</CodeBlock>
-              </div>
-              <div className="border border-border rounded-lg p-4 mt-4">
-                <h3 className="font-semibold mb-2">🟣 Full JWT Flow in AuthBuilders:</h3>
-                <p className="text-sm text-muted-foreground mb-4">nextjs-jwt template</p>
+            </div>
+            <div className="border border-border rounded-lg p-4 mt-4">
+              <h3 className="font-semibold mb-2">🟣 Full JWT Flow in AuthBuilders:</h3>
+              <p className="text-sm text-muted-foreground mb-4">nextjs-jwt template</p>
 
-                <p className="text-sm text-muted-foreground mb-4">
-                  AuthBuilders applies JWTs as a core mechanism for multiple flows:
-                </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                AuthBuilders applies JWTs as a core mechanism for multiple flows:
+              </p>
 
-                <ul className="list-disc pl-6 mb-4 text-sm text-muted-foreground">
-                  <li>🔐 <strong>Session Management:</strong> Short-lived encrypted JWTs are issued after login and stored inside an HTTP-only cookie.</li>
-                  <li>📩 <strong>Password Reset & Email Verification:</strong> Stateless JWTs (with different secret) are issued for time-sensitive flows via email links.</li>
-                  <li>⚙️ <strong>Server Actions Integrated:</strong> The entire flow leverages Next.js <code>"use server"</code> actions for secure server-side execution.</li>
-                </ul>
+              <ul className="list-disc pl-6 mb-4 text-sm text-muted-foreground">
+                <li>🔐 <strong>Session Management:</strong> Short-lived encrypted JWTs are issued after login and stored inside an HTTP-only cookie.</li>
+                <li>📩 <strong>Password Reset & Email Verification:</strong> Stateless JWTs (with different secret) are issued for time-sensitive flows via email links.</li>
+                <li>⚙️ <strong>Server Actions Integrated:</strong> The entire flow leverages Next.js <code>"use server"</code> actions for secure server-side execution.</li>
+              </ul>
 
-                <CodeBlock language="typescript" filename="lib/actions.ts">{`
+              <CodeBlock language="typescript" filename="lib/actions.ts">{`
 "use server";
 import { cookies } from "next/headers";
 import { AuthServerActionState } from "@/app/lib/(AuthBilders)/defintions";
@@ -462,29 +461,27 @@ export async function handlePasswordReset(_prev: AuthServerActionState, formData
   }
 }
   `}</CodeBlock>
-              </div>
+            </div>
 
-              <div className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-lg p-6 mt-12">
-                <h3 className="text-lg font-semibold mb-3 text-authbuilders-purple">🚀 Next Steps</h3>
-                <p className="mb-4">
-                  Now that you understand JWTs, explore how to implement them in your authentication system:
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <a href="/docs/concepts/sessions" className="inline-flex items-center px-4 py-2 bg-authbuilders-purple text-white rounded-lg hover:bg-authbuilders-purple-dark transition-colors text-sm font-medium">
-                    Session Management
-                  </a>
-                  <a href="/docs/security/backend" className="inline-flex items-center px-4 py-2 border border-authbuilders-purple text-authbuilders-purple rounded-lg hover:bg-authbuilders-purple/10 transition-colors text-sm font-medium">
-                    Backend Security
-                  </a>
-                </div>
+            <div className="bg-gradient-to-r from-authbuilders-purple/10 to-authbuilders-purple-light/10 border border-authbuilders-purple/20 rounded-lg p-6 mt-12">
+              <h3 className="text-lg font-semibold mb-3 text-authbuilders-purple">🚀 Next Steps</h3>
+              <p className="mb-4">
+                Now that you understand JWTs, explore how to implement them in your authentication system:
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a href="/docs/concepts/sessions" className="inline-flex items-center px-4 py-2 bg-authbuilders-purple text-white rounded-lg hover:bg-authbuilders-purple-dark transition-colors text-sm font-medium">
+                  Session Management
+                </a>
+                <a href="/docs/security/backend" className="inline-flex items-center px-4 py-2 border border-authbuilders-purple text-authbuilders-purple rounded-lg hover:bg-authbuilders-purple/10 transition-colors text-sm font-medium">
+                  Backend Security
+                </a>
               </div>
-            </DocContent>
-          </main>
-        </div>
-        <Footer />
+            </div>
+          </DocContent>
+        </main>
       </div>
+      <Footer />
     </div>
-
   );
 };
 
