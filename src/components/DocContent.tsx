@@ -12,8 +12,8 @@ interface DocContentProps {
 
 const DocContent = ({ title, description, children }: DocContentProps) => {
   return (
-    <div className="min-h-[calc(100vh-69px)] pb-16 flex max-w-[1440px]">
-      <div className="flex-1 min-w-0 py-8 px-6 lg:px-8 lg:ml-80">
+    <div className="flex max-w-[1440px] min-h-screen">
+      <div className="flex-1 min-w-0 py-8 px-6 lg:px-8 lg:ml-80 pb-20">
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
           <span>Documentation</span>
