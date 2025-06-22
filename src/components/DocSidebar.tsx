@@ -30,6 +30,7 @@ const TechIcon = ({ icon }: { icon?: string }) => {
 
 const DocSidebar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [openAccordions, setOpenAccordions] = useState<string[]>(['nextjs', 'vite']);
   const location = useLocation();
 
   return (
@@ -60,7 +61,7 @@ const DocSidebar = () => {
           </Button>
         </div>
 
-        <ScrollArea className="flex-1 py-6 lg:py-8">
+        <ScrollArea className="flex-1 py-6 lg:py-8 pb-20">
           <div className="px-6 lg:px-8">
             <div className="space-y-6">
               {/* General Categories (Getting Started, Core Concepts, Security) */}
@@ -96,7 +97,12 @@ const DocSidebar = () => {
                   Technologies
                 </h4>
 
-                <Accordion type="multiple" className="w-full space-y-2">
+                <Accordion 
+                  type="multiple" 
+                  value={openAccordions}
+                  onValueChange={setOpenAccordions}
+                  className="w-full space-y-2"
+                >
                   {technologySections.map((tech, techIndex) => (
                     <AccordionItem
                       key={techIndex}
