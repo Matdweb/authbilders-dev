@@ -106,7 +106,7 @@ const DocToc = () => {
           </h4>
           
           <nav className="space-y-1">
-            {tocItems.map((item) => (
+            {tocItems.slice(2).map((item) => (
               <motion.button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
