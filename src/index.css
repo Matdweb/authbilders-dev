@@ -156,3 +156,16 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-authbuilders-purple to-authbuilders-purple-light;
   }
 }
+
+
+/* global.css or tailwind.css */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-muted-foreground\/20 {
+  scrollbar-color: rgba(107, 114, 128, 0.2) transparent;
+}
+.scrollbar-thumb-muted-foreground\/40:hover {
+  scrollbar-color: rgba(107, 114, 128, 0.4) transparent;
+}
