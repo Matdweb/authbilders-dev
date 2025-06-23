@@ -28,6 +28,7 @@ import ConceptsMagicLinks from "./pages/docs/concepts/ConceptsMagicLinks";
 import ConceptsMfa from "./pages/docs/concepts/ConceptsMfa";
 
 // --Templates
+import Nextjs_Firebase from "./pages/docs/templates/Nextjs_firebase";
 import Nextjs_jwt from "./pages/docs/templates/Nextjs_jwt"
 import Nextjs_NextAuth from "./pages/docs/templates/Nextjs_NextAuth";
 
@@ -71,6 +72,7 @@ const App = () => {
             <Route path="/docs/concepts/magic-links" element={<ConceptsMagicLinks />} />
             <Route path="/docs/concepts/mfa" element={<ConceptsMfa />} />
             {/* templates */}
+            <Route path="/docs/templates/nextjs-firebase" element={<Nextjs_Firebase />} />
             <Route path="/docs/templates/nextjs-jwt" element={<Nextjs_jwt />} />
             <Route path="/docs/templates/nextjs-nextauth" element={<Nextjs_NextAuth />} />
 
