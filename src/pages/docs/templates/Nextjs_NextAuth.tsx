@@ -4,7 +4,7 @@ import DocSidebar from "@/components/DocSidebar";
 import DocContent from "@/components/DocContent";
 import CodeBlock from "@/components/CodeBlock";
 import { motion } from "framer-motion";
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiJsonwebtokens, } from "react-icons/si";
+import { SiNextdotjs, SiTypescript, SiTailwindcss, SiJsonwebtokens, SiZod, } from "react-icons/si";
 import { FaNodeJs, FaGithub, FaShieldAlt, FaDatabase, } from "react-icons/fa";
 import {
     FaLinux,
@@ -44,7 +44,7 @@ const Nextjs_NextAuth = () => {
                                     <motion.div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/50 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-lg" whileHover={cardHover.hover}>
                                         <ol className="list-decimal pl-8 space-y-6">
                                             {[
-                                                { step: "Ensure git and node are installed on your machine.", title: "Console", code: [`# git`, `$ git --version`, `# node`, `$ node -v`] },
+                                                { step: "Ensure git and node are installed on your machine.", title: "Console", code: [`# Git`, `$ git --version`, `# Node.js`, `$ node -v`] },
                                                 { step: "Install degit", title: "Degit", code: [`npm install -g degit`] },
                                                 { step: "Get template", title: "Download template", code: [`degit github:Matdweb/authbilders-nextjs-nextauth my-new-app`] },
                                                 { step: "Dependencies", title: "Dependencies", code: [`cd my-new-app`, `npm install`] },
@@ -85,7 +85,8 @@ const Nextjs_NextAuth = () => {
                                             { icon: SiTypescript, label: "TypeScript", color: "text-blue-500" },
                                             { icon: SiJsonwebtokens, label: "JWT (Jose + jsonwebtoken)", color: "text-purple-500" },
                                             { icon: FaDatabase, label: "JSON Mock File DB (for dev)", color: "text-orange-500" },
-                                            { icon: SiTailwindcss, label: "TailwindCSS, ShadCN UI", color: "text-cyan-500" }
+                                            { icon: SiTailwindcss, label: "TailwindCSS, Hero UI", color: "text-cyan-500" },
+                                            { icon: SiZod, label: "Zod", color: "text-blue-500" }
                                         ].map((tech, i) => (
                                             <motion.div key={i} variants={listItemVariants} whileHover={cardHover.hover} className="flex items-center gap-4 p-6 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-all duration-300">
                                                 <motion.div variants={iconHoverVariants} whileHover="hover"><tech.icon className={`w-10 h-10 ${tech.color}`} /></motion.div>
