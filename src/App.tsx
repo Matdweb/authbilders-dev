@@ -34,6 +34,7 @@ import Nextjs_NextAuth from "./pages/docs/templates/Nextjs_NextAuth";
 
 // --Services
 import ServiceResendDoc from "./pages/docs/integrations/ServiceResend";
+import ServiceFirebase from "./pages/docs/integrations/ServiceFirebase";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ const App = () => {
 
             {/* integrations */}
             <Route path="/docs/integrations/resend" element={<ServiceResendDoc />} />
+            <Route path="/docs/integrations/firebase" element={<ServiceFirebase />} />
 
             <Route path="/templates" element={<Templates />} />
             <Route path="/guides" element={<Guides />} />
