@@ -68,7 +68,7 @@ const Nextjs_NextAuth = () => {
                                             <p className="font-medium mb-2">💡 Pro Tips</p>
                                             1. Learn about <a href="#" className="text-authbuilders-purple hover:underline">How to get Google third party secrets</a> here. <br />
                                             1. Learn about <a href="#" className="text-authbuilders-purple hover:underline">How to get Github third party secrets</a> here. <br />
-                                            2. Take a look to <a href="/docs/services/resend" className="text-authbuilders-purple hover:underline">Resend setup guide</a> to get the right env variable value. <br />
+                                            2. Take a look to <a href="/docs/integrations/resend" className="text-authbuilders-purple hover:underline">Resend setup guide</a> to get the right env variable value. <br />
                                             3. Visit <a href="https://randomkeygen.com/" className="text-authbuilders-purple hover:underline">randomkeygen.com</a> to generate secret keys.
                                         </div>
                                     </motion.div>
