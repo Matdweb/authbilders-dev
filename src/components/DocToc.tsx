@@ -106,9 +106,9 @@ const DocToc = () => {
           </h4>
 
           <nav className="space-y-1">
-            {tocItems.slice(2,(tocItems.length-3)).map((item) => (
+            {tocItems.slice(2,(tocItems.length-3)).map((item,i) => (
               <motion.button
-                key={item.id}
+                key={i}
                 onClick={() => scrollToSection(item.id)}
                 className={cn(
                   "block w-full text-left text-sm leading-snug py-1.5 px-2 rounded-md transition-all duration-200",
