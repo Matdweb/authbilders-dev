@@ -38,9 +38,6 @@ const Navbar = () => {
           <Link to="/templates" className="text-muted-foreground hover:text-foreground transition-colors">
             Templates
           </Link>
-          <Link to="/guides" className="text-muted-foreground hover:text-foreground transition-colors">
-            Guides
-          </Link>
           <a
             href="https://github.com/authbuilders"
             target="_blank"
@@ -178,13 +175,6 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Templates
-          </Link>
-          <Link
-            to="/guides"
-            className="block text-muted-foreground hover:text-foreground transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Guides
           </Link>
           <a
             href="https://github.com/authbuilders"
